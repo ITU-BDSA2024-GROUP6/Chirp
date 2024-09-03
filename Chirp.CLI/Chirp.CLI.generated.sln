@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.002.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chirp.CLI", "Chirp.CLI.csproj", "{0BFC1D4C-E961-4C8C-AAF9-1DB3CCE9415C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chirp.CLI", "Chirp.CLI\Chirp.CLI.csproj", "{DE9E07A2-B807-49C6-BDB4-13AD99268255}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0BFC1D4C-E961-4C8C-AAF9-1DB3CCE9415C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0BFC1D4C-E961-4C8C-AAF9-1DB3CCE9415C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0BFC1D4C-E961-4C8C-AAF9-1DB3CCE9415C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0BFC1D4C-E961-4C8C-AAF9-1DB3CCE9415C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE9E07A2-B807-49C6-BDB4-13AD99268255}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE9E07A2-B807-49C6-BDB4-13AD99268255}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE9E07A2-B807-49C6-BDB4-13AD99268255}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE9E07A2-B807-49C6-BDB4-13AD99268255}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
