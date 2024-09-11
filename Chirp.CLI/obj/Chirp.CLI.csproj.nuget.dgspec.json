@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/Chirp.CLI.csproj": {}
+    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\Chirp.CLI\\Chirp.CLI.csproj": {}
   },
   "projects": {
-    "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/Chirp.CLI.csproj": {
+    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\Chirp.CLI\\Chirp.CLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/Chirp.CLI.csproj",
+        "projectUniqueName": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\Chirp.CLI\\Chirp.CLI.csproj",
         "projectName": "Chirp.CLI",
-        "projectPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/Chirp.CLI.csproj",
-        "packagesPath": "/Users/valdemarmulbjerg/.nuget/packages/",
-        "outputPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/obj/",
+        "projectPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\Chirp.CLI\\Chirp.CLI.csproj",
+        "packagesPath": "C:\\Users\\Bruger\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\Chirp.CLI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/valdemarmulbjerg/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Bruger\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -26,10 +26,63 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj": {
-                "projectPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj"
+              "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj": {
+                "projectPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj"
               }
             }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.317\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj",
+        "projectName": "SimpleDB",
+        "projectPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj",
+        "packagesPath": "C:\\Users\\Bruger\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\Bruger\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
           }
         },
         "warningProperties": {
@@ -63,60 +116,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.410/RuntimeIdentifierGraph.json"
-        }
-      }
-    },
-    "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj": {
-      "version": "1.0.0",
-      "restore": {
-        "projectUniqueName": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj",
-        "projectName": "SimpleDB",
-        "projectPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj",
-        "packagesPath": "/Users/valdemarmulbjerg/.nuget/packages/",
-        "outputPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/obj/",
-        "projectStyle": "PackageReference",
-        "configFilePaths": [
-          "/Users/valdemarmulbjerg/.nuget/NuGet/NuGet.Config"
-        ],
-        "originalTargetFrameworks": [
-          "net7.0"
-        ],
-        "sources": {
-          "https://api.nuget.org/v3/index.json": {}
-        },
-        "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
-            "projectReferences": {}
-          }
-        },
-        "warningProperties": {
-          "warnAsError": [
-            "NU1605"
-          ]
-        }
-      },
-      "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
-          "imports": [
-            "net461",
-            "net462",
-            "net47",
-            "net471",
-            "net472",
-            "net48",
-            "net481"
-          ],
-          "assetTargetFallback": true,
-          "warn": true,
-          "frameworkReferences": {
-            "Microsoft.NETCore.App": {
-              "privateAssets": "all"
-            }
-          },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.410/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.317\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj": {}
+    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj": {}
   },
   "projects": {
-    "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj": {
+    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj",
+        "projectUniqueName": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj",
-        "packagesPath": "/Users/valdemarmulbjerg/.nuget/packages/",
-        "outputPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/obj/",
+        "projectPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\SimpleDB.csproj",
+        "packagesPath": "C:\\Users\\Bruger\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\SimpleDB\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/valdemarmulbjerg/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\Bruger\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -37,6 +37,12 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "CsvHelper": {
+              "target": "Package",
+              "version": "[33.0.1, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -53,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.410/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.317\\RuntimeIdentifierGraph.json"
         }
       }
     }
