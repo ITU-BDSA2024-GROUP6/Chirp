@@ -14,6 +14,16 @@
             "related": ".xml"
           }
         }
+      },
+      "SimpleDB/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/SimpleDB.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/SimpleDB.dll": {}
+        }
       }
     }
   },
@@ -45,27 +55,33 @@
         "lib/netstandard2.1/CsvHelper.dll",
         "lib/netstandard2.1/CsvHelper.xml"
       ]
+    },
+    "SimpleDB/1.0.0": {
+      "type": "project",
+      "path": "../SimpleDB/SimpleDB.csproj",
+      "msbuildProject": "../SimpleDB/SimpleDB.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "CsvHelper >= 33.0.1"
+      "CsvHelper >= 33.0.1",
+      "SimpleDB >= 1.0.0"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Marcu\\.nuget\\packages\\": {}
+    "/Users/valdemarmulbjerg/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\Chirp.CLI\\Chirp.CLI.csproj",
+      "projectUniqueName": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/Chirp.CLI.csproj",
       "projectName": "Chirp.CLI",
-      "projectPath": "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\Chirp.CLI\\Chirp.CLI.csproj",
-      "packagesPath": "C:\\Users\\Marcu\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\Chirp.CLI\\obj\\",
+      "projectPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/Chirp.CLI.csproj",
+      "packagesPath": "/Users/valdemarmulbjerg/.nuget/packages/",
+      "outputPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/Chirp.CLI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Marcu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/valdemarmulbjerg/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -76,7 +92,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj": {
+              "projectPath": "/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/SimpleDB.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
@@ -110,7 +130,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.410/RuntimeIdentifierGraph.json"
       }
     }
   }

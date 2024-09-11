@@ -34,6 +34,7 @@ class Chirp {
 class Program {
 
     public static void Main(string[] args) {
+        IDatabaseRepository<Chirp> database = new CSVDatabase<Chirp>();
         bool hakkebakkefar = true;
         while(hakkebakkefar) {
             Console.WriteLine("Type \"Read\" to read previous Chirps");

@@ -1,0 +1,4 @@
+/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/obj/Debug/net7.0/SimpleDB.GeneratedMSBuildEditorConfig.editorconfig
+/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/obj/Debug/net7.0/SimpleDB.AssemblyInfoInputs.cache
+/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/obj/Debug/net7.0/SimpleDB.AssemblyInfo.cs
+/Users/valdemarmulbjerg/Documents/GitHub/Chirp/SimpleDB/obj/Debug/net7.0/SimpleDB.csproj.CoreCompileInputs.cache
