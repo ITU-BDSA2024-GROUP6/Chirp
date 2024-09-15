@@ -1,0 +1,86 @@
+name: Chirp Release Workflow
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-test-release:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+    
+    - name: Restore dependencies
+      run: dotnet restore
+    
+    - name: Build
+      run: dotnet build --no-restore
+    
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    
+    - name: Publish Windows
+      run: dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/win-x64
+    
+    - name: Publish macOS
+      run: dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/osx-x64
+    
+    - name: Publish Linux
+      run: dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/linux-x64
+    
+    - name: Zip Windows executable
+      run: zip -j chirp-win-x64.zip ./publish/win-x64/chirp.exe
+    
+    - name: Zip macOS executable
+      run: zip -j chirp-osx-x64.zip ./publish/osx-x64/chirp
+    
+    - name: Zip Linux executable
+      run: zip -j chirp-linux-x64.zip ./publish/linux-x64/chirp
+    
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }}
+        draft: false
+        prerelease: false
+    
+    - name: Upload Windows Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./chirp-win-x64.zip
+        asset_name: chirp-win-x64.zip
+        asset_content_type: application/zip
+    
+    - name: Upload macOS Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./chirp-osx-x64.zip
+        asset_name: chirp-osx-x64.zip
+        asset_content_type: application/zip
+    
+    - name: Upload Linux Release Asset
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./chirp-linux-x64.zip
+        asset_name: chirp-linux-x64.zip
+        asset_content_type: application/zip
