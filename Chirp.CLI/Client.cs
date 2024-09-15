@@ -17,10 +17,12 @@ namespace ChirpClient
                 Console.WriteLine("----------------------------------------------------------");
 
                 var userInput = Console.ReadLine();
-                switch (userInput.ToLower()) {
+                switch (userInput.ToLower()) 
+                {
                     case "read":
                         Console.Write("How many Chirps would you like to see? Type a number: ");
-                        foreach(Chirp chirp in database.Read(Convert.ToInt32(Console.ReadLine()))) {
+                        foreach(Chirp chirp in database.Read(Convert.ToInt32(Console.ReadLine()))) 
+                        {
                             UI.PrintChirp(chirp);
                             Thread.Sleep(1000);
                         }
