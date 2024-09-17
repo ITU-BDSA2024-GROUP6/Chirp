@@ -39,13 +39,13 @@ jobs:
       run: ls -la ./publish/win-x64
     
     - name: Zip Windows executable
-      run: zip -j chirp-win-x64.zip ./publish/win-x64/chirp.exe
+      run: zip -j chirp-win-x64.zip ./publish/win-x64/Chirp.CLI.exe
     
     - name: Zip macOS executable
-      run: zip -j chirp-osx-x64.zip ./publish/osx-x64/chirp
+      run: zip -j chirp-osx-x64.zip ./publish/osx-x64/Chirp.CLI
     
     - name: Zip Linux executable
-      run: zip -j chirp-linux-x64.zip ./publish/linux-x64/chirp
+      run: zip -j chirp-linux-x64.zip ./publish/linux-x64/Chirp.CLI
     
     - name: Create Release
       id: create_release
