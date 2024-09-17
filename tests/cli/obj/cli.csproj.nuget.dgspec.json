@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/wormy/Documents/GitHub/Chirp/tests/xunit/xunit.csproj": {}
+    "/Users/wormy/Documents/GitHub/Chirp/tests/cli/cli.csproj": {}
   },
   "projects": {
-    "/Users/wormy/Documents/GitHub/Chirp/tests/xunit/xunit.csproj": {
+    "/Users/wormy/Documents/GitHub/Chirp/tests/cli/cli.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/wormy/Documents/GitHub/Chirp/tests/xunit/xunit.csproj",
-        "projectName": "xunit",
-        "projectPath": "/Users/wormy/Documents/GitHub/Chirp/tests/xunit/xunit.csproj",
+        "projectUniqueName": "/Users/wormy/Documents/GitHub/Chirp/tests/cli/cli.csproj",
+        "projectName": "cli",
+        "projectPath": "/Users/wormy/Documents/GitHub/Chirp/tests/cli/cli.csproj",
         "packagesPath": "/Users/wormy/.nuget/packages/",
-        "outputPath": "/Users/wormy/Documents/GitHub/Chirp/tests/xunit/obj/",
+        "outputPath": "/Users/wormy/Documents/GitHub/Chirp/tests/cli/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/wormy/.nuget/NuGet/NuGet.Config"
