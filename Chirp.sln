@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CAE93A51-4F87-483D-BAC3-9CDF8D538876}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "chirp.CLI", "src\chirp.CLI\chirp.CLI.csproj", "{DDF2E6A2-9E36-4C4F-A19A-3D08AA3B4B23}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chirp.CLI", "src\Chirp.CLI\Chirp.CLI.csproj", "{DDF2E6A2-9E36-4C4F-A19A-3D08AA3B4B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "simpleDB", "src\simpleDB\simpleDB.csproj", "{CC4C503C-626B-4FFA-AE97-DFD75B14F526}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleDB", "src\SimpleDB\SimpleDB.csproj", "{CC4C503C-626B-4FFA-AE97-DFD75B14F526}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

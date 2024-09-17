@@ -27,13 +27,13 @@ jobs:
       run: dotnet test ./Chirp.sln --no-build --verbosity normal
     
     - name: Publish Windows
-      run: dotnet publish ./chirp.CLI/chirp.CLI.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/win-x64
+      run: dotnet publish ./Chirp.CLI/Chirp.CLI.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/win-x64
     
     - name: Publish macOS
-      run: dotnet publish ./chirp.CLI/chirp.CLI.csproj -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/osx-x64
+      run: dotnet publish ./Chirp.CLI/Chirp.CLI.csproj -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/osx-x64
     
     - name: Publish Linux
-      run: dotnet publish ./chirp.CLI/chirp.CLI.csproj -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/linux-x64
+      run: dotnet publish ./Chirp.CLI/Chirp.CLI.csproj -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/linux-x64
     
     - name: Zip Windows executable
       run: zip -j chirp-win-x64.zip ./publish/win-x64/chirp.exe
