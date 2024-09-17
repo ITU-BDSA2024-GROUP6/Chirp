@@ -1,0 +1,12 @@
+using ChirpClient;
+
+namespace xunit;
+
+public class Database_tests
+{
+    [Fact]
+    public void mainTest()
+    {
+        
+    }
+}
