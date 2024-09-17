@@ -34,6 +34,9 @@ jobs:
     
     - name: Publish Linux
       run: dotnet publish ./src/Chirp.CLI/Chirp.CLI.csproj -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/linux-x64
+
+    - name: List files in Windows publish directory
+      run: ls -la ./publish/win-x64
     
     - name: Zip Windows executable
       run: zip -j chirp-win-x64.zip ./publish/win-x64/chirp.exe
