@@ -7,7 +7,6 @@ namespace ChirpClient
     {
         static void Main(string[] args)
         {
-            IDatabaseRepository<Chirp> database = new CSVDatabase<Chirp>();
 
             bool running = true;
             while(running) {
@@ -21,7 +20,7 @@ namespace ChirpClient
                 {
                     case "read":
                         Console.Write("How many Chirps would you like to see? Type a number: ");
-                        foreach(Chirp chirp in database.Read(Convert.ToInt32(Console.ReadLine()))) 
+                        foreach(Chirp chirp in CSVDatabase<Chirp>.Instance.Read(Convert.ToInt32(Console.ReadLine()))) 
                         {
                             UI.PrintChirp(chirp);
                             Thread.Sleep(1000);
@@ -30,7 +29,7 @@ namespace ChirpClient
                         break;
                     case "write":
                         Console.Write("Type your message to the world: ");
-                        database.Store(new Chirp(Environment.UserName, Console.ReadLine(), DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
+                        CSVDatabase<Chirp>.Instance.Store(new Chirp(Environment.UserName, Console.ReadLine(), DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
                         Console.WriteLine("----------------------------------------------------------");
                         break;
                     case "quit":
