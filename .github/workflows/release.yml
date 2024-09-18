@@ -5,44 +5,51 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+  packages: write
+
 jobs:
   build-test-release:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     
     - name: Setup .NET
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 7.0.x
     
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./Chirp.sln
     
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./Chirp.sln --configuration Release --no-restore
     
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./Chirp.sln --no-build --verbosity normal
     
     - name: Publish Windows
-      run: dotnet publish -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/win-x64
+      run: dotnet publish ./src/Chirp.CLI/Chirp.CLI.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/win-x64
     
     - name: Publish macOS
-      run: dotnet publish -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/osx-x64
+      run: dotnet publish ./src/Chirp.CLI/Chirp.CLI.csproj -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/osx-x64
     
     - name: Publish Linux
-      run: dotnet publish -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/linux-x64
+      run: dotnet publish ./src/Chirp.CLI/Chirp.CLI.csproj -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/linux-x64
+
+    - name: List files in Windows publish directory
+      run: ls -la ./publish/win-x64
     
     - name: Zip Windows executable
-      run: zip -j chirp-win-x64.zip ./publish/win-x64/chirp.exe
+      run: zip -j chirp-win-x64.zip ./publish/win-x64/Chirp.CLI.exe
     
     - name: Zip macOS executable
-      run: zip -j chirp-osx-x64.zip ./publish/osx-x64/chirp
+      run: zip -j chirp-osx-x64.zip ./publish/osx-x64/Chirp.CLI
     
     - name: Zip Linux executable
-      run: zip -j chirp-linux-x64.zip ./publish/linux-x64/chirp
+      run: zip -j chirp-linux-x64.zip ./publish/linux-x64/Chirp.CLI
     
     - name: Create Release
       id: create_release
