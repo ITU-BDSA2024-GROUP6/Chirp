@@ -1,42 +1,89 @@
 ﻿using System;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using SimpleDB;
 
 namespace ChirpClient
 {
     public class Client
     {
-        static void Main(string[] args)
+        private static readonly HttpClient httpClient = new HttpClient
         {
+            BaseAddress = new Uri("http://localhost:5023/")
+        };
 
+        static async Task Main(string[] args)
+        {
             bool running = true;
-            while(running) {
+            while(running)
+            {
                 Console.WriteLine("Type \"Read\" to read previous Chirps");
                 Console.WriteLine("Type \"Write\" to write a new Chirp");
                 Console.WriteLine("Type \"Quit\" to quit program");
                 Console.WriteLine("----------------------------------------------------------");
 
                 var userInput = Console.ReadLine();
-                switch (userInput.ToLower()) 
+                switch (userInput.ToLower())
                 {
                     case "read":
-                        Console.Write("How many Chirps would you like to see? Type a number: ");
-                        foreach(Chirp chirp in CSVDatabase<Chirp>.Instance.Read(Convert.ToInt32(Console.ReadLine()))) 
-                        {
-                            UI.PrintChirp(chirp);
-                            Thread.Sleep(1000);
-                        }
-                        Console.WriteLine("----------------------------------------------------------");
+                        await ReadChirps();
                         break;
                     case "write":
-                        Console.Write("Type your message to the world: ");
-                        CSVDatabase<Chirp>.Instance.Store(new Chirp(Environment.UserName, Console.ReadLine(), DateTimeOffset.UtcNow.ToUnixTimeSeconds()));
-                        Console.WriteLine("----------------------------------------------------------");
+                        await WriteChirp();
                         break;
                     case "quit":
                         running = false;
                         break;
                 }
             }
+        }
+
+        static async Task ReadChirps()
+        {
+            Console.Write("How many Chirps would you like to see? Type a number: ");
+            string limitInput = Console.ReadLine();
+            int limit;
+            if (!int.TryParse(limitInput, out limit))
+            {
+                Console.WriteLine("Invalid input. Using default limit of 10.");
+                limit = 10;
+            }
+
+            var response = await httpClient.GetAsync($"chirps?limit={limit}");
+            if (response.IsSuccessStatusCode)
+            {
+                var chirps = await response.Content.ReadFromJsonAsync<List<Chirp>>();
+                foreach (var chirp in chirps)
+                {
+                    UI.PrintChirp(chirp);
+                    await Task.Delay(1000);
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
+            Console.WriteLine("----------------------------------------------------------");
+        }
+
+        static async Task WriteChirp()
+        {
+            Console.Write("Type your message to the world: ");
+            string message = Console.ReadLine();
+            var newChirp = new Chirp(Environment.UserName, message, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
+
+            var response = await httpClient.PostAsJsonAsync("chirp", newChirp);
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Chirp posted successfully!");
+            }
+            else
+            {
+                Console.WriteLine($"Error posting chirp: {response.StatusCode}");
+            }
+            Console.WriteLine("----------------------------------------------------------");
         }
     }
 }
