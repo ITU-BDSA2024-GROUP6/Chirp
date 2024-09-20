@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "zZESQFm7lkfp16imTBZJiDNbEzApqSBGwq4H64H+7322d+ICzH4EszGVaffYBcZZOROzIwgrJESqR9lDkgfeYQ==",
+  "dgSpecHash": "ETR8IsIRKBKp2YVJrqrWEIzs+FyK6hDvpt9JXo/TOGq/Bq+cHuiFq1oIIUuuOhhq8wgOAW0FATAPE81TASK2Zg==",
   "success": true,
-  "projectFilePath": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
+  "projectFilePath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj",
   "expectedPackageFiles": [
-    "/Users/wormy/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512"
+    "C:\\Users\\Bruger\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
   ],
   "logs": []
 }

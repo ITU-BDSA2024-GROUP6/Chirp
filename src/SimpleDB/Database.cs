@@ -17,41 +17,22 @@ namespace SimpleDB
     }
 
     public sealed class CSVDatabase<T> : IDatabaseRepository<T> where T : Chirp
-    {   //the following makes the csv database a singleton objec(only one instance)
-        private static readonly CSVDatabase<T> instance = new CSVDatabase<T>();
-        static CSVDatabase()
-        {
-            
-        }
-        private CSVDatabase()
-        {
-             _filePath = "../SimpleDB/data/chirp_cli_db.csv";
-            if (!File.Exists(_filePath))
-            {
-                File.Create(_filePath).Close();
-            }
-        }
-        public static CSVDatabase<T> Instance
-        {
+    {
+        private static readonly Lazy<CSVDatabase<T>> lazy =
+            new Lazy<CSVDatabase<T>>(() => new CSVDatabase<T>());
 
-            get
-            {
-                return instance;
-            }
-        }
-
+        public static CSVDatabase<T> Instance { get { return lazy.Value; } }
 
         private readonly string _filePath;
-        /*
-        public CSVDatabase(string filePath = "../SimpleDB/data/chirp_cli_db.csv")
+
+        private CSVDatabase()
         {
-            _filePath = filePath;
+            _filePath = "../SimpleDB/data/chirp_cli_db.csv";
             if (!File.Exists(_filePath))
             {
                 File.Create(_filePath).Close();
             }
         }
-        */
 
         public void Store(T record)
         {
