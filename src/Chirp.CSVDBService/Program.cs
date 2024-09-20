@@ -16,10 +16,9 @@ app.MapGet("/chirps", (int? limit) =>
 // Save a new chirp to the database
 app.MapPost("/chirp", (Chirp chirp) =>
 {
+    chirp = new Chirp("me", "Hej!", 1684229348);
     CSVDatabase<Chirp>.Instance.Store(chirp);
     return Results.Ok("Chirp saved successfully!");
 });
 
 app.Run();
-
-public record Chirp(string Author, string Message, long Timestamp);
