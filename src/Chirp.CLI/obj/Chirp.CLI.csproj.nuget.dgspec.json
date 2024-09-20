@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\Chirp.CLI\\Chirp.CLI.csproj": {}
+    "/Users/wormy/Documents/GitHub/Chirp/src/Chirp.CLI/Chirp.CLI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\Chirp.CLI\\Chirp.CLI.csproj": {
+    "/Users/wormy/Documents/GitHub/Chirp/src/Chirp.CLI/Chirp.CLI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\Chirp.CLI\\Chirp.CLI.csproj",
+        "projectUniqueName": "/Users/wormy/Documents/GitHub/Chirp/src/Chirp.CLI/Chirp.CLI.csproj",
         "projectName": "Chirp.CLI",
-        "projectPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\Chirp.CLI\\Chirp.CLI.csproj",
-        "packagesPath": "C:\\Users\\Bruger\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\Chirp.CLI\\obj\\",
+        "projectPath": "/Users/wormy/Documents/GitHub/Chirp/src/Chirp.CLI/Chirp.CLI.csproj",
+        "packagesPath": "/Users/wormy/.nuget/packages/",
+        "outputPath": "/Users/wormy/Documents/GitHub/Chirp/src/Chirp.CLI/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Bruger\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/wormy/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj": {
-                "projectPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj"
+              "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj": {
+                "projectPath": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj"
               }
             }
           }
@@ -57,21 +57,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.317\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.304/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj": {
+    "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj",
+        "projectUniqueName": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj",
-        "packagesPath": "C:\\Users\\Bruger\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\SimpleDB\\obj\\",
+        "projectPath": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
+        "packagesPath": "/Users/wormy/.nuget/packages/",
+        "outputPath": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Bruger\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/wormy/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -116,7 +116,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.317\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.304/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -19,12 +19,9 @@ namespace ChirpClient
             bool running = true;
             while(running)
             {
-                Console.WriteLine("Type \"Read\" to read previous Chirps");
-                Console.WriteLine("Type \"Write\" to write a new Chirp");
-                Console.WriteLine("Type \"Quit\" to quit program");
-                Console.WriteLine("----------------------------------------------------------");
+                UserInterface.WelcomeMessage();
 
-                var userInput = Console.ReadLine();
+                var userInput = Console.ReadLine() ?? string.Empty; 
                 switch (userInput.ToLower())
                 {
                     case "read":
@@ -36,6 +33,9 @@ namespace ChirpClient
                     case "quit":
                         running = false;
                         break;
+                    default: 
+                    Console.WriteLine("Invalid input, please try again."); 
+                    break;
                 }
             }
         }
@@ -43,21 +43,21 @@ namespace ChirpClient
         static async Task ReadChirps()
         {
             Console.Write("How many Chirps would you like to see? Type a number: ");
-            string limitInput = Console.ReadLine();
+            string limitInput = Console.ReadLine() ?? string.Empty;
             int limit;
             if (!int.TryParse(limitInput, out limit))
             {
                 Console.WriteLine("Invalid input. Using default limit of 10.");
                 limit = 10;
             }
-
+        
             var response = await httpClient.GetAsync($"chirps?limit={limit}");
             if (response.IsSuccessStatusCode)
             {
-                var chirps = await response.Content.ReadFromJsonAsync<List<Chirp>>();
+                var chirps = await response.Content.ReadFromJsonAsync<List<Chirp>>() ?? new List<Chirp>();
                 foreach (var chirp in chirps)
                 {
-                    UI.PrintChirp(chirp);
+                    UserInterface.PrintChirp(chirp);
                     await Task.Delay(1000);
                 }
             }
@@ -71,7 +71,11 @@ namespace ChirpClient
         static async Task WriteChirp()
         {
             Console.Write("Type your message to the world: ");
-            string message = Console.ReadLine();
+            string message = Console.ReadLine()?.Trim() ?? string.Empty; 
+            if (string.IsNullOrEmpty(message)) { 
+                Console.WriteLine(" \nMessage cannot be empty. Please try again.\n"); 
+                return;
+            }
             var newChirp = new Chirp(Environment.UserName, message, DateTimeOffset.UtcNow.ToUnixTimeSeconds());
 
             var response = await httpClient.PostAsJsonAsync("chirp", newChirp);

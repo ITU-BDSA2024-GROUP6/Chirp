@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "YlwI86f/ctDfph3SCJ+EakZ9WcYPtrsaACbpEVj+rr049QcWnnRJUNm4IdGGEG5Ip4CuDo92A8BQBreg+xt92A==",
+  "dgSpecHash": "J/R1Q6Mq+484xm83b/Nw5onXxYCW1dw0us/8yut6weWnNi7qOf5mgvPkHXaudp16z9b4OwYIq279jlUSoU8O6Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Bruger\\Documents\\GitHub\\Chirp\\src\\Chirp.CLI\\Chirp.CLI.csproj",
+  "projectFilePath": "/Users/wormy/Documents/GitHub/Chirp/src/Chirp.CLI/Chirp.CLI.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Bruger\\.nuget\\packages\\csvhelper\\33.0.1\\csvhelper.33.0.1.nupkg.sha512"
+    "/Users/wormy/.nuget/packages/csvhelper/33.0.1/csvhelper.33.0.1.nupkg.sha512"
   ],
   "logs": []
 }
