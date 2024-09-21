@@ -21,7 +21,7 @@ namespace ChirpClient
             {
                 UserInterface.WelcomeMessage();
 
-                var userInput = Console.ReadLine() ?? string.Empty; 
+                var userInput = Console.ReadLine()?.Trim() ?? string.Empty; 
                 switch (userInput.ToLower())
                 {
                     case "read":
