@@ -11,7 +11,7 @@ namespace ChirpClient
     {
         private static readonly HttpClient httpClient = new HttpClient
         {
-            BaseAddress = new Uri("http://localhost:5023/")
+            BaseAddress = new Uri("https://bdsagroup06chirpremotedb-eedgbvewhwgxbne6.northeurope-01.azurewebsites.net/")
         };
 
         static async Task Main(string[] args)
