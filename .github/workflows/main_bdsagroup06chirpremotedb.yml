@@ -1,6 +1,5 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
-// Pushing the same thing to see if new access has allowed azure/login@v2 and azure/webapps-deploy@v3
 
 name: Build and deploy ASP.Net Core app to Azure Web App - bdsagroup06chirpremotedb
 
@@ -63,4 +62,4 @@ jobs:
           app-name: 'bdsagroup06chirpremotedb'
           slot-name: 'Production'
           package: .
-          
+// Pushing the same thing to see if new access has allowed azure/login@v2 and azure/webapps-deploy@v3
