@@ -62,4 +62,4 @@ jobs:
           app-name: 'bdsagroup06chirpremotedb'
           slot-name: 'Production'
           package: .
-// Pushing the same thing to see if new access has allowed azure/login@v2 and azure/webapps-deploy@v3
+# Pushing the same thing to see if new access has allowed azure/login@v2 and azure/webapps-deploy@v3
