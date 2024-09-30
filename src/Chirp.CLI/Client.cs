@@ -16,7 +16,7 @@ namespace ChirpClient
 
         static async Task Main(string[] args)
         {
-            bool running = true;
+            bool running = true; 
             while(running)
             {
                 UserInterface.WelcomeMessage();
