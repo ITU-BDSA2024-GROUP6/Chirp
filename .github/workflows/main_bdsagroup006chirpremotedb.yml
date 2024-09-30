@@ -21,7 +21,7 @@ jobs:
         with:
           dotnet-version: '8.x'
 
-       - name: Build with dotnet
+      - name: Build with dotnet
         run: dotnet build src/Chirp.CSVDBService/ --configuration Release
 
       - name: dotnet publish
