@@ -26,4 +26,6 @@ app.MapPost("/chirp", (Chirp chirp) =>
     return Results.Ok("Chirp saved successfully!");
 });
 
+app.MapGet("/", () => "Hello, World!");
+
 app.Run();

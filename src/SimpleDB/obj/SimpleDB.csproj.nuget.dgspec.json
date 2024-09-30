@@ -1,30 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj": {}
+    "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj": {
+    "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj",
+        "projectUniqueName": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
         "projectName": "SimpleDB",
-        "projectPath": "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\src\\SimpleDB\\SimpleDB.csproj",
-        "packagesPath": "C:\\Users\\Marcu\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Marcu\\OneDrive\\Skrivebord\\GitHub\\Chirp\\src\\SimpleDB\\obj\\",
+        "projectPath": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/SimpleDB.csproj",
+        "packagesPath": "/Users/wormy/.nuget/packages/",
+        "outputPath": "/Users/wormy/Documents/GitHub/Chirp/src/SimpleDB/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Marcu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/wormy/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net8.0"
         ],
         "sources": {
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -32,11 +32,16 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "CsvHelper": {
               "target": "Package",
@@ -59,7 +64,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.402/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
