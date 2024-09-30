@@ -6,6 +6,7 @@ using SimpleDB;
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+
 // Return chirps from the database
 app.MapGet("/chirps", (int? limit, int? offset) => {
     limit = limit ?? 50; // Default to 50 if not specified
@@ -25,7 +26,5 @@ app.MapPost("/chirp", (Chirp chirp) =>
     CSVDatabase<Chirp>.Instance.Store(chirp);
     return Results.Ok("Chirp saved successfully!");
 });
-
-app.MapGet("/", () => "Hello, World!");
 
 app.Run();
