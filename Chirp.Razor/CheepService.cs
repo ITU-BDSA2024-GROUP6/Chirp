@@ -1,25 +1,22 @@
-using Microsoft.Data.Sqlite; 
-using System.Collections.Generic; 
-using System.Linq;
-using System.Data;
+using System.Collections.Generic;
 
 public interface ICheepService
 {
-    public List<CheepViewModel> GetCheeps();
-    public List<CheepViewModel> GetCheepsFromAuthor(string author);
+    public List<CheepViewModel> GetCheeps(int? page = 0, int? pageSize = 32);
+    public List<CheepViewModel> GetCheepsFromAuthor(string author, int? page = 0, int? pageSize = 32);
 }
 
 public class CheepService : ICheepService
 {
-    private readonly DBFacade _dbFacade = new DBFacade(); // Field initialized directly
+    private readonly DBFacade _dbFacade = new DBFacade();
 
-    public List<CheepViewModel> GetCheeps()
+    public List<CheepViewModel> GetCheeps(int? page = 0, int? pageSize = 32)
     {
-        return _dbFacade.GetCheeps();
+        return _dbFacade.GetCheeps(page, pageSize);
     }
 
-    public List<CheepViewModel> GetCheepsFromAuthor(string author)
+    public List<CheepViewModel> GetCheepsFromAuthor(string author, int? page = 0, int? pageSize = 32)
     {
-        return _dbFacade.GetCheepsFromAuthor(author);
+        return _dbFacade.GetCheepsFromAuthor(author, page, pageSize);
     }
 }
