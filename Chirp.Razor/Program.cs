@@ -3,7 +3,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddSingleton<ICheepService, CheepService>();
-
+Console.WriteLine("program is running!!!");
 
 var app = builder.Build();
 
@@ -23,3 +23,4 @@ app.UseRouting();
 app.MapRazorPages();
 
 app.Run();
+
