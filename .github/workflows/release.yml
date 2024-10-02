@@ -22,35 +22,29 @@ jobs:
         dotnet-version: 8.x
     
     - name: Restore dependencies
-      run: dotnet restore ./Chirp.sln
+      run: dotnet restore ./Chirp.Razor/Chirp.Razor.csproj
     
     - name: Build
-      run: dotnet build ./Chirp.sln --configuration Release --no-restore
+      run: dotnet build ./Chirp.Razor/Chirp.Razor.csproj --configuration Release --no-restore
     
-    - name: Test
-      run: dotnet test ./Chirp.sln --no-build --verbosity normal
+    - name: Run API Tests
+      run: dotnet test ./test/Chirp.ApiTests/Chirp.ApiTests.csproj --no-build --verbosity normal
     
-    - name: Publish Windows
-      run: dotnet publish ./src/Chirp.CLI/Chirp.CLI.csproj -c Release -r win-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/win-x64
+    - name: Run E2E Tests
+      run: dotnet test ./test/Chirp.E2ETest/Chirp.E2ETest.csproj --no-build --verbosity normal
     
-    - name: Publish macOS
-      run: dotnet publish ./src/Chirp.CLI/Chirp.CLI.csproj -c Release -r osx-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/osx-x64
+    - name: Run Integration Tests
+      run: dotnet test ./test/integration/integration.csproj --no-build --verbosity normal
     
-    - name: Publish Linux
-      run: dotnet publish ./src/Chirp.CLI/Chirp.CLI.csproj -c Release -r linux-x64 -p:PublishSingleFile=true --self-contained false -o ./publish/linux-x64
+    - name: Run Unit Tests
+      run: dotnet test ./test/unit/unit.csproj --no-build --verbosity normal
+    
+    - name: Publish Web App
+      run: dotnet publish ./Chirp.Razor/Chirp.Razor.csproj -c Release -o ./publish
+    
+    - name: Zip Published App
+      run: zip -r chirp-webapp.zip ./publish
 
-    - name: List files in Windows publish directory
-      run: ls -la ./publish/win-x64
-    
-    - name: Zip Windows executable
-      run: zip -j chirp-win-x64.zip ./publish/win-x64/Chirp.CLI.exe
-    
-    - name: Zip macOS executable
-      run: zip -j chirp-osx-x64.zip ./publish/osx-x64/Chirp.CLI
-    
-    - name: Zip Linux executable
-      run: zip -j chirp-linux-x64.zip ./publish/linux-x64/Chirp.CLI
-    
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -62,32 +56,12 @@ jobs:
         draft: false
         prerelease: false
     
-    - name: Upload Windows Release Asset
+    - name: Upload Web App Release Asset
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./chirp-win-x64.zip
-        asset_name: chirp-win-x64.zip
-        asset_content_type: application/zip
-    
-    - name: Upload macOS Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./chirp-osx-x64.zip
-        asset_name: chirp-osx-x64.zip
-        asset_content_type: application/zip
-    
-    - name: Upload Linux Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./chirp-linux-x64.zip
-        asset_name: chirp-linux-x64.zip
+        asset_path: ./chirp-webapp.zip
+        asset_name: chirp-webapp.zip
         asset_content_type: application/zip
