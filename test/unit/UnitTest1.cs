@@ -1,6 +1,3 @@
-using System.Collections.Generic; 
-using Xunit;
-
 namespace unit;
 
 public class UnitTests
@@ -14,7 +11,7 @@ public class UnitTests
     [Fact] 
     public void GetCheeps_ReturnsListOfCheeps() 
     {     
-        // Given 
+        // Given
         var pageSize = 32;
 
         // When 

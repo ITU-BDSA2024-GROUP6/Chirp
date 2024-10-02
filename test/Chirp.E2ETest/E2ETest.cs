@@ -1,10 +1,3 @@
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
-using System.Text.Json;
-using System.Collections.Generic;
-
 namespace Chirp.E2ETest
 {
     public class E2ETest : IDisposable
