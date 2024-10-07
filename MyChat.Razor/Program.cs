@@ -5,8 +5,8 @@ builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite(connec
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddSingleton<IChatService, ChatService>();
-
+builder.Services.AddScoped<ICheepRepository, CheepRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
 var app = builder.Build();
 
