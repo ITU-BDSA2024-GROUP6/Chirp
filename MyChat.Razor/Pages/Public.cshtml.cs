@@ -10,7 +10,7 @@ namespace MyChat.Razor.Pages
     public class PublicModel : PageModel
     {
         private readonly ICheepRepository _service;
-        public List<Cheep> Cheeps { get; set; }
+        public List<CheepDTO> Cheeps { get; set; }
         public int CurrentPage { get; set; }
         private const int PageSize = 32;
 
