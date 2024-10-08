@@ -14,17 +14,28 @@
         <ul id="messagelist" class="cheeps">
             @foreach (var cheep in Model.Cheeps)
             {
-                <li>
+                <li class="cheep">
                     <p>
                         <strong>
                             <a href="/@cheep.Author">@cheep.Author</a>
                         </strong>
-                        @cheep.Message
-                        <small>&mdash; @cheep.Timestamp</small>
+                        @cheep.Text
+                        <small>&mdash; @cheep.TimeStamp</small>
                     </p>
                 </li>
             }
         </ul>
+        <div class="pagination">
+            @if (Model.CurrentPage > 0)
+            {
+                <a href="/@Model.Author?page=@(Model.CurrentPage - 1)">Previous</a>
+            }
+
+            @if (Model.Cheeps.Count == 32) // Assuming 32 is the page size
+            {
+                <a href="/@Model.Author?page=@(Model.CurrentPage + 1)">Next</a>
+            }
+        </div>
     }
     else
     {

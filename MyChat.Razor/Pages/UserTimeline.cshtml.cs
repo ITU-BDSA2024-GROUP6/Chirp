@@ -1,21 +1,30 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using MyChat.Razor.Repositories;
 
-namespace MyChat.Razor.Pages;
 
-public class UserTimelineModel : PageModel
+namespace MyChat.Razor.Pages
 {
-    private readonly IChatService _service;
-    public List<CheepViewModel> Cheeps { get; set; }
-
-    public UserTimelineModel(IChatService service)
+    public class UserTimelineModel : PageModel
     {
-        _service = service;
-    }
+        private readonly ICheepRepository _service;
+        public List<Cheep> Cheeps { get; set; }
+        public string Author { get; set; }
+        public int CurrentPage { get; set; }
+        private const int PageSize = 32;
 
-    public ActionResult OnGet(string author)
-    {
-        Cheeps = _service.GetCheepsFromAuthor(author);
-        return Page();
+        public UserTimelineModel(ICheepRepository service)
+        {
+            _service = service;
+        }
+
+        public IActionResult OnGet(string author, [FromQuery] int page = 0)
+        {
+            Author = author;
+            CurrentPage = page;
+            Cheeps = _service.GetCheepsFromAuthor(author, page, PageSize);
+            return Page();
+        }
     }
 }

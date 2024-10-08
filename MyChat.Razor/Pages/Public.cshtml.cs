@@ -1,21 +1,29 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Collections.Generic;
+using MyChat.Razor.Repositories;
 
-namespace MyChat.Razor.Pages;
 
-public class PublicModel : PageModel
+namespace MyChat.Razor.Pages 
 {
-    private readonly IChatService _service;
-    public List<CheepViewModel> Cheeps { get; set; }
 
-    public PublicModel(IChatService service)
+    public class PublicModel : PageModel
     {
-        _service = service;
-    }
+        private readonly ICheepRepository _service;
+        public List<Cheep> Cheeps { get; set; }
+        public int CurrentPage { get; set; }
+        private const int PageSize = 32;
 
-    public ActionResult OnGet()
-    {
-        Cheeps = _service.GetCheeps();
-        return Page();
+        public PublicModel(ICheepRepository service)
+        {
+            _service = service;
+        }
+
+        public ActionResult OnGet([FromQuery] int page = 0)
+        {
+            CurrentPage = page;
+            Cheeps = _service.GetCheeps(page, PageSize);
+            return Page();
+        }
     }
 }
