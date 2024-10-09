@@ -1,5 +1,5 @@
 ﻿@page "/{author}"
-@model Chirp.Razor.Pages.UserTimelineModel
+@model MyChat.Razor.Pages.UserTimelineModel
 @{
     ViewData["Title"] = "Chirp!";
     Layout = "Shared/_Layout";
@@ -17,10 +17,10 @@
                 <li class="cheep">
                     <p>
                         <strong>
-                            <a href="/@cheep.Author">@cheep.Author</a>
+                            <a href="/@cheep.Author.Name">@cheep.Author.Name</a>
                         </strong>
-                        @cheep.Message
-                        <small>&mdash; @cheep.Timestamp</small>
+                        @cheep.Text
+                        <small>&mdash; @cheep.TimeStamp</small>
                     </p>
                 </li>
             }

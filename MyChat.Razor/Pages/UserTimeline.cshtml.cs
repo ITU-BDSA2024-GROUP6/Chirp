@@ -1,18 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
+using MyChat.Razor.Repositories;
 
-namespace Chirp.Razor.Pages
+
+namespace MyChat.Razor.Pages
 {
     public class UserTimelineModel : PageModel
     {
-        private readonly ICheepService _service;
-        public List<CheepViewModel> Cheeps { get; set; } = new List<CheepViewModel>();
-        public string Author { get; set; } = string.Empty;
+        private readonly ICheepRepository _service;
+        public List<CheepDTO> Cheeps { get; set; }
+        public string Author { get; set; }
         public int CurrentPage { get; set; }
         private const int PageSize = 32;
 
-        public UserTimelineModel(ICheepService service)
+        public UserTimelineModel(ICheepRepository service)
         {
             _service = service;
         }
