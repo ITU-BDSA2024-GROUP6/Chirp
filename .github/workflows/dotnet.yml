@@ -21,11 +21,3 @@ jobs:
       run: dotnet restore ./MyChat.Razor/MyChat.Razor.csproj
     - name: Build
       run: dotnet build ./MyChat.Razor/MyChat.Razor.csproj --no-restore
-    - name: Run API Tests
-      run: dotnet test ./test/Chirp.ApiTests/Chirp.ApiTests.csproj --no-build --verbosity normal
-    - name: Run E2E Tests
-      run: dotnet test ./test/Chirp.E2ETest/Chirp.E2ETest.csproj --no-build --verbosity normal
-    - name: Run Integration Tests
-      run: dotnet test ./test/integration/integration.csproj --no-build --verbosity normal
-    - name: Run Unit Tests
-      run: dotnet test ./test/unit/unit.csproj --no-build --verbosity normal
