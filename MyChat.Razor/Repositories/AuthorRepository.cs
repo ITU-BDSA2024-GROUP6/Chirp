@@ -21,6 +21,12 @@ namespace MyChat.Razor.Repositories
                 .FirstOrDefault(author => author.Email.ToLower() == email.ToLower());
         }
 
+        public Author getAuthorByID(int id)
+        {
+            return _context.Authors
+                .FirstOrDefault(author => author.AuthorId == id);
+        }
+
         public bool createAuthor(string name, string email)
         {
             // Check if the author already exists
@@ -31,10 +37,13 @@ namespace MyChat.Razor.Repositories
                 return false; // Or handle this case as needed
             }
 
+            // Get the maximum AuthorId
+            var maxAuthorId = _context.Authors.Any() ? _context.Authors.Max(a => a.AuthorId) : 0;
+
             // Create a new Author
             var newAuthor = new Author
             {
-                AuthorId = _context.Authors.LastOrDefault()?.AuthorId + 1 ?? 1,
+                AuthorId = maxAuthorId + 1,
                 Name = name,
                 Email = email,
                 Cheeps = new List<Cheep>(),
