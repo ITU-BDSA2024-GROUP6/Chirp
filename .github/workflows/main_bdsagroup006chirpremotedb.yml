@@ -1,3 +1,6 @@
+# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+# More GitHub Actions for Azure: https://github.com/Azure/actions
+
 name: Build and deploy ASP.Net Core app to Azure Web App - bdsagroup006chirpremotedb
 
 on:
@@ -6,11 +9,7 @@ on:
       - main
   workflow_dispatch:
 
-permissions:
-  id-token: write
-  contents: read
-
-jobs: 
+jobs:
   build:
     runs-on: ubuntu-latest
 
@@ -23,10 +22,10 @@ jobs:
           dotnet-version: '8.x'
 
       - name: Build with dotnet
-        run: dotnet build MyChat.Razor/MyChat.Razor.csproj --configuration Release
+        run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish MyChat.Razor/MyChat.Razor.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -40,6 +39,8 @@ jobs:
     environment:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write #This is required for requesting the JWT
 
     steps:
       - name: Download artifact from build job
@@ -50,9 +51,9 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_92CDF2392DBB48F0984FD9275FFA2345 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_59CD8DFEC5974AA0A5249B2C8338CFC7 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F598BCABE75B46099E5EEDAAFBCFC324 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_765ECBD42A484A7094277E94D7FAA351 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4E3391E6C9A64D5DA6441BD3B22952BB }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_695FC36026E0456E9EA5E478D77249F4 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -61,3 +62,4 @@ jobs:
           app-name: 'bdsagroup006chirpremotedb'
           slot-name: 'Production'
           package: .
+          
