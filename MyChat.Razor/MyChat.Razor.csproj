@@ -18,6 +18,6 @@
   <None Update="App_Data\Chat.db">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </None>
-</ItemGroup>
+  </ItemGroup>
 
 </Project>
