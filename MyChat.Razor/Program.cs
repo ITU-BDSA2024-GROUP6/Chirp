@@ -3,8 +3,8 @@ using MyChat.Razor.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite(connectionString));
+var connectionString = Path.Combine(AppContext.BaseDirectory, "App_Data", "Chat.db");
+builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite($"Data Source={connectionString}"));
 
 
 // Add services to the container.
