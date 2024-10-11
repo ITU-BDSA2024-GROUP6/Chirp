@@ -3,7 +3,19 @@ using MyChat.Razor.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = Path.Combine(AppContext.BaseDirectory, "App_Data", "Chat.db");
+var connectionString = string.Empty;
+
+if (builder.Environment.IsDevelopment())
+{
+    // Local development database path
+    connectionString = Path.Combine(AppContext.BaseDirectory, "App_Data", "Chat.db");
+}
+else
+{
+    // Azure environment database path
+    connectionString = Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "App_Data", "Chat.db");
+}
+Console.WriteLine($"Database path: {connectionString}");
 builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite($"Data Source={connectionString}"));
 
 
