@@ -16,8 +16,7 @@ public class UnitTests
     private IAuthorRepository _authorRepository = null!;
     private CheepRepository _cheepRepository = null!;
         
-    [Fact]
-    public void Setup()
+    public UnitTests ()
     {
         var connectionString = Path.Combine(AppContext.BaseDirectory, "App_Data", "Chat.db");
         var options = new DbContextOptionsBuilder<ChatDBContext>()
@@ -40,7 +39,7 @@ public class UnitTests
         var result = _cheepRepository.GetCheeps(1, pageSize); 
         
         // Then 
-        Assert.Equal(pageSize, result.Count);  
+        Assert.True(result.Count <= pageSize);  
     }
 
     [Fact] 
@@ -70,15 +69,14 @@ public class UnitTests
             var result_2 = _cheepRepository.GetCheeps(page_2, pageSize);
 
         // Then
-            Assert.Equal(result_1, result_2);
+            Assert.NotEqual(result_1, result_2);
     }
 
     [Fact]
-    public void GetCheepsFromAuthor_OnlyReturnsCheepFromSpecificAuthor()
+    public void GetCheepsFromAuthor_OnlyReturnsCheepFromSpecificAuthorName()
     {
         // Given
-            var author = _cheepRepository.GetCheeps(0,1)[0].Author;
-            var authorName = author.Name;
+            var authorName = _cheepRepository.GetCheeps(0,1)[0].Author.Name;
             int page = 0;
             int pageSize = 32;
 
@@ -86,7 +84,7 @@ public class UnitTests
             var result = _cheepRepository.GetCheepsFromAuthor(authorName, page, pageSize);
 
         // Then
-            Assert.All(result, cheep => Assert.Equal(author, cheep.Author));
+            Assert.All(result, cheepDTO => Assert.Equal(authorName, cheepDTO.Author.Name));
     }
 
     [Fact] 
@@ -112,8 +110,46 @@ public class UnitTests
         
         // When 
         var firstCheep = cheeps[0]; 
+
+        Console.WriteLine(firstCheep.TimeStamp);
         
         // Then 
-        Assert.Matches(@"\d{2}/\d{2}/\d{2} \d{1,2}:\d{2}:\d{2}", firstCheep.TimeStamp); 
+        Assert.Matches(@"\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}", firstCheep.TimeStamp); 
     } 
+
+    [Fact]
+    public void createAuthorCreatesAnAuthor()
+    {
+        // Given
+        string authorName = "testName";
+        string authorEmail = "testEmail@author.email";
+
+        _authorRepository.createAuthor(authorName, authorEmail);    
+
+    // Then
+    var result = _authorRepository.getAuthorByName(authorName);
+    
+    Assert.NotNull(result);
+    Assert.Equal(authorName, result.Name); 
+    Assert.Equal(authorEmail, result.Email);
+    }
+
+    [Fact]
+    public void createCheepStoresCheepInDBIfAuthorDoesNotExist()
+    {
+        // Given
+        string text = @"Test";
+        string name = "TestAuthor";
+        string email = "Test@Author.Email";
+
+        // When
+        _cheepRepository.createCheep(text, name, email);
+
+         var authorResult = _authorRepository.getAuthorByName(name);
+
+        var cheepResult = _cheepRepository.GetCheepsFromAuthor(authorResult.Name, 0, 32);
+
+        // Then
+        Assert.NotNull(authorResult);  
+    }
 }

@@ -56,13 +56,20 @@ namespace MyChat.Razor.Repositories
 
             if (author == null) 
             {
+                Console.WriteLine("Author is null");
                 var created = _authorRepository.createAuthor(name, email);
+                Console.WriteLine("Author Created");
                 if (!created)
                 {
                     throw new Exception("Could not create author.");
                 }
 
                 author = _authorRepository.getAuthorByEmail(email);
+
+                if (author == null)
+                {
+                    throw new Exception("Author creation failed unexpectedly.");
+                }
             }
 
             var maxCheepId = _context.Cheeps.Any() ? _context.Cheeps.Max(cheep => cheep.CheepId) : 0;
@@ -70,15 +77,15 @@ namespace MyChat.Razor.Repositories
             var newCheep = new Cheep
             {
                 CheepId = maxCheepId + 1,
-                AuthorId = author!.AuthorId,
-                Author = author!,
+                AuthorId = author.AuthorId,
+                Author = author,
                 Text = text,
                 TimeStamp = DateTime.Now
             };
 
             author.Cheeps.Add(newCheep);
 
-            _context.Cheeps.Add(newCheep);
+            _context.Cheeps.AddRange(newCheep);
             _context.SaveChanges();
         }
     }
