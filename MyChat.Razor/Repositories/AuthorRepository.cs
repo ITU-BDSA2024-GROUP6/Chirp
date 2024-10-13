@@ -9,19 +9,19 @@ namespace MyChat.Razor.Repositories
             _context = context;
         }
 
-        public Author getAuthorByName(string name)
+        public Author? getAuthorByName(string name)
         {
             return _context.Authors
                 .FirstOrDefault(author => author.Name.ToLower() == name.ToLower());
         }
 
-        public Author getAuthorByEmail(string email)
+        public Author? getAuthorByEmail(string email)
         {
             return _context.Authors
                 .FirstOrDefault(author => author.Email.ToLower() == email.ToLower());
         }
 
-        public Author getAuthorByID(int id)
+        public Author? getAuthorByID(int id)
         {
             return _context.Authors
                 .FirstOrDefault(author => author.AuthorId == id);
