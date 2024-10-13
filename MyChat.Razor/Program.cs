@@ -24,7 +24,10 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<ICheepRepository, CheepRepository>();
 builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
+
+
 var app = builder.Build();
+
 
 using (var scope = app.Services.CreateScope())
 {
