@@ -138,9 +138,9 @@ public class UnitTests
     public void createCheepStoresCheepInDBIfAuthorDoesNotExist()
     {
         // Given
-        string text = @"Test";
-        string name = "TestAuthor";
-        string email = "Test@Author.Email";
+        string text = "Test";
+        string name = "TestAuthor2";
+        string email = "Test@Author.Email2";
 
         // When
         _cheepRepository.createCheep(text, name, email);
@@ -150,6 +150,6 @@ public class UnitTests
         var cheepResult = _cheepRepository.GetCheepsFromAuthor(authorResult.Name, 0, 32);
 
         // Then
-        Assert.NotNull(authorResult);
+        Assert.NotNull(cheepResult);  
     }
 }

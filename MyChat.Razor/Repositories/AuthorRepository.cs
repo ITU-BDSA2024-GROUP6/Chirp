@@ -27,14 +27,14 @@ namespace MyChat.Razor.Repositories
                 .FirstOrDefault(author => author.AuthorId == id);
         }
 
-        public void createAuthor(string name, string email)
+        public bool createAuthor(string name, string email)
         {
             // Check if the author already exists
             var existingAuthor = getAuthorByEmail(email);
             if (existingAuthor != null)
             {
                 // Author already exists
-                throw new InvalidOperationException("An author with the specified details already exists.");
+                return false; // Or handle this case as needed
             }
 
             // Get the maximum AuthorId
@@ -53,7 +53,7 @@ namespace MyChat.Razor.Repositories
             _context.Authors.Add(newAuthor);
             _context.SaveChanges(); // Save the changes to the database
             
-            // Successfully created author
+            return true; // Successfully created author
         }
     }
 }
