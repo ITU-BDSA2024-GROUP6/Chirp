@@ -1,3 +1,5 @@
+using MyChat.Razor.Exceptions;
+
 namespace MyChat.Razor.Repositories
 {
     public class AuthorRepository : IAuthorRepository
@@ -9,32 +11,45 @@ namespace MyChat.Razor.Repositories
             _context = context;
         }
 
-        public Author? getAuthorByName(string name)
+        public Author? GetAuthorByName(string name)
         {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+            }
+
             return _context.Authors
                 .FirstOrDefault(author => author.Name.ToLower() == name.ToLower());
         }
 
-        public Author? getAuthorByEmail(string email)
+        public Author? GetAuthorByEmail(string email)
         {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                throw new ArgumentException("Email cannot be null or empty.", nameof(email));
+            }
+
             return _context.Authors
                 .FirstOrDefault(author => author.Email.ToLower() == email.ToLower());
         }
 
-        public Author? getAuthorByID(int id)
+        public Author? GetAuthorByID(int id)
         {
+            if (id <= 0)
+            {
+                throw new ArgumentException("Id must be a positive integer.", nameof(id));
+            }
+
             return _context.Authors
                 .FirstOrDefault(author => author.AuthorId == id);
         }
 
-        public bool createAuthor(string name, string email)
+        public void CreateAuthor(string name, string email)
         {
             // Check if the author already exists
-            var existingAuthor = getAuthorByEmail(email);
-            if (existingAuthor != null)
+            if (_context.Authors.Any(a => a.Email.ToLower() == email.ToLower()))
             {
-                // Author already exists
-                return false; // Or handle this case as needed
+                throw new DuplicateAuthorException($"Author with email '{email}' already exists.");
             }
 
             // Get the maximum AuthorId
@@ -52,8 +67,6 @@ namespace MyChat.Razor.Repositories
             // Add the new author to the context and save changes
             _context.Authors.Add(newAuthor);
             _context.SaveChanges(); // Save the changes to the database
-            
-            return true; // Successfully created author
         }
     }
 }

@@ -1,3 +1,5 @@
+using MyChat.Razor.Exceptions;
+
 namespace MyChat.Razor.Repositories
 {
     public class CheepRepository : ICheepRepository
@@ -50,26 +52,24 @@ namespace MyChat.Razor.Repositories
                 .ToList();
         }
 
-        public void createCheep(string text, string name, string email) 
+        public void CreateCheep(string text, string authorName, string authorEmail) 
         {
-            var author = _authorRepository.getAuthorByEmail(email);
+            if (string.IsNullOrWhiteSpace(text))
+                throw new ArgumentException("Cheep text cannot be empty.", nameof(text));
+            if (string.IsNullOrWhiteSpace(authorName))
+                throw new ArgumentException("Author name cannot be empty.", nameof(authorName));
+            if (string.IsNullOrWhiteSpace(authorEmail))
+                throw new ArgumentException("Author email cannot be empty.", nameof(authorEmail));
 
-            if (author == null) 
+            Author? author = _authorRepository.GetAuthorByEmail(authorEmail);
+
+            if (author == null)
             {
-                Console.WriteLine("Author is null");
-                var created = _authorRepository.createAuthor(name, email);
-                Console.WriteLine("Author Created");
-                if (!created)
-                {
-                    throw new Exception("Could not create author.");
-                }
-
-                author = _authorRepository.getAuthorByEmail(email);
-
+                _authorRepository.CreateAuthor(authorName, authorEmail);
+                author = _authorRepository.GetAuthorByEmail(authorEmail);
+                
                 if (author == null)
-                {
-                    throw new Exception("Author creation failed unexpectedly.");
-                }
+                    throw new InvalidOperationException("Failed to create or retrieve author.");
             }
 
             var maxCheepId = _context.Cheeps.Any() ? _context.Cheeps.Max(cheep => cheep.CheepId) : 0;
@@ -83,9 +83,7 @@ namespace MyChat.Razor.Repositories
                 TimeStamp = DateTime.Now
             };
 
-            author.Cheeps.Add(newCheep);
-
-            _context.Cheeps.AddRange(newCheep);
+            _context.Cheeps.Add(newCheep);
             _context.SaveChanges();
         }
     }

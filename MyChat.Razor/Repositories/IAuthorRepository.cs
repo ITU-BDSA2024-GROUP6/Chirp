@@ -2,10 +2,10 @@ namespace MyChat.Razor.Repositories
 {
     public interface IAuthorRepository
     {
-        public Author? getAuthorByName(string name);
-        public Author? getAuthorByEmail(string email);
-        public Author? getAuthorByID(int id);
-        public bool createAuthor(string name, string email);  
+        public Author? GetAuthorByName(string name);
+        public Author? GetAuthorByEmail(string email);
+        public Author? GetAuthorByID(int id);
+        public void CreateAuthor(string name, string email);  
     }
 
 }
