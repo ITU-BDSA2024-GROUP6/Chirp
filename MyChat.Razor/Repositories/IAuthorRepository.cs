@@ -5,7 +5,7 @@ namespace MyChat.Razor.Repositories
         public Author? getAuthorByName(string name);
         public Author? getAuthorByEmail(string email);
         public Author? getAuthorByID(int id);
-        public bool createAuthor(string name, string email);  
+        public void createAuthor(string name, string email);  
     }
 
 }

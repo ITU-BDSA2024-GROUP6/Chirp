@@ -39,7 +39,7 @@ public class UnitTests
         var result = _cheepRepository.GetCheeps(1, pageSize); 
         
         // Then 
-        Assert.True(result.Count <= pageSize);  
+        Assert.True(result.Count <= pageSize);
     }
 
     [Fact] 
@@ -145,11 +145,11 @@ public class UnitTests
         // When
         _cheepRepository.createCheep(text, name, email);
 
-         var authorResult = _authorRepository.getAuthorByName(name);
+        var authorResult = _authorRepository.getAuthorByName(name);
 
         var cheepResult = _cheepRepository.GetCheepsFromAuthor(authorResult.Name, 0, 32);
 
         // Then
-        Assert.NotNull(authorResult);  
+        Assert.NotNull(authorResult);
     }
 }

@@ -50,7 +50,7 @@ namespace MyChat.Razor.Repositories
                 .ToList();
         }
 
-        public void createCheep(string text, string email, string name) 
+        public void createCheep(string text, string name, string email) 
         {
             var author = _authorRepository.getAuthorByEmail(email);
 
