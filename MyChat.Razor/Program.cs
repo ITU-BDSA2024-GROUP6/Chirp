@@ -13,7 +13,7 @@ if (builder.Environment.IsDevelopment())
 else
 {
     // Azure environment database path
-    connectionString = Path.Combine(builder.Environment.ContentRootPath, "wwwroot", "App_Data", "Chat.db");
+    connectionString = Path.Combine(builder.Environment.ContentRootPath, "App_Data", "Chat.db");
 }
 Console.WriteLine($"Database path: {connectionString}");
 builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite($"Data Source={connectionString}"));
