@@ -9,8 +9,13 @@ namespace MyChat.Razor.Pages
     public class UserTimelineModel : PageModel
     {
         private readonly ICheepRepository _service;
-        public List<CheepDTO> Cheeps { get; set; }
-        public string Author { get; set; }
+
+        [Required]
+        public required List<CheepDTO> Cheeps { get; set; }
+
+        [Required]
+        public required string Author { get; set; }
+
         public int CurrentPage { get; set; }
         private const int PageSize = 32;
 
