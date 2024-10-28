@@ -1,4 +1,6 @@
-namespace MyChat.Razor.Repositories
+using Chirp.Core.DTOs;
+
+namespace Chirp.Core.RepositoryInterfaces
 {
     public interface ICheepRepository
     {

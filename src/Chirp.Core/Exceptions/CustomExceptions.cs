@@ -1,6 +1,6 @@
 using System;
 
-namespace MyChat.Razor.Exceptions
+namespace Chirp.Core.Exceptions
 {
     public class NotFoundException : Exception
     {

@@ -1,3 +1,7 @@
+using Chirp.Core;
+using Chirp.Infrastructure.Data;
+using Chirp.Core.Models;
+
 public static class DbInitializer
 {
     public static void SeedDatabase(ChatDBContext chatDBContext)

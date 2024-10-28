@@ -3,10 +3,11 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Chirp.Infrastructure.Data;
 
 #nullable disable
 
-namespace MyChat.Razor.Migrations
+namespace Chirp.Infrastructure.Migrations
 {
     [DbContext(typeof(ChatDBContext))]
     partial class ChatDBContextModelSnapshot : ModelSnapshot

@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Collections.Generic;
-using MyChat.Razor.Repositories;
+using System.ComponentModel.DataAnnotations;
+using Chirp.Infrastructure.Repositories;
+using Chirp.Core.RepositoryInterfaces;
+using Chirp.Core.DTOs;
 
 
-namespace MyChat.Razor.Pages
+namespace Chirp.Web.Pages
 {
     public class UserTimelineModel : PageModel
     {

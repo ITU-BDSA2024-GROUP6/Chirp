@@ -1,5 +1,7 @@
-using MyChat.Razor.Repositories;
-
+using Microsoft.EntityFrameworkCore;
+using Chirp.Infrastructure.Repositories;
+using Chirp.Infrastructure.Data;
+using Chirp.Core.RepositoryInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +10,12 @@ var connectionString = string.Empty;
 if (builder.Environment.IsDevelopment())
 {
     // Local development database path
-    connectionString = Path.Combine(AppContext.BaseDirectory, "App_Data", "Chat.db");
+    connectionString = Path.Combine(AppContext.BaseDirectory, "src", "App_Data", "Chat.db");
 }
 else
 {
     // Azure environment database path
-    connectionString = Path.Combine(builder.Environment.ContentRootPath, "App_Data", "Chat.db");
+    connectionString = Path.Combine(builder.Environment.ContentRootPath, "src", "App_Data", "Chat.db");
 }
 Console.WriteLine($"Database path: {connectionString}");
 builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite($"Data Source={connectionString}"));

@@ -1,8 +1,11 @@
-public class CheepDTO
+namespace Chirp.Core.DTOs
 {
-    public required string Text { get; set; }
+    public class CheepDTO
+    {
+        public required string Text { get; set; }
 
-    public required string TimeStamp { get; set; }
+        public required string TimeStamp { get; set; }
 
-    public required AuthorDTO Author { get; set; }
+        public required AuthorDTO Author { get; set; }
+    }
 }

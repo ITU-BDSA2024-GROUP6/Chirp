@@ -1,6 +1,10 @@
-using MyChat.Razor.Exceptions;
+using Microsoft.EntityFrameworkCore;
+using Chirp.Core.Models;
+using Chirp.Core.RepositoryInterfaces;
+using Chirp.Infrastructure.Data;
+using Chirp.Core.Exceptions;
 
-namespace MyChat.Razor.Repositories
+namespace Chirp.Infrastructure.Repositories
 {
     public class AuthorRepository : IAuthorRepository
     {
