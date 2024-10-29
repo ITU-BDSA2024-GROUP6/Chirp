@@ -5,21 +5,8 @@ using Chirp.Core.RepositoryInterfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = string.Empty;
-
-if (builder.Environment.IsDevelopment())
-{
-    // Local development database path
-    connectionString = Path.Combine(AppContext.BaseDirectory, "Chat.db");
-}
-else
-{
-    // Azure environment database path
-    //OBS: NEEDS TO BE CHANGED IN THE FUTURE
-    connectionString = Path.Combine(builder.Environment.ContentRootPath, "src", "Chirp.Web", "bin", "debug", "net8.0", "Chat.db");
-}
-Console.WriteLine(Path.Combine(builder.Environment.ContentRootPath, "src", "Chirp.Web", "bin", "debug", "net8.0", "Chat.db"));
-builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite($"Data Source={connectionString}"));
+string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite(connectionString));
 
 
 // Add services to the container.
