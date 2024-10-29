@@ -22,13 +22,13 @@ jobs:
         dotnet-version: 8.x
     
     - name: Restore dependencies
-      run: dotnet restore ./MyChat.Razor/MyChat.Razor.csproj
+      run: dotnet restore ./src/Chirp.Web/Chirp.Web.csproj
     
     - name: Build
-      run: dotnet build ./MyChat.Razor/MyChat.Razor.csproj --configuration Release --no-restore
+      run: dotnet build ./src/Chirp.Web/Chirp.Web.csproj --configuration Release --no-restore
     
     - name: Publish Web App
-      run: dotnet publish ./MyChat.Razor/MyChat.Razor.csproj -c Release -o ./publish
+      run: dotnet publish ./src/Chirp.Web/Chirp.Web.csproj -c Release -o ./publish
     
     - name: Zip Published App
       run: zip -r chirp-webapp.zip ./publish

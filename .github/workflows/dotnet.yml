@@ -18,6 +18,6 @@ jobs:
       with:
         dotnet-version: 8.x
     - name: Restore dependencies
-      run: dotnet restore ./MyChat.Razor/MyChat.Razor.csproj
+      run: dotnet restore ./src/Chirp.Web/Chirp.Web.csproj
     - name: Build
-      run: dotnet build ./MyChat.Razor/MyChat.Razor.csproj --no-restore
+      run: dotnet build ./src/Chirp.Web/Chirp.Web.csproj --no-restore
