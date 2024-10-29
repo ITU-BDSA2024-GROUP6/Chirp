@@ -15,6 +15,7 @@ if (builder.Environment.IsDevelopment())
 else
 {
     // Azure environment database path
+    //OBS: NEEDS TO BE CHANGED IN THE FUTURE
     connectionString = Path.Combine(builder.Environment.ContentRootPath, "src", "Chirp.Web", "bin", "debug", "net8.0", "Chat.db");
 }
 Console.WriteLine(Path.Combine(builder.Environment.ContentRootPath, "src", "Chirp.Web", "bin", "debug", "net8.0", "Chat.db"));
