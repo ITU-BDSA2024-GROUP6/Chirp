@@ -15,9 +15,9 @@ if (builder.Environment.IsDevelopment())
 else
 {
     // Azure environment database path
-    connectionString = Path.Combine(builder.Environment.ContentRootPath, "Chat.db");
+    connectionString = Path.Combine(builder.Environment.ContentRootPath, "src", "Chirp.Web", "bin", "debug", "net8.0", "Chat.db");
 }
-Console.WriteLine($"Database path: {connectionString}");
+Console.WriteLine(Path.Combine(builder.Environment.ContentRootPath, "src", "Chirp.Web", "bin", "debug", "net8.0", "Chat.db"));
 builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite($"Data Source={connectionString}"));
 
 
