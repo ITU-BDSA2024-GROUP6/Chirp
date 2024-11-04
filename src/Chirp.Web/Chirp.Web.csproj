@@ -21,7 +21,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Update="Chat.db">
+    <None Update="chat.db">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
