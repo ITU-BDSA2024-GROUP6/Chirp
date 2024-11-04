@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Repositories;
 using Chirp.Infrastructure.Data;
@@ -8,6 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite(connectionString));
 
+// Add Identity services
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ChatDBContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();

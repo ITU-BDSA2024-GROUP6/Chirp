@@ -1,0 +1,10 @@
+
+.navbar-nav {
+    display: flex; /* Aligns list items horizontally */
+    flex-direction: row; /* Ensures that the items are in a row */
+    gap: 4px; /* Adds spacing between items */
+    align-items: center; /* Aligns items vertically in the center */
+    list-style: none; /* Removes default list item bullets */
+    padding: 0; /* Removes default padding */
+    margin: 0; /* Removes default margin */
+}
