@@ -30,7 +30,7 @@ namespace Chirp.Infrastructure.Repositories
                     TimeStamp = c.TimeStamp.ToString(),
                     Author = new AuthorDTO 
                     {
-                        Name = c.Author.Name,
+                        Name = c.Author.UserName,
                         Email = c.Author.Email
                     }
                 })
@@ -42,7 +42,7 @@ namespace Chirp.Infrastructure.Repositories
             return _context.Cheeps
                 .Include(c => c.Author)
                 .OrderBy(c => c.TimeStamp)
-                .Where(c => c.Author.Name == author) 
+                .Where(c => c.Author.UserName == author) 
                 .Skip((page) * pageSize)
                 .Take(pageSize)
                 .Select(c => new CheepDTO 
@@ -51,7 +51,7 @@ namespace Chirp.Infrastructure.Repositories
                     TimeStamp = c.TimeStamp.ToString(),
                     Author = new AuthorDTO
                     {
-                        Name = c.Author.Name,
+                        Name = c.Author.UserName,
                         Email = c.Author.Email
                     }
                 })
@@ -71,7 +71,8 @@ namespace Chirp.Infrastructure.Repositories
 
             if (author == null)
             {
-                _authorRepository.CreateAuthor(authorName, authorEmail);
+                AuthorDTO authorDTO = new() { Name = authorName, Email = authorEmail };
+                _authorRepository.CreateAuthor(authorDTO);
                 author = _authorRepository.GetAuthorByEmail(authorEmail);
                 
                 if (author == null)
@@ -83,7 +84,6 @@ namespace Chirp.Infrastructure.Repositories
             var newCheep = new Cheep
             {
                 CheepId = maxCheepId + 1,
-                AuthorId = author.AuthorId,
                 Author = author,
                 Text = text,
                 TimeStamp = DateTime.Now

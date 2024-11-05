@@ -41,7 +41,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+// app.UseAuthentication(); Disse to linjer er tilføjet jævnført bogen, men er ikke endnu blevet implementeret.
+// app.UseAuthorization();
 app.MapRazorPages();
-
 app.Run();
