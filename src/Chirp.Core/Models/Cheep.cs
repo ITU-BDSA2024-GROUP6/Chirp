@@ -11,8 +11,6 @@ namespace Chirp.Core.Models
 
         public DateTime TimeStamp { get; set; }
 
-        public int AuthorId { get; set; }
-
         public required Author Author { get; set; }
     }
 }

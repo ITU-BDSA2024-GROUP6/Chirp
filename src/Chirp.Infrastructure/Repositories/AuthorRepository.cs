@@ -1,8 +1,7 @@
-using Microsoft.EntityFrameworkCore;
 using Chirp.Core.Models;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Infrastructure.Data;
-using Chirp.Core.Exceptions;
+using Chirp.Core.DTOs;
 
 namespace Chirp.Infrastructure.Repositories
 {
@@ -23,7 +22,7 @@ namespace Chirp.Infrastructure.Repositories
             }
 
             return _context.Authors
-                .FirstOrDefault(author => author.Name.ToLower() == name.ToLower());
+                .FirstOrDefault(author => author.UserName.ToLower() == name.ToLower());
         }
 
         public Author? GetAuthorByEmail(string email)
@@ -37,40 +36,19 @@ namespace Chirp.Infrastructure.Repositories
                 .FirstOrDefault(author => author.Email.ToLower() == email.ToLower());
         }
 
-        public Author? GetAuthorByID(int id)
+        public Author? GetAuthorByID(string id)
         {
-            if (id <= 0)
-            {
-                throw new ArgumentException("Id must be a positive integer.", nameof(id));
-            }
-
             return _context.Authors
-                .FirstOrDefault(author => author.AuthorId == id);
+                .FirstOrDefault(author => author.Id.Equals(id));
         }
 
-        public void CreateAuthor(string name, string email)
+        public async Task<Author> CreateAuthor(AuthorDTO authorDto)
         {
-            // Check if the author already exists
-            if (_context.Authors.Any(a => a.Email.ToLower() == email.ToLower()))
-            {
-                throw new DuplicateAuthorException($"Author with email '{email}' already exists.");
-            }
+            Author newAuthor = new() { UserName = authorDto.Name, Email = authorDto.Email };
+            var queryResult = await _context.Authors.AddAsync(newAuthor); // does not write to the database!
 
-            // Get the maximum AuthorId
-            var maxAuthorId = _context.Authors.Any() ? _context.Authors.Max(a => a.AuthorId) : 0;
-
-            // Create a new Author
-            var newAuthor = new Author
-            {
-                AuthorId = maxAuthorId + 1,
-                Name = name,
-                Email = email,
-                Cheeps = new List<Cheep>(),
-            };
-
-            // Add the new author to the context and save changes
-            _context.Authors.Add(newAuthor);
-            _context.SaveChanges(); // Save the changes to the database
+            await _context.SaveChangesAsync(); // persist the changes in the database
+            return queryResult.Entity;
         }
     }
 }

@@ -1,13 +1,9 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Chirp.Core.Models
 {
-    public class Author
+    public class Author : IdentityUser
     {
-        public int AuthorId { get; set; }
-
-        public required string Name { get; set; }
-
-        public required string Email { get; set; }
-
-        public required ICollection<Cheep> Cheeps { get; set; }
+        public ICollection<Cheep>? Cheeps { get; set; } = new List<Cheep>();
     }
 }
