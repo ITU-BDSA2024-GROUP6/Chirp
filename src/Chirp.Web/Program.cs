@@ -10,7 +10,7 @@ string? connectionString = builder.Configuration.GetConnectionString("DefaultCon
 builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite(connectionString));
 
 // Add Identity services
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ChatDBContext>();
 
 // Add services to the container.
@@ -41,7 +41,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-// app.UseAuthentication(); Disse to linjer er tilføjet jævnført bogen, men er ikke endnu blevet implementeret.
-// app.UseAuthorization();
+ app.UseAuthentication();
+ app.UseAuthorization();
 app.MapRazorPages();
 app.Run();
