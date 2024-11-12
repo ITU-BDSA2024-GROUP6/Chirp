@@ -9,7 +9,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li>
-        <a class="nav-item text-dark" asp-asp-area="Identity" asp-asp-page="">Your Timeline</a>
+        <a class="nav-item text-dark" href="/@User.Identity?.Name">Your Timeline</a>
     </li>
 
     <li class="nav-item">
