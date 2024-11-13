@@ -43,6 +43,7 @@ namespace Chirp.Web.Pages
         {
             if (!User.Identity.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
             {
+                Console.WriteLine("Yuuuur");
                 return Page();
             }
 
@@ -51,13 +52,12 @@ namespace Chirp.Web.Pages
 
             if (author == null)
             {
+                Console.WriteLine("hep");
                 return Page(); 
             }
             await _service.CreateCheep(Text, author, DateTime.UtcNow);
             
             return RedirectToPage("/Public", new { page = 1 });
         }
-
-
     }
 }

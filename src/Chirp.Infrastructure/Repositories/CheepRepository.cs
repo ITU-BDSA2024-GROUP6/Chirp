@@ -21,7 +21,7 @@ namespace Chirp.Infrastructure.Repositories
         {
             return _context.Cheeps
                 .Include(c => c.Author)
-                .OrderBy(c => c.TimeStamp) 
+                .OrderByDescending(c => c.TimeStamp) 
                 .Skip((page) * pageSize) 
                 .Take(pageSize) 
                 .Select(c => new CheepDTO 
@@ -46,7 +46,7 @@ namespace Chirp.Infrastructure.Repositories
         {
             return _context.Cheeps
                 .Include(c => c.Author)
-                .OrderBy(c => c.TimeStamp)
+                .OrderByDescending(c => c.TimeStamp)
                 .Where(c => c.Author.UserName == author) 
                 .Skip((page) * pageSize)
                 .Take(pageSize)
