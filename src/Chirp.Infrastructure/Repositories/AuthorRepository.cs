@@ -21,6 +21,12 @@ namespace Chirp.Infrastructure.Repositories
                 throw new ArgumentException("Name cannot be null or empty.", nameof(name));
             }
 
+            Console.WriteLine(name + "små pgier");
+
+            foreach (Author author in _context.Authors) {
+                Console.WriteLine(author.UserName + "diller");
+            }
+
             return _context.Authors
                 .FirstOrDefault(author => author.UserName.ToLower() == name.ToLower());
         }
@@ -50,5 +56,6 @@ namespace Chirp.Infrastructure.Repositories
             await _context.SaveChangesAsync(); // persist the changes in the database
             return queryResult.Entity;
         }
+
     }
 }

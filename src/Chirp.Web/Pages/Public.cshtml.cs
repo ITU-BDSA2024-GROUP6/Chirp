@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using Chirp.Infrastructure.Repositories;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Core.DTOs;
+using Chirp.Core.Models;
 
 
 namespace Chirp.Web.Pages 
@@ -37,5 +38,26 @@ namespace Chirp.Web.Pages
             Cheeps = _service.GetCheeps(page, PageSize);
             return Page();
         }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!User.Identity.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
+            {
+                return Page();
+            }
+
+            var authorName = User.Identity.Name; // User.Identity.Name is an Email
+            var author = _service.GetAuthorByEmail(authorName);
+
+            if (author == null)
+            {
+                return Page(); 
+            }
+            await _service.CreateCheep(Text, author, DateTime.UtcNow);
+            
+            return RedirectToPage("/Public", new { page = 1 });
+        }
+
+
     }
 }

@@ -37,6 +37,11 @@ namespace Chirp.Infrastructure.Repositories
                 .ToList();
         }
 
+        public Author? GetAuthorByEmail(string name)
+        {
+            return _authorRepository.GetAuthorByEmail(name); 
+        }
+
         public List<CheepDTO> GetCheepsFromAuthor(string author, int page, int pageSize)
         {
             return _context.Cheeps
@@ -58,39 +63,22 @@ namespace Chirp.Infrastructure.Repositories
                 .ToList();
         }
 
-        public void CreateCheep(string text, string authorName, string authorEmail) 
+        public async Task CreateCheep(string text, Author author, DateTime dateTime) 
         {
             if (string.IsNullOrWhiteSpace(text))
                 throw new ArgumentException("Cheep text cannot be empty.", nameof(text));
-            if (string.IsNullOrWhiteSpace(authorName))
-                throw new ArgumentException("Author name cannot be empty.", nameof(authorName));
-            if (string.IsNullOrWhiteSpace(authorEmail))
-                throw new ArgumentException("Author email cannot be empty.", nameof(authorEmail));
+            
 
-            Author? author = _authorRepository.GetAuthorByEmail(authorEmail);
+            var result = _context.Authors.SingleOrDefault(a => a.UserName == author.UserName);
 
-            if (author == null)
+            if (author != null)
             {
-                AuthorDTO authorDTO = new() { Name = authorName, Email = authorEmail };
-                _authorRepository.CreateAuthor(authorDTO);
-                author = _authorRepository.GetAuthorByEmail(authorEmail);
-                
-                if (author == null)
-                    throw new InvalidOperationException("Failed to create or retrieve author.");
+                Cheep cheep = new (){ Author = author, Text = text, TimeStamp = dateTime};
+                await _context.Cheeps.AddAsync(cheep);
             }
 
-            var maxCheepId = _context.Cheeps.Any() ? _context.Cheeps.Max(cheep => cheep.CheepId) : 0;
+            await _context.SaveChangesAsync();
+            }
 
-            var newCheep = new Cheep
-            {
-                CheepId = maxCheepId + 1,
-                Author = author,
-                Text = text,
-                TimeStamp = DateTime.Now
-            };
-
-            _context.Cheeps.Add(newCheep);
-            _context.SaveChanges();
-        }
     }
 }

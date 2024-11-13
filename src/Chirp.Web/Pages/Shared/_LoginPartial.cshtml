@@ -1,6 +1,7 @@
 @using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@using Chirp.Core.Models
+@inject SignInManager<Author> SignInManager
+@inject UserManager<Author> UserManager
 
 <head>
     <link rel="stylesheet" href="~/_LoginPartial.cshtml.css" />

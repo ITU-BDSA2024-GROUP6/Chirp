@@ -4,7 +4,7 @@ using Chirp.Core.Models;
 
 namespace Chirp.Infrastructure.Data
 {  
-    public class ChatDBContext : IdentityDbContext
+    public class ChatDBContext : IdentityDbContext<Author>
     {
         public ChatDBContext(DbContextOptions<ChatDBContext> options) : base(options) {}
         public DbSet<Author> Authors { get; set; }

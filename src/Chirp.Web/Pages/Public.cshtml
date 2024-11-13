@@ -1,5 +1,6 @@
 ﻿@page "/"
-@inject SignInManager<IdentityUser> SignInManager
+@using Chirp.Core.Models
+@inject SignInManager<Author> SignInManager
 @model Chirp.Web.Pages.PublicModel
 @{
     ViewData["Title"] = "Chirp!";
@@ -24,6 +25,7 @@
             @foreach (var cheep in Model.Cheeps)
             {
                 <li class="cheep">
+    using Chirp.Core.Models;
                     <p>
                         <strong>
                             <a href="/@cheep.Author.Name">@cheep.Author.Name</a>
