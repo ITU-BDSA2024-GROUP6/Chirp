@@ -14,8 +14,13 @@ namespace Chirp.Web.Pages
     {
         private readonly ICheepRepository _service;
 
+        
         [Required]
         public required List<CheepDTO> Cheeps { get; set; }
+
+        [BindProperty]
+        [Required]        
+        public required string Text { get; set; }
 
         public int CurrentPage { get; set; }
 

@@ -8,6 +8,14 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    <li>
+        <a class="nav-item text-dark" href="/@User.Identity?.Name">Your Timeline</a>
+    </li>
+
+    <li class="nav-item">
+                            <span>|</span>
+                        </li>
+    
     <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
