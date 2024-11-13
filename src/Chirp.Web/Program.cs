@@ -4,6 +4,7 @@ using Chirp.Infrastructure.Repositories;
 using Chirp.Infrastructure.Data;
 using Chirp.Core.RepositoryInterfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Chirp.Core.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ string? connectionString = builder.Configuration.GetConnectionString("DefaultCon
 builder.Services.AddDbContext<ChatDBContext>(options => options.UseSqlite(connectionString));
 
 // Add Identity services
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+builder.Services.AddDefaultIdentity<Author>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddEntityFrameworkStores<ChatDBContext>();
 
 // Add services to the container.

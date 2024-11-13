@@ -1,5 +1,6 @@
 ﻿@page "/"
-@inject SignInManager<IdentityUser> SignInManager
+@using Chirp.Core.Models
+@inject SignInManager<Author> SignInManager
 @model Chirp.Web.Pages.PublicModel
 @{
     ViewData["Title"] = "Chirp!";
