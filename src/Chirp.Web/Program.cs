@@ -5,6 +5,7 @@ using Chirp.Infrastructure.Data;
 using Chirp.Core.RepositoryInterfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Chirp.Core.Models;
+using Chirp.Web.Areas.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
