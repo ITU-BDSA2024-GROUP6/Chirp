@@ -21,14 +21,10 @@ namespace Chirp.Infrastructure.Repositories
                 throw new ArgumentException("Name cannot be null or empty.", nameof(name));
             }
 
-            Console.WriteLine(name + "små pgier");
-
-            foreach (Author author in _context.Authors) {
-                Console.WriteLine(author.UserName + "diller");
-            }
-
             return _context.Authors
-                .FirstOrDefault(author => author.UserName.ToLower() == name.ToLower());
+                .FirstOrDefault(author => author.UserName != null && author.UserName.ToLower() == name.ToLower());
+
+
         }
 
         public Author? GetAuthorByEmail(string email)
@@ -39,7 +35,7 @@ namespace Chirp.Infrastructure.Repositories
             }
 
             return _context.Authors
-                .FirstOrDefault(author => author.Email.ToLower() == email.ToLower());
+                .FirstOrDefault(author => author.Email != null && author.Email.ToLower() == email.ToLower());
         }
 
         public Author? GetAuthorByID(string id)
