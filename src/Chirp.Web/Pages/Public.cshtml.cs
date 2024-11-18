@@ -46,8 +46,8 @@ namespace Chirp.Web.Pages
                 return OnGet();
             }
 
-            var authorName = User.Identity.Name ?? ""; // User.Identity.Name is an Email
-            var author = _service.GetAuthorByEmail(authorName);
+            var authorName = User.Identity.Name ?? "";
+            var author = _service.GetAuthorByName(authorName);
 
             if (author == null)
             {

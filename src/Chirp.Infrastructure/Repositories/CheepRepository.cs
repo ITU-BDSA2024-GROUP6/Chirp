@@ -37,9 +37,14 @@ namespace Chirp.Infrastructure.Repositories
                 .ToList();
         }
 
-        public Author? GetAuthorByEmail(string name)
+        public Author? GetAuthorByEmail(string email)
         {
-            return _authorRepository.GetAuthorByEmail(name); 
+            return _authorRepository.GetAuthorByEmail(email); 
+        }
+
+        public Author? GetAuthorByName(string name)
+        {
+            return _authorRepository.GetAuthorByName(name); 
         }
 
         public List<CheepDTO> GetCheepsFromAuthor(string author, int page, int pageSize)

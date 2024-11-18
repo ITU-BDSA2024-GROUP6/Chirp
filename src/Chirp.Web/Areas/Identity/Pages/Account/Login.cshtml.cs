@@ -107,52 +107,52 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
-{
-    returnUrl ??= Url.Content("~/");
-
-    ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-    if (ModelState.IsValid)
-    {
-        Author user = null;
-
-        // Attempt to find the user by email or username
-        if (Input.EmailOrUsername.Contains("@"))
         {
-            // Assume it's an email
-            user = await _userManager.FindByEmailAsync(Input.EmailOrUsername);
-        }
-        else
-        {
-            // Assume it's a username
-            user = await _userManager.FindByNameAsync(Input.EmailOrUsername);
-        }
+            returnUrl ??= Url.Content("~/");
 
-        if (user != null)
-        {
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-            if (result.Succeeded)
+            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            if (ModelState.IsValid)
             {
-                _logger.LogInformation("User logged in.");
-                return LocalRedirect(returnUrl);
+                Author user = null;
+
+                // Attempt to find the user by email or username
+                if (Input.EmailOrUsername.Contains("@"))
+                {
+                    // Assume it's an email
+                    user = await _userManager.FindByEmailAsync(Input.EmailOrUsername);
+                }
+                else
+                {
+                    // Assume it's a username
+                    user = await _userManager.FindByNameAsync(Input.EmailOrUsername);
+                }
+
+                if (user != null)
+                {
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return LocalRedirect(returnUrl);
+                    }
+                    if (result.RequiresTwoFactor)
+                    {
+                        return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
+                    }
+                    if (result.IsLockedOut)
+                    {
+                        _logger.LogWarning("User account locked out.");
+                        return RedirectToPage("./Lockout");
+                    }
+                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             }
-            if (result.RequiresTwoFactor)
-            {
-                return RedirectToPage("./LoginWith2fa", new { ReturnUrl = returnUrl, RememberMe = Input.RememberMe });
-            }
-            if (result.IsLockedOut)
-            {
-                _logger.LogWarning("User account locked out.");
-                return RedirectToPage("./Lockout");
-            }
+
+            
+            // If we got this far, something failed, redisplay form
+            return Page();
         }
-
-        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-    }
-
-    // If we got this far, something failed, redisplay form
-    return Page();
-}
-
     }
 }
