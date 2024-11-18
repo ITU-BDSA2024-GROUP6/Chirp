@@ -30,8 +30,8 @@ namespace Chirp.Infrastructure.Repositories
                     TimeStamp = c.TimeStamp.ToString(),
                     Author = new AuthorDTO 
                     {
-                        Name = c.Author.UserName,
-                        Email = c.Author.Email
+                        Name = c.Author.UserName ?? "",
+                        Email = c.Author.Email ?? ""
                     }
                 })
                 .ToList();
@@ -56,8 +56,8 @@ namespace Chirp.Infrastructure.Repositories
                     TimeStamp = c.TimeStamp.ToString(),
                     Author = new AuthorDTO
                     {
-                        Name = c.Author.UserName,
-                        Email = c.Author.Email
+                        Name = c.Author.UserName ?? "",
+                        Email = c.Author.Email ?? ""
                     }
                 })
                 .ToList();
