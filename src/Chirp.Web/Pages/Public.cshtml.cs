@@ -41,12 +41,12 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!User.Identity.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
+            if (!User.Identity!.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
             {
                 return OnGet();
             }
 
-            var authorName = User.Identity.Name; // User.Identity.Name is an Email
+            var authorName = User.Identity.Name ?? ""; // User.Identity.Name is an Email
             var author = _service.GetAuthorByEmail(authorName);
 
             if (author == null)

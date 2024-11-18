@@ -6,7 +6,7 @@ namespace Chirp.Core.Models
         public int CheepId { get; set; }
 
         [Required]
-        [StringLength(160)]
+        [StringLength(160, ErrorMessage = "Cheeps cannot exceed 160 characters")] 
         public required string Text { get; set; }
 
         public DateTime TimeStamp { get; set; }
