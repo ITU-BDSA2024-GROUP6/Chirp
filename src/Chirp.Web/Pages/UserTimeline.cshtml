@@ -15,9 +15,12 @@
     {
         <div class="cheepbox">
             <h3>What's on your mind @(User.Identity.Name)?</h3>
-            <form method="post">
-                <input style="float: left" type="text" asp-for="Text">
-                <input type="submit" value="Share">
+            <form method="post" class="cheep-form">
+                <div class="cheep-input-wrapper">
+                    <textarea asp-for="Text" id="cheepInput" maxlength="160" oninput="updateCharCount()" rows="1"></textarea>
+                    <span id="charCount">0/160</span>
+                </div>
+                <input type="submit" value="Share" class="share-button" />
             </form>
         </div>
     }
@@ -55,3 +58,69 @@
         <em>There are no cheeps so far.</em>
     }
 </div>
+
+@section Styles {
+    <style>
+        .cheepbox {
+            margin-bottom: 20px;
+        }
+
+        .cheep-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 85%; /* Allows space for the Share button */
+            vertical-align: top;
+        }
+
+        textarea#cheepInput {
+            width: 100%;
+            padding: 10px;
+            padding-right: 50px; /* Space for character counter */
+            resize: none;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.5;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        textarea#cheepInput:focus {
+            outline: none;
+        }
+
+        #charCount {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.85rem;
+            color: gray;
+        }
+
+        .share-button {
+            margin-left: 15px;
+            vertical-align: top;
+            height: fit-content;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .cheep p {
+            word-wrap: break-word; /* Break long words onto the next line */
+            overflow-wrap: break-word; /* Wrap long words onto the next line */
+            word-break: break-word; /* Handle long words in different browsers */
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        function updateCharCount() {
+            var input = document.getElementById('cheepInput');
+            var charCount = input.value.length;
+            document.getElementById('charCount').textContent = charCount + "/160";
+
+            // Auto-resize the textarea
+            input.style.height = 'auto'; // Reset height to calculate new height properly
+            input.style.height = input.scrollHeight + 'px'; // Expand to content height
+        }
+    </script>
+}
