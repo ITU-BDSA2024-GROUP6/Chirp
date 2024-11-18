@@ -65,15 +65,11 @@ namespace Chirp.Infrastructure.Repositories
 
         public async Task CreateCheep(string text, Author author, DateTime dateTime) 
         {
-            if (string.IsNullOrWhiteSpace(text))
-                throw new ArgumentException("Cheep text cannot be empty.", nameof(text));
-            
-
             var result = _context.Authors.SingleOrDefault(a => a.UserName == author.UserName);
 
-            if (author != null)
+            if (result != null)
             {
-                Cheep cheep = new (){ Author = author, Text = text, TimeStamp = dateTime};
+                Cheep cheep = new (){ Author = result, Text = text, TimeStamp = dateTime};
                 await _context.Cheeps.AddAsync(cheep);
             }
 
