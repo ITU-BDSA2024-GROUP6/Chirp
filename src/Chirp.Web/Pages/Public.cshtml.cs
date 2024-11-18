@@ -43,8 +43,7 @@ namespace Chirp.Web.Pages
         {
             if (!User.Identity.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
             {
-                Console.WriteLine("Yuuuur");
-                return Page();
+                return OnGet();
             }
 
             var authorName = User.Identity.Name; // User.Identity.Name is an Email
@@ -52,8 +51,7 @@ namespace Chirp.Web.Pages
 
             if (author == null)
             {
-                Console.WriteLine("hep");
-                return Page(); 
+                return OnGet(); 
             }
             await _service.CreateCheep(Text, author, DateTime.UtcNow);
             
