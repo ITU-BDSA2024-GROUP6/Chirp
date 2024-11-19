@@ -1,27 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Chirp.Infrastructure.Repositories;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Core.DTOs;
 using Chirp.Core.Models;
-
+using Chirp.Web.Pages.Shared;
 
 namespace Chirp.Web.Pages 
 {
-
-    public class PublicModel : PageModel
+    public class PublicModel : CheepPageModel  // Changed from PageModel to CheepPageModel
     {
         private readonly ICheepRepository _service;
-
         
         [Required]
         public required List<CheepDTO> Cheeps { get; set; }
-
-        [BindProperty]
-        [Required]        
-        public required string Text { get; set; }
 
         public int CurrentPage { get; set; }
 
@@ -53,7 +45,10 @@ namespace Chirp.Web.Pages
             {
                 return OnGet(); 
             }
-            await _service.CreateCheep(Text, author, DateTime.UtcNow);
+
+            // Add sanitization before creating the cheep
+            var sanitizedText = SanitizeText(Text);
+            await _service.CreateCheep(sanitizedText, author, DateTime.UtcNow);
             
             return RedirectToPage("/Public", new { page = 1 });
         }

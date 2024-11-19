@@ -1,0 +1,55 @@
+@using Chirp.Web.Pages.Shared
+@model CheepPageModel
+
+<div class="cheepbox">
+    <h3>What's on your mind @Html.Encode(User.Identity?.Name)?</h3>
+    <form method="post" class="cheep-form">
+        @Html.AntiForgeryToken()
+        <div class="cheep-input-wrapper">
+            <textarea asp-for="Text" 
+                      id="cheepInput" 
+                      maxlength="160" 
+                      oninput="validateAndUpdateInput(this)" 
+                      rows="1"
+                      required></textarea>
+            <span id="charCount">0/160</span>
+            <span asp-validation-for="Text" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Share" class="share-button" />
+    </form>
+</div>
+
+<script>
+    function validateAndUpdateInput(element) {
+        // Sanitize input
+        let text = element.value;
+        
+        // Remove HTML tags and dangerous characters
+        text = text.replace(/<[^>]*>/g, '');
+        text = text.replace(/[<>{}\\]/g, '');
+        
+        if (text !== element.value) {
+            element.value = text;
+        }
+
+        // Update character count
+        const charCount = text.length;
+        document.getElementById('charCount').textContent = charCount + "/160";
+
+        // Auto-resize textarea
+        element.style.height = 'auto';
+        element.style.height = element.scrollHeight + 'px';
+    }
+
+    // Prevent paste events from containing HTML
+    document.addEventListener('DOMContentLoaded', function() {
+        const cheepInput = document.getElementById('cheepInput');
+        if (cheepInput) {
+            cheepInput.addEventListener('paste', function(e) {
+                e.preventDefault();
+                const text = (e.originalEvent || e).clipboardData.getData('text/plain');
+                document.execCommand('insertText', false, text);
+            });
+        }
+    });
+</script>
