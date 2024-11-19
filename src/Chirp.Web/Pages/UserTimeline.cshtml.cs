@@ -1,24 +1,18 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Chirp.Infrastructure.Repositories;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Core.DTOs;
-
+using Chirp.Core.Models;
+using Chirp.Web.Pages.Shared;
 
 namespace Chirp.Web.Pages
 {
-    public class UserTimelineModel : PageModel
+    public class UserTimelineModel : CheepPageModel
     {
         private readonly ICheepRepository _service;
 
         [Required]
         public required List<CheepDTO> Cheeps { get; set; }
-
-        [BindProperty]
-        [Required]        
-        public required string Text { get; set; }
 
         [Required]
         public required string Author { get; set; }
@@ -37,6 +31,28 @@ namespace Chirp.Web.Pages
             CurrentPage = page;
             Cheeps = _service.GetCheepsFromAuthor(author, page, PageSize);
             return Page();
+        }
+
+        public async Task<IActionResult> OnPostAsync(string author)
+        {
+            if (!User.Identity!.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
+            {
+                return RedirectToPage("/UserTimeline", new { author });
+            }
+
+            var authorName = User.Identity.Name ?? "";
+            var currentUser = _service.GetAuthorByName(authorName);
+
+            if (currentUser == null)
+            {
+                return RedirectToPage("/UserTimeline", new { author });
+            }
+
+            // Add sanitization before creating the cheep
+            var sanitizedText = SanitizeText(Text);
+            await _service.CreateCheep(sanitizedText, currentUser, DateTime.UtcNow);
+            
+            return RedirectToPage("/UserTimeline", new { author });
         }
     }
 }

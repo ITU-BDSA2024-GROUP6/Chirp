@@ -11,16 +11,7 @@
     <h2> Public Timeline</h2>
     @if (SignInManager.IsSignedIn(User))
     {
-        <div class="cheepbox">
-            <h3>What's on your mind @(User.Identity.Name)?</h3>
-            <form method="post" class="cheep-form">
-                <div class="cheep-input-wrapper">
-                    <textarea asp-for="Text" id="cheepInput" maxlength="160" oninput="updateCharCount()" rows="1"></textarea>
-                    <span id="charCount">0/160</span>
-                </div>
-                <input type="submit" value="Share" class="share-button" />
-            </form>
-        </div>
+        <partial name="_CheepInput" model="@Model" />
     }
     @if (Model.Cheeps.Any())
     {
