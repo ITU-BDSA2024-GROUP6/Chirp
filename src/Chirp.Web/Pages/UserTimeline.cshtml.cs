@@ -16,6 +16,10 @@ namespace Chirp.Web.Pages
         [Required]
         public required List<CheepDTO> Cheeps { get; set; }
 
+        [BindProperty]
+        [Required]        
+        public required string Text { get; set; }
+
         [Required]
         public required string Author { get; set; }
 
