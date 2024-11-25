@@ -33,7 +33,7 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!User.Identity!.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
+            if (!User.Identity!.IsAuthenticated || string.IsNullOrWhiteSpace(Text) || Text.Length > 160)
             {
                 return OnGet();
             }
