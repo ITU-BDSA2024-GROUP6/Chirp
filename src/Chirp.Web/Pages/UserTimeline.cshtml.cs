@@ -4,6 +4,7 @@ using Chirp.Core.RepositoryInterfaces;
 using Chirp.Core.DTOs;
 using Chirp.Core.Models;
 using Chirp.Web.Pages.Shared;
+using Microsoft.Extensions.WebEncoders.Testing;
 
 namespace Chirp.Web.Pages
 {
@@ -35,7 +36,7 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostAsync(string author)
         {
-            if (!User.Identity!.IsAuthenticated || string.IsNullOrWhiteSpace(Text))
+            if (!User.Identity!.IsAuthenticated || string.IsNullOrWhiteSpace(Text) || Text.Length > 160)
             {
                 return RedirectToPage("/UserTimeline", new { author });
             }
