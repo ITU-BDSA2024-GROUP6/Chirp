@@ -1,6 +1,7 @@
 using Chirp.Core;
 using Chirp.Infrastructure.Data;
 using Chirp.Core.Models;
+using Chirp.Core.DTOs;
 
 public static class DbInitializer
 {

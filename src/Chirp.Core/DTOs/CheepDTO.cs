@@ -6,6 +6,6 @@ namespace Chirp.Core.DTOs
 
         public required string TimeStamp { get; set; }
 
-        public required AuthorDTO Author { get; set; }
+        public required AuthorDTO AuthorDTO { get; set; }
     }
 }

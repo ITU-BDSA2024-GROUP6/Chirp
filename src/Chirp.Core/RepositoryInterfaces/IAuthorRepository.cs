@@ -8,7 +8,8 @@ namespace Chirp.Core.RepositoryInterfaces
         public Author? GetAuthorByName(string name);
         public Author? GetAuthorByEmail(string email);
         public Author? GetAuthorByID(string id);
-        public Task<Author> CreateAuthor(AuthorDTO authorDto); 
+        public AuthorDTO CreateAuthorDTO(Author author) {return new AuthorDTO(){Name = author.UserName ?? "", Email = author.Email ?? ""};}
+
     }
 
 }

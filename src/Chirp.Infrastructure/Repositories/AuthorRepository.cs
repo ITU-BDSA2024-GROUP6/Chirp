@@ -2,6 +2,7 @@ using Chirp.Core.Models;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Infrastructure.Data;
 using Chirp.Core.DTOs;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Chirp.Infrastructure.Repositories
 {
@@ -44,14 +45,9 @@ namespace Chirp.Infrastructure.Repositories
                 .FirstOrDefault(author => author.Id.Equals(id));
         }
 
-        public async Task<Author> CreateAuthor(AuthorDTO authorDto)
+        public AuthorDTO CreateAuthorDTO(Author author) 
         {
-            Author newAuthor = new() { UserName = authorDto.Name, Email = authorDto.Email };
-            var queryResult = await _context.Authors.AddAsync(newAuthor); // does not write to the database!
-
-            await _context.SaveChangesAsync(); // persist the changes in the database
-            return queryResult.Entity;
+            return new AuthorDTO(){Name = author?.UserName?? "", Email = author?.Email?? ""};
         }
-
     }
 }
