@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Chirp.Core.Models;
 using Chirp.Web.Areas.Identity;
 using NetEscapades.AspNetCore.SecurityHeaders;
+using Chirp.Web.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
