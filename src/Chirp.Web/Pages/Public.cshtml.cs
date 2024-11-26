@@ -10,7 +10,8 @@ namespace Chirp.Web.Pages
 {
     public class PublicModel : CheepPageModel  // Changed from PageModel to CheepPageModel
     {
-        private readonly ICheepRepository _service;
+        private readonly ICheepRepository _cheepService;
+        private readonly IAuthorRepository _authorService;
         
         [Required]
         public required List<CheepDTO> Cheeps { get; set; }
@@ -19,15 +20,16 @@ namespace Chirp.Web.Pages
 
         private const int PageSize = 32;
 
-        public PublicModel(ICheepRepository service)
+        public PublicModel(ICheepRepository cheepService, IAuthorRepository authorService)
         {
-            _service = service;
+            _cheepService = cheepService;
+            _authorService = authorService;
         }
 
         public ActionResult OnGet([FromQuery] int page = 0)
         {
             CurrentPage = page;
-            Cheeps = _service.GetCheeps(page, PageSize);
+            Cheeps = _cheepService.GetCheeps(page, PageSize);
             return Page();
         }
 
@@ -39,7 +41,7 @@ namespace Chirp.Web.Pages
             }
 
             var authorName = User.Identity.Name ?? "";
-            var author = _service.GetAuthorByName(authorName);
+            var author = _authorService.GetAuthorByName(authorName);
 
             if (author == null)
             {
@@ -48,7 +50,7 @@ namespace Chirp.Web.Pages
 
             // Add sanitization before creating the cheep
             var sanitizedText = SanitizeText(Text);
-            await _service.CreateCheep(sanitizedText, author, DateTime.UtcNow);
+            await _cheepService.CreateCheep(sanitizedText, author, DateTime.UtcNow);
             
             return RedirectToPage("/Public", new { page = 1 });
         }

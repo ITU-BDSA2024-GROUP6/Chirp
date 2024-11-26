@@ -28,44 +28,25 @@ namespace Chirp.Infrastructure.Repositories
                 {
                     Text = c.Text, 
                     TimeStamp = c.TimeStamp.ToString(),
-                    Author = new AuthorDTO 
-                    {
-                        Name = c.Author.UserName ?? "",
-                        Email = c.Author.Email ?? ""
-                    }
-                })
-                .ToList();
+                    AuthorDTO = _authorRepository.CreateAuthorDTO(c.Author)
+                }).ToList();
         }
 
-        public Author? GetAuthorByEmail(string email)
+        public List<CheepDTO> GetCheepsFromAuthor(Author author, int page, int pageSize)
         {
-            return _authorRepository.GetAuthorByEmail(email); 
-        }
-
-        public Author? GetAuthorByName(string name)
-        {
-            return _authorRepository.GetAuthorByName(name); 
-        }
-
-        public List<CheepDTO> GetCheepsFromAuthor(string author, int page, int pageSize)
-        {
+            AuthorDTO authorDTO = _authorRepository.CreateAuthorDTO(author);
             return _context.Cheeps
                 .Include(c => c.Author)
                 .OrderByDescending(c => c.TimeStamp)
-                .Where(c => c.Author.UserName == author) 
-                .Skip((page) * pageSize)
+                .Where(c => c.Author == author) 
+                .Skip(page * pageSize)
                 .Take(pageSize)
                 .Select(c => new CheepDTO 
                 {
                     Text = c.Text,
                     TimeStamp = c.TimeStamp.ToString(),
-                    Author = new AuthorDTO
-                    {
-                        Name = c.Author.UserName ?? "",
-                        Email = c.Author.Email ?? ""
-                    }
-                })
-                .ToList();
+                    AuthorDTO = authorDTO
+                }).ToList();
         }
 
         public async Task CreateCheep(string text, Author author, DateTime dateTime) 
