@@ -5,8 +5,7 @@ using Chirp.Infrastructure.Data;
 using Chirp.Core.RepositoryInterfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Chirp.Core.Models;
-using Chirp.Web.Areas.Identity;
-using NetEscapades.AspNetCore.SecurityHeaders;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,16 +23,16 @@ builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
 
 builder.Services.AddAuthentication(options =>
     {
-        //options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        //options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        //options.DefaultChallengeScheme = "GitHub";
+        options.DefaultChallengeScheme = "GitHub";
     })
-    //.AddCookie()
+    .AddCookie()
     
     .AddGitHub(o =>
     {
         o.ClientId = builder.Configuration["authentication_github_clientId"] ?? "";
         o.ClientSecret = builder.Configuration["authentication_github_clientSecret"] ?? "";
+        o.Scope.Add("read:user");
+        o.Scope.Add("user:email");
         o.CallbackPath = "/signin-github";
     });
 
@@ -51,7 +50,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-
+/*
 // Add security headers
 app.UseSecurityHeaders(new HeaderPolicyCollection()
     .AddDefaultSecurityHeaders()
@@ -67,6 +66,7 @@ app.UseSecurityHeaders(new HeaderPolicyCollection()
         // if we need to allow GitHub authentication:
         // builder.AddFrameSrc().From("https://github.com");
     }));
+*/
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
