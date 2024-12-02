@@ -49,6 +49,37 @@ namespace Chirp.Infrastructure.Repositories
                 }).ToList();
         }
 
+        public List<CheepDTO> GetUsersFollowingCheeps(Author author, int page, int pageSize)
+        {
+            var _cheeps = GetCheepsFromAuthor(author, page, pageSize);
+
+            foreach (Author followingAuthor in author.Following)
+            {
+                _cheeps.AddRange
+                (
+                    _context.Cheeps
+                .Include(c => c.Author)
+                .Where(c => c.Author == followingAuthor) 
+                .Skip(page * pageSize)
+                .Take(pageSize)
+                .Select(c => new CheepDTO 
+                {
+                    Text = c.Text,
+                    TimeStamp = c.TimeStamp.ToString(),
+                    AuthorDTO = _authorRepository.CreateAuthorDTO(followingAuthor)
+                }).ToList()
+                );
+            }
+
+            _cheeps = _cheeps
+                .OrderByDescending(cheep => DateTime.Parse(cheep.TimeStamp))
+                .ToList();
+
+            return _cheeps;
+        }
+
+
+
         public async Task CreateCheep(string text, Author author, DateTime dateTime) 
         {
             var result = _context.Authors.SingleOrDefault(a => a.UserName == author.UserName);

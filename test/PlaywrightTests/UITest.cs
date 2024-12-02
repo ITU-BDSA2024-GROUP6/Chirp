@@ -47,9 +47,9 @@ namespace test.PlaywrightTests
 
             await _page.GetByRole(AriaRole.Link, new() { NameString = "Register" }).ClickAsync();
             await _page.GetByPlaceholder("Username").ClickAsync();
-            await _page.GetByPlaceholder("Username").FillAsync("BennyMedDetHenny");
+            await _page.GetByPlaceholder("Username").FillAsync("TestUser");
             await _page.GetByPlaceholder("name@example.com").ClickAsync();
-            await _page.GetByPlaceholder("name@example.com").FillAsync("beor@itu.dk");
+            await _page.GetByPlaceholder("name@example.com").FillAsync("Test@Test.Test");
             await _page.GetByLabel("Password", new() { Exact = true }).ClickAsync();
             await _page.GetByLabel("Password", new() { Exact = true }).FillAsync("Password1!");
             await _page.GetByLabel("Confirm Password").ClickAsync();

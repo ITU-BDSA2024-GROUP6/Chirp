@@ -3,19 +3,19 @@
 @inject SignInManager<Author> SignInManager
 @model Chirp.Web.Pages.UserTimelineModel
 @{
-    ViewData["Title"] = "Chirp!";
-    Layout = "Shared/_Layout";
-    var routeName = HttpContext.GetRouteValue("author");
+    ViewData["Title"] = $"@{Model.Author}'s Timeline";
+}
+
+<div class="timeline-header">
+    <h2>@Model.Author's Timeline</h2>
+</div>
+
+@if (User.Identity?.IsAuthenticated == true && Model.IsOwnTimeline)
+{
+    <partial name="_CheepInput" model="Model" />
 }
 
 <div>
-    <h2> @routeName's Timeline </h2>
-    
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <partial name="_CheepInput" model="@Model" />
-    }
-
     @if (Model.Cheeps.Any())
     {
         <ul id="messagelist" class="cheeps">
@@ -24,8 +24,27 @@
                 <li class="cheep">
                     <p>
                         <strong>
-                            <a href="/@cheep.AuthorDTO.Name">@cheep.AuthorDTO.Name</a>
+                            <a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a>
                         </strong>
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            @if (cheep.IsFollowing)
+                            {
+                                <form method="post" asp-page-handler="Unfollow" asp-route-author="@cheep.AuthorDTO.Name" class="follow-form">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="follow-button small-button">Unfollow</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" asp-page-handler="Follow" asp-route-author="@cheep.AuthorDTO.Name" class="follow-form">
+                                    @Html.AntiForgeryToken()
+                                    <button type="submit" class="follow-button small-button">Follow</button>
+                                </form>
+                            }
+                        }
+
                         @cheep.Text
                         <small>&mdash; @cheep.TimeStamp</small>
                     </p>
@@ -35,12 +54,12 @@
         <div class="pagination">
             @if (Model.CurrentPage > 0)
             {
-                <a href="/@Model.Author?page=@(Model.CurrentPage - 1)">Previous</a>
+                <a href="?page=@(Model.CurrentPage - 1)">Previous</a>
             }
 
             @if (Model.Cheeps.Count == 32) // Assuming 32 is the page size
             {
-                <a href="/@Model.Author?page=@(Model.CurrentPage + 1)">Next</a>
+                <a href="?page=@(Model.CurrentPage + 1)">Next</a>
             }
         </div>
     }
@@ -49,69 +68,3 @@
         <em>There are no cheeps so far.</em>
     }
 </div>
-
-@section Styles {
-    <style>
-        .cheepbox {
-            margin-bottom: 20px;
-        }
-
-        .cheep-input-wrapper {
-            position: relative;
-            display: inline-block;
-            width: 85%; /* Allows space for the Share button */
-            vertical-align: top;
-        }
-
-        textarea#cheepInput {
-            width: 100%;
-            padding: 10px;
-            padding-right: 50px; /* Space for character counter */
-            resize: none;
-            font-family: Arial, Helvetica, sans-serif;
-            line-height: 1.5;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-
-        textarea#cheepInput:focus {
-            outline: none;
-        }
-
-        #charCount {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            font-size: 0.85rem;
-            color: gray;
-        }
-
-        .share-button {
-            margin-left: 15px;
-            vertical-align: top;
-            height: fit-content;
-            padding: 10px;
-            font-size: 1rem;
-        }
-
-        .cheep p {
-            word-wrap: break-word; /* Break long words onto the next line */
-            overflow-wrap: break-word; /* Wrap long words onto the next line */
-            word-break: break-word; /* Handle long words in different browsers */
-        }
-    </style>
-}
-
-@section Scripts {
-    <script>
-        function updateCharCount() {
-            var input = document.getElementById('cheepInput');
-            var charCount = input.value.length;
-            document.getElementById('charCount').textContent = charCount + "/160";
-
-            // Auto-resize the textarea
-            input.style.height = 'auto'; // Reset height to calculate new height properly
-            input.style.height = input.scrollHeight + 'px'; // Expand to content height
-        }
-    </script>
-}

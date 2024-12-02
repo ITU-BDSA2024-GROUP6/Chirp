@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Core.DTOs;
 using Chirp.Web.Pages.Shared;
+using Chirp.Core.Models;
 
 namespace Chirp.Web.Pages
 {
@@ -17,32 +18,57 @@ namespace Chirp.Web.Pages
         [Required]
         public required string Author { get; set; }
 
+        public bool IsFollowing { get; set; }
+        public bool IsOwnTimeline { get; set; }
+
         public int CurrentPage { get; set; }
+        public string CurrentUser { get; set; } = string.Empty; 
         private const int PageSize = 32;
 
         public UserTimelineModel(ICheepRepository cheepService, IAuthorRepository authorService)
         {
-
             _cheepService = cheepService;
             _authorService = authorService;
         }
 
-        public IActionResult OnGet(string author, [FromQuery] int page = 0)
+        private async Task InitializeFollowStatus()
+        {
+            CurrentUser = User.Identity!.Name!;
+            IsFollowing = await _authorService.IsFollowing(CurrentUser, Author);
+
+            var currentUser = _authorService.GetAuthorByName(CurrentUser);
+            var targetAuthor = _authorService.GetAuthorByName(Author);
+            IsOwnTimeline = currentUser?.UserName == targetAuthor?.UserName;
+        }
+
+        public async Task<IActionResult> OnGetAsync(string author, [FromQuery] int page = 0)
         {
             Author = author;
             CurrentPage = page;
-            Cheeps = _cheepService.GetCheepsFromAuthor(_authorService.GetAuthorByName(Author)!, page, PageSize);
+            
+            var targetAuthor = _authorService.GetAuthorByName(Author);
+            if (targetAuthor == null)
+            {
+                return NotFound();
+            }
+
+            await InitializeFollowStatus();
+
+            Cheeps = IsOwnTimeline
+                ? _cheepService.GetUsersFollowingCheeps(targetAuthor, page, PageSize)
+                : _cheepService.GetCheepsFromAuthor(targetAuthor, page, PageSize);
+
+            foreach (var cheep in Cheeps)
+            {
+                cheep.IsFollowing = await _authorService.IsFollowing(CurrentUser, cheep.AuthorDTO.Name);
+            }
+
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(string author)
         {
-            if (!User.Identity!.IsAuthenticated || string.IsNullOrWhiteSpace(Text) || Text.Length > 160)
-            {
-                return RedirectToPage("/UserTimeline", new { author });
-            }
-
-            var authorName = User.Identity.Name ?? "";
+            var authorName = User.Identity!.Name ?? "";
             var currentUser = _authorService.GetAuthorByName(authorName);
 
             if (currentUser == null)
@@ -50,10 +76,54 @@ namespace Chirp.Web.Pages
                 return RedirectToPage("/UserTimeline", new { author });
             }
 
-            // Add sanitization before creating the cheep
             var sanitizedText = SanitizeText(Text);
             await _cheepService.CreateCheep(sanitizedText, currentUser, DateTime.UtcNow);
             
+            return Page();
+        }
+
+        public async Task<IActionResult> OnPostFollowAsync(string author)
+        {
+            try 
+            {
+                Author = author;
+                await _authorService.FollowAuthor(User.Identity!.Name!, author);
+                await InitializeFollowStatus();
+            }
+            catch (ArgumentException ex)
+            {
+                Console.WriteLine($"Error while following author: {ex.Message}");
+
+                ModelState.AddModelError(string.Empty, "Unable to follow this author. Please try again.");
+            }
+
+            if(IsOwnTimeline)
+            {
+                return RedirectToPage("/UserTimeline", new { author = CurrentUser });
+            }
+            return RedirectToPage("/UserTimeline", new { author });
+        }
+
+        public async Task<IActionResult> OnPostUnfollowAsync(string author)
+        {
+            try 
+            {
+                Author = author;
+                await _authorService.UnfollowAuthor(User.Identity!.Name!, author);
+            }
+            catch (ArgumentException ex)
+            {
+                {
+                    Console.WriteLine($"Error while following author: {ex.Message}");
+
+                    ModelState.AddModelError(string.Empty, "Unable to unfollow this author. Please try again.");
+                }
+            }
+
+            if(IsOwnTimeline)
+            {
+                return RedirectToPage("/UserTimeline", new { author = CurrentUser });
+            }
             return RedirectToPage("/UserTimeline", new { author });
         }
     }
