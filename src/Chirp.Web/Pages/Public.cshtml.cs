@@ -86,9 +86,11 @@ namespace Chirp.Web.Pages
                 await _authorService.FollowAuthor(User.Identity!.Name!, author);
                 await InitializeFollowStatus();
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
-                // Handle the error gracefully, maybe add to ModelState if needed
+                Console.WriteLine($"Error while unfollowing author: {ex.Message}");
+
+                ModelState.AddModelError(string.Empty, "Unable to unfollow this author. Please try again.");
             }
 
             return RedirectToPage("/Public", new{});
@@ -102,9 +104,11 @@ namespace Chirp.Web.Pages
                 await _authorService.UnfollowAuthor(User.Identity!.Name!, author);
                 await InitializeFollowStatus();
             }
-            catch (ArgumentException)
+            catch (ArgumentException ex)
             {
-                // Handle the error gracefully
+                Console.WriteLine($"Error while unfollowing author: {ex.Message}");
+
+                ModelState.AddModelError(string.Empty, "Unable to unfollow this author. Please try again.");
             }
 
             return RedirectToPage("/Public", new{});

@@ -10,7 +10,7 @@
     <h2>@Model.Author's Timeline</h2>
 </div>
 
-@if (User.Identity?.IsAuthenticated == true && Model.IsOwnTimeline)
+@if (User.Identity?.IsAuthenticated == true && Model.IsOwnTimeline(User.Identity!.Name!))
 {
     <partial name="_CheepInput" model="Model" />
 }

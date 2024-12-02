@@ -4,6 +4,7 @@ using Chirp.Core.RepositoryInterfaces;
 using Chirp.Core.DTOs;
 using Chirp.Web.Pages.Shared;
 using Chirp.Core.Models;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Chirp.Web.Pages
 {
@@ -17,13 +18,10 @@ namespace Chirp.Web.Pages
 
         [Required]
         public required string Author { get; set; }
-
-        public bool IsFollowing { get; set; }
-        public bool IsOwnTimeline { get; set; }
-
         public int CurrentPage { get; set; }
         public string CurrentUser { get; set; } = string.Empty;
         private const int PageSize = 32;
+        
 
         public UserTimelineModel(ICheepRepository cheepService, IAuthorRepository authorService)
         {
@@ -31,19 +29,10 @@ namespace Chirp.Web.Pages
             _authorService = authorService;
         }
 
-        private async Task InitializeFollowStatus()
-        {
-            CurrentUser = User.Identity!.Name!;
-            IsFollowing = await _authorService.IsFollowing(CurrentUser, Author);
-
-            var currentUser = _authorService.GetAuthorByName(CurrentUser);
-            var targetAuthor = _authorService.GetAuthorByName(Author);
-            IsOwnTimeline = currentUser?.UserName == targetAuthor?.UserName;
-        }
-
         public async Task<IActionResult> OnGetAsync(string author, [FromQuery] int page = 0)
         {
             Author = author;
+            CurrentUser = User.Identity!.Name!;
             CurrentPage = page;
 
             var targetAuthor = _authorService.GetAuthorByName(Author);
@@ -52,9 +41,8 @@ namespace Chirp.Web.Pages
                 return NotFound();
             }
 
-            await InitializeFollowStatus();
 
-            Cheeps = IsOwnTimeline
+            Cheeps = IsOwnTimeline(CurrentUser)
                 ? _cheepService.GetUsersFollowingCheeps(targetAuthor, page, PageSize)
                 : _cheepService.GetCheepsFromAuthor(targetAuthor, page, PageSize);
 
@@ -84,11 +72,11 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostFollowAsync(string author)
         {
+            Console.WriteLine("in the follow method");
             try
             {
-                Author = author;
+                
                 await _authorService.FollowAuthor(User.Identity!.Name!, author);
-                await InitializeFollowStatus();
             }
             catch (ArgumentException ex)
             {
@@ -96,8 +84,8 @@ namespace Chirp.Web.Pages
 
                 ModelState.AddModelError(string.Empty, "Unable to follow this author. Please try again.");
             }
-
-            if (IsOwnTimeline)
+            
+            if (IsOwnTimeline(User.Identity!.Name!))
             {
                 return RedirectToPage("/UserTimeline", new { author = CurrentUser });
             }
@@ -106,25 +94,39 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostUnfollowAsync(string author)
         {
+            CurrentUser = User.Identity!.Name!;
+            Console.WriteLine("CurrentUser: " + CurrentUser);
             try
             {
-                Author = author;
                 await _authorService.UnfollowAuthor(User.Identity!.Name!, author);
             }
             catch (ArgumentException ex)
             {
                 {
-                    Console.WriteLine($"Error while following author: {ex.Message}");
+                    Console.WriteLine($"Error while unfollowing author: {ex.Message}");
 
                     ModelState.AddModelError(string.Empty, "Unable to unfollow this author. Please try again.");
                 }
             }
 
-            if (IsOwnTimeline)
+            if (IsOwnTimeline(CurrentUser))
             {
                 return RedirectToPage("/UserTimeline", new { author = CurrentUser });
             }
             return RedirectToPage("/UserTimeline", new { author });
+        }
+
+        public bool IsOwnTimeline(string user)
+        { 
+            Console.WriteLine("In the owntimeline method");
+            var currentPath = Request.Path.ToString();
+
+            var authorFromUrl = currentPath.TrimStart('/'); // Remove leading slash
+            var decodedAuthorFromUrl = Uri.UnescapeDataString(authorFromUrl); // Decode URL-encoded string
+
+            Console.WriteLine("User: " + User);
+            Console.WriteLine("Decoded user: " + decodedAuthorFromUrl);
+            return string.Equals(decodedAuthorFromUrl, user, StringComparison.OrdinalIgnoreCase);
         }
     }
 }
