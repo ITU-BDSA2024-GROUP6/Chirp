@@ -44,36 +44,27 @@
                     }
                 </div>
             }
-        } 
-        else {
+        }
+        else
+        {
             <ul id="messagelist" class="cheeps">
                 @foreach (var cheep in Model.Cheeps)
                 {
                     <li class="cheep">
-                        <p>
-                            <strong>
-                                <a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a>
-                            </strong>
-
-                            
-                            @if (cheep.IsFollowing)
+                        <p style="display: flex; align-items: center; margin: 0;">
+                        <div style="display: flex; align-items: center;"><strong><a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a></strong>
+                            @if (User.Identity!.Name != cheep.AuthorDTO.Name)
                             {
-                                <form method="post" asp-page-handler="Unfollow" asp-route-author="@cheep.AuthorDTO.Name" class="follow-form">
+                            <form method="post" style="display: inline; margin-left: 8px;"
+                                asp-page-handler="@(cheep.IsFollowing ? "Unfollow" : "Follow")"
+                                asp-route-author="@cheep.AuthorDTO.Name">
                                     @Html.AntiForgeryToken()
-                                    <button type="submit" class="follow-button small-button">Unfollow</button>
-                                </form>
+                                <button type="submit" style="padding: 2px 6px;">@(cheep.IsFollowing ? "Unfollow" : "Follow")</button>
+                            </form>
                             }
-                            else
-                            {
-                                <form method="post" asp-page-handler="Follow" asp-route-author="@cheep.AuthorDTO.Name" class="follow-form">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="follow-button small-button">Follow</button>
-                                </form>
-                            }
-                            
-
-                            @cheep.Text
-                            <small>&mdash; @cheep.TimeStamp</small>
+                        </div>
+                        <div style="margin-top: 4px;">@cheep.Text</div>
+                        <small>&mdash; @cheep.TimeStamp</small>
                         </p>
                     </li>
                 }
@@ -106,14 +97,16 @@
         .cheep-input-wrapper {
             position: relative;
             display: inline-block;
-            width: 85%; /* Allows space for the Share button */
+            width: 85%;
+            /* Allows space for the Share button */
             vertical-align: top;
         }
 
         textarea#cheepInput {
             width: 100%;
             padding: 10px;
-            padding-right: 50px; /* Space for character counter */
+            padding-right: 50px;
+            /* Space for character counter */
             resize: none;
             font-family: Arial, Helvetica, sans-serif;
             line-height: 1.5;
@@ -142,9 +135,12 @@
         }
 
         .cheep p {
-            word-wrap: break-word; /* Break long words onto the next line */
-            overflow-wrap: break-word; /* Wrap long words onto the next line */
-            word-break: break-word; /* Handle long words in different browsers */
+            word-wrap: break-word;
+            /* Break long words onto the next line */
+            overflow-wrap: break-word;
+            /* Wrap long words onto the next line */
+            word-break: break-word;
+            /* Handle long words in different browsers */
         }
     </style>
 }

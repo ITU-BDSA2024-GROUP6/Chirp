@@ -22,7 +22,7 @@ namespace Chirp.Web.Pages
         public bool IsOwnTimeline { get; set; }
 
         public int CurrentPage { get; set; }
-        public string CurrentUser { get; set; } = string.Empty; 
+        public string CurrentUser { get; set; } = string.Empty;
         private const int PageSize = 32;
 
         public UserTimelineModel(ICheepRepository cheepService, IAuthorRepository authorService)
@@ -45,7 +45,7 @@ namespace Chirp.Web.Pages
         {
             Author = author;
             CurrentPage = page;
-            
+
             var targetAuthor = _authorService.GetAuthorByName(Author);
             if (targetAuthor == null)
             {
@@ -78,13 +78,13 @@ namespace Chirp.Web.Pages
 
             var sanitizedText = SanitizeText(Text);
             await _cheepService.CreateCheep(sanitizedText, currentUser, DateTime.UtcNow);
-            
-            return Page();
+
+            return RedirectToPage("/UserTimeline", new { CurrentUser });
         }
 
         public async Task<IActionResult> OnPostFollowAsync(string author)
         {
-            try 
+            try
             {
                 Author = author;
                 await _authorService.FollowAuthor(User.Identity!.Name!, author);
@@ -97,7 +97,7 @@ namespace Chirp.Web.Pages
                 ModelState.AddModelError(string.Empty, "Unable to follow this author. Please try again.");
             }
 
-            if(IsOwnTimeline)
+            if (IsOwnTimeline)
             {
                 return RedirectToPage("/UserTimeline", new { author = CurrentUser });
             }
@@ -106,7 +106,7 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostUnfollowAsync(string author)
         {
-            try 
+            try
             {
                 Author = author;
                 await _authorService.UnfollowAuthor(User.Identity!.Name!, author);
@@ -120,7 +120,7 @@ namespace Chirp.Web.Pages
                 }
             }
 
-            if(IsOwnTimeline)
+            if (IsOwnTimeline)
             {
                 return RedirectToPage("/UserTimeline", new { author = CurrentUser });
             }
@@ -128,3 +128,4 @@ namespace Chirp.Web.Pages
         }
     }
 }
+

@@ -22,31 +22,21 @@
             @foreach (var cheep in Model.Cheeps)
             {
                 <li class="cheep">
-                    <p>
-                        <strong>
-                            <a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a>
-                        </strong>
-
-                        @if (User.Identity?.IsAuthenticated == true)
+                    <p style="display: flex; align-items: center; margin: 0;">
+                    <div style="display: flex; align-items: center;"><strong><a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a></strong>
+                        @if (User.Identity!.Name != cheep.AuthorDTO.Name)
                         {
-                            @if (cheep.IsFollowing)
-                            {
-                                <form method="post" asp-page-handler="Unfollow" asp-route-author="@cheep.AuthorDTO.Name" class="follow-form">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="follow-button small-button">Unfollow</button>
-                                </form>
-                            }
-                            else
-                            {
-                                <form method="post" asp-page-handler="Follow" asp-route-author="@cheep.AuthorDTO.Name" class="follow-form">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="follow-button small-button">Follow</button>
-                                </form>
-                            }
+                        <form method="post" style="display: inline; margin-left: 8px;"
+                            asp-page-handler="@(cheep.IsFollowing ? "Unfollow" : "Follow")"
+                            asp-route-author="@cheep.AuthorDTO.Name">
+                                @Html.AntiForgeryToken()
+                            <button type="submit"
+                                style="padding: 2px 6px;">@(cheep.IsFollowing ? "Unfollow" : "Follow")</button>
+                        </form>
                         }
-
-                        @cheep.Text
-                        <small>&mdash; @cheep.TimeStamp</small>
+                    </div>
+                    <div style="margin-top: 4px;">@cheep.Text</div>
+                    <small>&mdash; @cheep.TimeStamp</small>
                     </p>
                 </li>
             }
@@ -68,3 +58,74 @@
         <em>There are no cheeps so far.</em>
     }
 </div>
+
+@section Styles {
+    <style>
+        .cheepbox {
+            margin-bottom: 20px;
+        }
+
+        .cheep-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 85%;
+            /* Allows space for the Share button */
+            vertical-align: top;
+        }
+
+        textarea#cheepInput {
+            width: 100%;
+            padding: 10px;
+            padding-right: 50px;
+            /* Space for character counter */
+            resize: none;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.5;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        textarea#cheepInput:focus {
+            outline: none;
+        }
+
+        #charCount {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 0.85rem;
+            color: gray;
+        }
+
+        .share-button {
+            margin-left: 15px;
+            vertical-align: top;
+            height: fit-content;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        .cheep p {
+            word-wrap: break-word;
+            /* Break long words onto the next line */
+            overflow-wrap: break-word;
+            /* Wrap long words onto the next line */
+            word-break: break-word;
+            /* Handle long words in different browsers */
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        function updateCharCount() {
+            var input = document.getElementById('cheepInput');
+            var charCount = input.value.length;
+            document.getElementById('charCount').textContent = charCount + "/160";
+
+            // Auto-resize the textarea
+            input.style.height = 'auto'; // Reset height to calculate new height properly
+            input.style.height = input.scrollHeight + 'px'; // Expand to content height
+        }
+    </script>
+}
