@@ -38,11 +38,12 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
+/*
 using (var scope = app.Services.CreateScope())
 {
     var chatDBContext = scope.ServiceProvider.GetRequiredService<ChatDBContext>();
     DbInitializer.SeedDatabase(chatDBContext);
-}
+}*/
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -76,3 +77,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();
 app.Run();
+
+//This makes the program public, then the test class can access it
+public partial class Program { }
