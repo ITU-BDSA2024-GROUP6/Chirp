@@ -14,6 +14,8 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="xunit" Version="2.5.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.10" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Chirp.Razor\Chirp.Razor.csproj" />
+    <ProjectReference Include="..\..\src\Chirp.Web\Chirp.Web.csproj" />
   </ItemGroup>
 
 </Project>
