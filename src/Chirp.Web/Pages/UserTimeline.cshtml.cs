@@ -92,28 +92,18 @@ namespace Chirp.Web.Pages
             return RedirectToPage("/UserTimeline", new { author });
         }
 
-        public async Task<IActionResult> OnPostUnfollowAsync(string author)
+        public async Task<IActionResult> OnPostUnfollowAsync(string author, string currentAuthor) 
         {
-            CurrentUser = User.Identity!.Name!;
-            Console.WriteLine("CurrentUser: " + CurrentUser);
             try
             {
                 await _authorService.UnfollowAuthor(User.Identity!.Name!, author);
             }
             catch (ArgumentException ex)
             {
-                {
-                    Console.WriteLine($"Error while unfollowing author: {ex.Message}");
-
-                    ModelState.AddModelError(string.Empty, "Unable to unfollow this author. Please try again.");
-                }
+                Console.WriteLine($"Error while unfollowing author: {ex.Message}");
+                ModelState.AddModelError(string.Empty, "Unable to unfollow this author. Please try again.");
             }
-
-            if (IsOwnTimeline(CurrentUser))
-            {
-                return RedirectToPage("/UserTimeline", new { author = CurrentUser });
-            }
-            return RedirectToPage("/UserTimeline", new { author });
+            return RedirectToPage("/UserTimeline", new { author = currentAuthor });
         }
 
         public bool IsOwnTimeline(string user)

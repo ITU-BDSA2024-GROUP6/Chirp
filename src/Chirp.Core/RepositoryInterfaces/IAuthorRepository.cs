@@ -13,5 +13,6 @@ namespace Chirp.Core.RepositoryInterfaces
         public Task<bool> IsFollowing(string followerName, string followedName);
         public Task FollowAuthor(string followerName, string followedName);
         public Task UnfollowAuthor(string followerName, string followedName);
+        public List<AuthorDTO> GetFollowers(Author author);
     }
 }
