@@ -27,7 +27,7 @@ namespace Chirp.Infrastructure.Repositories
                 .Select(c => new CheepDTO 
                 {
                     Text = c.Text, 
-                    TimeStamp = c.TimeStamp.ToString(),
+                    TimeStamp = c.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss"),
                     AuthorDTO = _authorRepository.CreateAuthorDTO(c.Author)
                 }).ToList();
         }
@@ -44,7 +44,7 @@ namespace Chirp.Infrastructure.Repositories
                 .Select(c => new CheepDTO 
                 {
                     Text = c.Text,
-                    TimeStamp = c.TimeStamp.ToString(),
+                    TimeStamp = c.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss"),
                     AuthorDTO = authorDTO
                 }).ToList();
         }
@@ -65,7 +65,7 @@ namespace Chirp.Infrastructure.Repositories
                 .Select(c => new CheepDTO 
                 {
                     Text = c.Text,
-                    TimeStamp = c.TimeStamp.ToString(),
+                    TimeStamp = c.TimeStamp.ToString("yyyy-MM-dd HH:mm:ss"),
                     AuthorDTO = _authorRepository.CreateAuthorDTO(followingAuthor)
                 }).ToList()
                 );

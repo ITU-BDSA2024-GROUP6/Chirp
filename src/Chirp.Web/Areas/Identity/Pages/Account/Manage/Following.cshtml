@@ -1,0 +1,40 @@
+@page
+@model FollowingModel
+@{
+    ViewData["Title"] = "List of People You Follow";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+@if (Model.Authors.Any())
+{
+    <ul id="authorDTOList" class="author">
+        @foreach (var author in Model.Authors)
+        {
+            <li class="author" style="justify-content: space-between; margin-bottom: 10px;">
+                <p style="display: flex; align-items: center; margin: 0;">
+                <div>
+                    <strong>
+                        <a href="/@author.Name">@author.Name</a>
+                    </strong>
+                    <form method="post" style="display: inline; margin: 0;" asp-page-handler="Unfollow"
+                        asp-route-author="@author.Name">
+                            @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="author" value="@author.Name" />
+
+                        <input type="hidden" name="currentAuthor" value="@User.Identity!.Name" />
+
+                        <button type="submit" style="padding: 2px 6px;">Unfollow</button>
+                    </form>
+                </div>
+                </p>
+            </li>
+        }
+    </ul>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

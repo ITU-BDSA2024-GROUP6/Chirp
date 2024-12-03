@@ -30,8 +30,13 @@
                             asp-page-handler="@(cheep.IsFollowing ? "Unfollow" : "Follow")"
                             asp-route-author="@cheep.AuthorDTO.Name">
                                 @Html.AntiForgeryToken()
-                            <button type="submit"
-                                style="padding: 2px 6px;">@(cheep.IsFollowing ? "Unfollow" : "Follow")</button>
+
+                                
+                                <input type="hidden" name="author" value="@cheep.AuthorDTO.Name" />
+
+                                <input type="hidden" name="currentAuthor" value="@Model.Author" />
+
+                            <button type="submit" style="padding: 2px 6px;">@(cheep.IsFollowing ? "Unfollow" : "Follow")</button>
                         </form>
                         }
                     </div>

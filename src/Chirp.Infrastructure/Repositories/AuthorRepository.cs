@@ -45,9 +45,9 @@ namespace Chirp.Infrastructure.Repositories
                 .FirstOrDefault(author => author.Id.Equals(id));
         }
 
-        public AuthorDTO CreateAuthorDTO(Author author) 
+        public AuthorDTO CreateAuthorDTO(Author author)
         {
-            return new AuthorDTO(){Name = author?.UserName ?? "", Email = author?.Email ?? ""};
+            return new AuthorDTO() { Name = author?.UserName ?? "", Email = author?.Email ?? "" };
         }
 
         public async Task<bool> IsFollowing(string followerName, string followedName)
@@ -66,7 +66,7 @@ namespace Chirp.Infrastructure.Repositories
             var follower = await _context.Authors
                 .Include(a => a.Following)
                 .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followerName.ToLower());
-                
+
             var followed = await _context.Authors
                 .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followedName.ToLower());
 
@@ -88,7 +88,7 @@ namespace Chirp.Infrastructure.Repositories
             var follower = await _context.Authors
                 .Include(a => a.Following)
                 .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followerName.ToLower());
-                
+
             var followed = await _context.Authors
                 .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followedName.ToLower());
 
@@ -102,6 +102,19 @@ namespace Chirp.Infrastructure.Repositories
                 follower.Following.Remove(followed);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public List<AuthorDTO> GetFollowers(Author author)
+        {
+            return _context.Authors
+                .Where(a => a.Id == author.Id) // Filter to find the specific author
+                .SelectMany(a => a.Following) // Flatten the Following list
+                .Select(f => new AuthorDTO
+                {
+                    Name = f.UserName,
+                    Email = f.Email
+                })
+                .ToList();
         }
     }
 }

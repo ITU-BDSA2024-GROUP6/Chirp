@@ -1,0 +1,46 @@
+@page
+@model PersonalCheepsModel
+@{
+    ViewData["Title"] = "List of Your Cheeps";
+    ViewData["ActivePage"] = ManageNavPages.Index;
+}
+
+<h3>@ViewData["Title"]</h3>
+
+<div>
+    @if (Model.Cheeps.Any())
+    {
+        <ul id="messagelist" class="cheeps">
+            @foreach (var cheep in Model.Cheeps)
+            {
+                <li class="cheep">
+                    <p style="display: flex; align-items: center; margin: 0;">
+                    <div style="display: flex; align-items: center;"><strong><a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a></strong>
+                    </div>
+                    <div style="margin-top: 4px;">@cheep.Text</div>
+                    <small>&mdash; @cheep.TimeStamp</small>
+                    </p>
+                </li>
+            }
+        </ul>
+        <div class="pagination">
+            @if (Model.CurrentPage > 0)
+            {
+                <a href="?page=@(Model.CurrentPage - 1)">Previous</a>
+            }
+
+            @if (Model.Cheeps.Count == 32) // Assuming 32 is the page size
+            {
+                <a href="?page=@(Model.CurrentPage + 1)">Next</a>
+            }
+        </div>
+    }
+    else
+    {
+        <em>There are no cheeps so far.</em>
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
