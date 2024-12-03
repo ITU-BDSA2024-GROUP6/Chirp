@@ -32,7 +32,7 @@ namespace Chirp.Web.Pages
         public async Task<IActionResult> OnGetAsync(string author, [FromQuery] int page = 0)
         {
             Author = author;
-            CurrentUser = User.Identity!.Name!;
+            CurrentUser = User.Identity!.Name ?? string.Empty;
             CurrentPage = page;
 
             var targetAuthor = _authorService.GetAuthorByName(Author);
@@ -46,9 +46,12 @@ namespace Chirp.Web.Pages
                 ? _cheepService.GetUsersFollowingCheeps(targetAuthor, page, PageSize)
                 : _cheepService.GetCheepsFromAuthor(targetAuthor, page, PageSize);
 
-            foreach (var cheep in Cheeps)
+            if (CurrentUser != string.Empty)
             {
-                cheep.IsFollowing = await _authorService.IsFollowing(CurrentUser, cheep.AuthorDTO.Name);
+                foreach (var cheep in Cheeps)
+                {
+                    cheep.IsFollowing = await _authorService.IsFollowing(CurrentUser, cheep.AuthorDTO.Name);
+                }
             }
 
             return Page();
@@ -56,7 +59,7 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostAsync(string author)
         {
-            var authorName = User.Identity!.Name ?? "";
+            var authorName = User.Identity!.Name ?? string.Empty;
             var currentUser = _authorService.GetAuthorByName(authorName);
 
             if (currentUser == null)

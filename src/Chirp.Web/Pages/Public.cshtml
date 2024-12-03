@@ -15,71 +15,39 @@
     }
     @if (Model.Cheeps.Any())
     {
-        @if (!SignInManager.IsSignedIn(User))
-        {
+        <ul id="messagelist" class="cheeps">
+            @foreach (var cheep in Model.Cheeps)
             {
-                <ul id="messagelist" class="cheeps">
-                    @foreach (var cheep in Model.Cheeps)
-                    {
-                        <li class="cheep">
-                            <p>
-                                <strong>
-                                    <a href="/@cheep.AuthorDTO.Name">@cheep.AuthorDTO.Name</a>
-                                </strong>
-                                @cheep.Text
-                                <small>&mdash; @cheep.TimeStamp</small>
-                            </p>
-                        </li>
-                    }
-                </ul>
-                <div class="pagination">
-                    @if (Model.CurrentPage > 0)
-                    {
-                        <a href="?page=@(Model.CurrentPage - 1)">Previous</a>
-                    }
-
-                    @if (Model.Cheeps.Count == 32) // Assuming 32 is the page size
-                    {
-                        <a href="?page=@(Model.CurrentPage + 1)">Next</a>
-                    }
-                </div>
+                <li class="cheep">
+                    <p style="display: flex; align-items: center; margin: 0;">
+                    <div style="display: flex; align-items: center;"><strong><a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a></strong>
+                        @if (User.Identity!.Name != cheep.AuthorDTO.Name && SignInManager.IsSignedIn(User))
+                        {
+                        <form method="post" style="display: inline; margin-left: 8px;"
+                            asp-page-handler="@(cheep.IsFollowing ? "Unfollow" : "Follow")"
+                            asp-route-author="@cheep.AuthorDTO.Name">
+                                @Html.AntiForgeryToken()
+                            <button type="submit" style="padding: 2px 6px;">@(cheep.IsFollowing ? "Unfollow" : "Follow")</button>
+                        </form>
+                        }
+                    </div>
+                    <div style="margin-top: 4px;">@cheep.Text</div>
+                    <small>&mdash; @cheep.TimeStamp</small>
+                    </p>
+                </li>
             }
-        }
-        else
-        {
-            <ul id="messagelist" class="cheeps">
-                @foreach (var cheep in Model.Cheeps)
-                {
-                    <li class="cheep">
-                        <p style="display: flex; align-items: center; margin: 0;">
-                        <div style="display: flex; align-items: center;"><strong><a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a></strong>
-                            @if (User.Identity!.Name != cheep.AuthorDTO.Name)
-                            {
-                            <form method="post" style="display: inline; margin-left: 8px;"
-                                asp-page-handler="@(cheep.IsFollowing ? "Unfollow" : "Follow")"
-                                asp-route-author="@cheep.AuthorDTO.Name">
-                                    @Html.AntiForgeryToken()
-                                <button type="submit" style="padding: 2px 6px;">@(cheep.IsFollowing ? "Unfollow" : "Follow")</button>
-                            </form>
-                            }
-                        </div>
-                        <div style="margin-top: 4px;">@cheep.Text</div>
-                        <small>&mdash; @cheep.TimeStamp</small>
-                        </p>
-                    </li>
-                }
-            </ul>
-            <div class="pagination">
-                @if (Model.CurrentPage > 0)
-                {
-                    <a href="?page=@(Model.CurrentPage - 1)">Previous</a>
-                }
+        </ul>
+        <div class="pagination">
+            @if (Model.CurrentPage > 0)
+            {
+                <a href="?page=@(Model.CurrentPage - 1)">Previous</a>
+            }
 
-                @if (Model.Cheeps.Count == 32) // Assuming 32 is the page size
-                {
-                    <a href="?page=@(Model.CurrentPage + 1)">Next</a>
-                }
-            </div>
+            @if (Model.Cheeps.Count == 32) // Assuming 32 is the page size
+            {
+                <a href="?page=@(Model.CurrentPage + 1)">Next</a>
+            }
+        </div>
         }
     }
     else
