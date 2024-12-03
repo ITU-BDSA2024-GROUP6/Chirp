@@ -2,7 +2,7 @@ using Chirp.Core.Models;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Infrastructure.Data;
 using Chirp.Core.DTOs;
-using System.Reflection.Metadata.Ecma335;
+using Microsoft.EntityFrameworkCore;
 
 namespace Chirp.Infrastructure.Repositories
 {
@@ -23,9 +23,9 @@ namespace Chirp.Infrastructure.Repositories
             }
 
             return _context.Authors
+                .Include(a => a.Following)
+                .Include(a => a.Followers)
                 .FirstOrDefault(author => author.UserName != null && author.UserName.ToLower() == name.ToLower());
-
-
         }
 
         public Author? GetAuthorByEmail(string email)
@@ -47,7 +47,61 @@ namespace Chirp.Infrastructure.Repositories
 
         public AuthorDTO CreateAuthorDTO(Author author) 
         {
-            return new AuthorDTO(){Name = author?.UserName?? "", Email = author?.Email?? ""};
+            return new AuthorDTO(){Name = author?.UserName ?? "", Email = author?.Email ?? ""};
+        }
+
+        public async Task<bool> IsFollowing(string followerName, string followedName)
+        {
+            var follower = await _context.Authors
+                .Include(a => a.Following)
+                .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followerName.ToLower());
+
+            if (follower == null) return false;
+
+            return follower.Following.Any(f => f.UserName != null && f.UserName.ToLower() == followedName.ToLower());
+        }
+
+        public async Task FollowAuthor(string followerName, string followedName)
+        {
+            var follower = await _context.Authors
+                .Include(a => a.Following)
+                .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followerName.ToLower());
+                
+            var followed = await _context.Authors
+                .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followedName.ToLower());
+
+            if (follower == null || followed == null)
+            {
+                throw new ArgumentException("One or both users not found");
+            }
+
+            // Check if already following
+            if (!await IsFollowing(followerName, followedName))
+            {
+                follower.Following.Add(followed);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UnfollowAuthor(string followerName, string followedName)
+        {
+            var follower = await _context.Authors
+                .Include(a => a.Following)
+                .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followerName.ToLower());
+                
+            var followed = await _context.Authors
+                .FirstOrDefaultAsync(a => a.UserName != null && a.UserName.ToLower() == followedName.ToLower());
+
+            if (follower == null || followed == null)
+            {
+                throw new ArgumentException("One or both users not found");
+            }
+
+            if (await IsFollowing(followerName, followedName))
+            {
+                follower.Following.Remove(followed);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

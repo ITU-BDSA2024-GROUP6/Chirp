@@ -10,5 +10,8 @@ namespace Chirp.Core.Models
         public override required string? UserName { get => base.UserName; set => base.UserName = value; }
         
         public ICollection<Cheep>? Cheeps { get; set; } = [];
+
+        public virtual ICollection<Author> Following { get; set; } = new List<Author>();
+        public virtual ICollection<Author> Followers { get; set; } = new List<Author>();
     }
 }

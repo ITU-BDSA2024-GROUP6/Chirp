@@ -16,7 +16,12 @@ namespace Chirp.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<AuthorDTO>()
-                .HasNoKey(); 
+                .HasNoKey();
+
+            modelBuilder.Entity<Author>()
+                .HasMany(a => a.Following)
+                .WithMany(a => a.Followers)
+                .UsingEntity(j => j.ToTable("AuthorFollows"));
         }
     }
 }

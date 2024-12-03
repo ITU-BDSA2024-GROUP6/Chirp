@@ -9,7 +9,9 @@ namespace Chirp.Core.RepositoryInterfaces
         public Author? GetAuthorByEmail(string email);
         public Author? GetAuthorByID(string id);
         public AuthorDTO CreateAuthorDTO(Author author) {return new AuthorDTO(){Name = author.UserName ?? "", Email = author.Email ?? ""};}
-
+        
+        public Task<bool> IsFollowing(string followerName, string followedName);
+        public Task FollowAuthor(string followerName, string followedName);
+        public Task UnfollowAuthor(string followerName, string followedName);
     }
-
 }
