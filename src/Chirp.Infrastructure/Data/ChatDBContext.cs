@@ -8,8 +8,8 @@ namespace Chirp.Infrastructure.Data
     public class ChatDBContext : IdentityDbContext<Author>
     {
         public ChatDBContext(DbContextOptions<ChatDBContext> options) : base(options) {}
-        public required DbSet<Author> Authors { get; set; }
-        public required DbSet<Cheep> Cheeps { get; set; }
+        public DbSet<Author> Authors { get; set; }
+        public DbSet<Cheep> Cheeps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
