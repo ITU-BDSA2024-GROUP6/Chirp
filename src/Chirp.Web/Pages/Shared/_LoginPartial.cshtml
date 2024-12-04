@@ -12,7 +12,7 @@
         <span>
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-item text-dark" href="/@User.Identity?.Name">Your Timeline</a>
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Public">Public Timeline</a>
                 </li>
 
                 <li class="nav-item">
@@ -20,11 +20,19 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">About
-                        me</a>
+                    <a class="nav-item text-dark" href="/@User.Identity?.Name">
+                        Your Timeline
+                    </a>
                 </li>
+
                 <li class="nav-item">
                     <span>|</span>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+                        About me
+                    </a>
                 </li>
             </ul>
         </span>
@@ -36,6 +44,21 @@
 }
 else
 {
+    <div style="width: 100%; position: relative;">
+        <span>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-page="/Public">Public Timeline</a>
+                </li>
+            </ul>
+        </span>
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Login"
+            asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark" style="float: right;">Login</button>
+        </form>
+    </div>
+    /*
+    //OLD IMPLEMENTATION FOR REFERENCE
     <ul class="navbar-nav">
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
@@ -47,4 +70,5 @@ else
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
         </li>
     </ul>
+    */
 }
