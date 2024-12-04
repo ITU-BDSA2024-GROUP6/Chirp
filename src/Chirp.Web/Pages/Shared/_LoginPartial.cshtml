@@ -9,7 +9,7 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <div style="width: 100%; position: relative;">
-        <span style="width: auto;">
+        <span>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-page="/Public">Public Timeline</a>
@@ -36,7 +36,7 @@
                 </li>
             </ul>
         </span>
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" style="width: auto;"
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
             asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
             <button type="submit" class="nav-link btn btn-link text-dark" style="float: right;">Logout</button>
         </form>
@@ -45,14 +45,14 @@
 else
 {
     <div style="width: 100%; position: relative;">
-        <span style="width: auto;">
+        <span>
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link text-dark" asp-area="" asp-page="/Public">Public Timeline</a>
                 </li>
             </ul>
         </span>
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Login" style="width: auto;"
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Login"
             asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
             <button type="submit" class="nav-link btn btn-link text-dark" style="float: right;">Login</button>
         </form>
