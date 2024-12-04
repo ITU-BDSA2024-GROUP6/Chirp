@@ -22,6 +22,9 @@ namespace Chirp.Web.Pages
         public string CurrentUser { get; set; } = string.Empty;
         private const int PageSize = 32;
         
+        // Add properties for FollowersCount and FollowingCount
+        public int FollowersCount { get; set; }
+        public int FollowingCount { get; set; }
 
         public UserTimelineModel(ICheepRepository cheepService, IAuthorRepository authorService)
         {
@@ -41,6 +44,9 @@ namespace Chirp.Web.Pages
                 return NotFound();
             }
 
+            // Populate FollowersCount and FollowingCount
+            FollowersCount = targetAuthor.Followers.Count;
+            FollowingCount = targetAuthor.Following.Count;
 
             Cheeps = IsOwnTimeline(CurrentUser)
                 ? _cheepService.GetUsersFollowingCheeps(targetAuthor, page, PageSize)

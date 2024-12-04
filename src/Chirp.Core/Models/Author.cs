@@ -13,5 +13,12 @@ namespace Chirp.Core.Models
 
         public virtual ICollection<Author> Following { get; set; } = new List<Author>();
         public virtual ICollection<Author> Followers { get; set; } = new List<Author>();
+
+        [NotMapped]
+        public int FollowersCount => Followers?.Count ?? 0;
+
+        [NotMapped]
+        public int FollowingCount => Following?.Count ?? 0;
+
     }
 }
