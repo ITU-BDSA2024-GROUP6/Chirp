@@ -24,7 +24,7 @@
                 <li class="cheep">
                     <p style="display: flex; align-items: center; margin: 0;">
                     <div style="display: flex; align-items: center;"><strong><a href="/@cheep.AuthorDTO.Name" class="author-name">@cheep.AuthorDTO.Name</a></strong>
-                        @if (User.Identity!.Name != cheep.AuthorDTO.Name)
+                        @if (User.Identity!.Name != cheep.AuthorDTO.Name && SignInManager.IsSignedIn(User))
                         {
                         <form method="post" style="display: inline; margin-left: 8px;"
                             asp-page-handler="@(cheep.IsFollowing ? "Unfollow" : "Follow")"
