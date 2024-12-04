@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MyChat.Razor.Repositories;
+using Chirp.Infrastructure.Repositories;
 using Xunit;
 using System;
 using System.Linq;
