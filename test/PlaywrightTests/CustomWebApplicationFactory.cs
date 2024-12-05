@@ -52,11 +52,14 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         var initialHost = builder.Build();
         var selectedPort = GetAvailablePort();
+
+        // Set up the base URL using the available port
         var baseUrl = $"http://127.0.0.1:{selectedPort}";
 
+        // Configure test services and replace the default services
         builder.ConfigureServices(services =>
         {
-            // Your existing database configuration
+            // Replace existing ChatDBContext with an in-memory version for testing purposes
             var existingDbContext = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<ChatDBContext>));
             if (existingDbContext != null)
@@ -64,6 +67,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(existingDbContext);
             }
 
+            // Remove any existing database connection
             var dbConnDescriptor = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbConnection));
             if (dbConnDescriptor != null)
@@ -71,6 +75,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(dbConnDescriptor);
             }
 
+            // Set up an open SQLite connection to ensure the connection stays open for tests
             services.AddSingleton<DbConnection>(_ =>
             {
                 var sqliteConn = new SqliteConnection("DataSource=:memory:");
@@ -78,30 +83,29 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 return sqliteConn;
             });
 
+            // Configure the ChatDBContext to use the in-memory SQLite connection
             services.AddDbContext<ChatDBContext>((provider, options) =>
             {
                 var conn = provider.GetRequiredService<DbConnection>();
                 options.UseSqlite(conn);
             });
-
-            // Add this new part to handle GitHub auth in test environment
-            services.Configure<AuthenticationOptions>(options =>
-            {
-                options.DefaultChallengeScheme = IdentityConstants.ApplicationScheme;
-            });
         });
 
         builder.UseEnvironment("Development");
+        // Configure the server to use Kestrel with the chosen base URL
         builder.ConfigureWebHost(webHostBuilder => webHostBuilder.UseKestrel().UseUrls(baseUrl));
 
+        // Build and start the custom test host
         _testHost = builder.Build();
+
         _testHost.Start();
 
+        // Retrieve the server's base address and configure HTTP client options
         var server = _testHost.Services.GetRequiredService<IServer>();
-        var addressesFeature = server.Features.Get<IServerAddressesFeature>() ?? 
-            throw new InvalidOperationException("No server addresses available.");
+        var addressesFeature = server.Features.Get<IServerAddressesFeature>() ?? throw new InvalidOperationException("No server addresses available.");
         ClientOptions.BaseAddress = addressesFeature.Addresses.Select(uri => new Uri(uri)).Last();
 
+        // Start the initial host instance
         initialHost.Start();
         return initialHost;
     }
