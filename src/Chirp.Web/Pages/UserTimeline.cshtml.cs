@@ -48,9 +48,16 @@ namespace Chirp.Web.Pages
             FollowersCount = targetAuthor.Followers.Count;
             FollowingCount = targetAuthor.Following.Count;
 
-            Cheeps = IsOwnTimeline(CurrentUser)
-                ? _cheepService.GetUsersFollowingCheeps(targetAuthor, page, PageSize)
-                : _cheepService.GetCheepsFromAuthor(targetAuthor, page, PageSize);
+            Cheeps = _cheepService.GetCheepsFromAuthor(targetAuthor, page, PageSize);
+
+            if (IsOwnTimeline(CurrentUser))
+            {
+                Cheeps.AddRange(_cheepService.GetUsersFollowingCheeps(targetAuthor, page, PageSize));
+            }
+            
+            Cheeps = Cheeps
+                .OrderByDescending(cheep => DateTime.Parse(cheep.TimeStamp))
+                .ToList();
 
             if (CurrentUser != string.Empty)
             {
