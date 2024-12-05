@@ -50,8 +50,6 @@ namespace UnitTests
             // Assert
             Assert.IsNotNull(result, "Result should not be null");
             Assert.That(result.UserName, Is.EqualTo(expectedAuthor.UserName));
-
-
         }
 
         [Test]
@@ -128,71 +126,109 @@ namespace UnitTests
         }
 
         [Test]
-        public void FollowAuthor_AddsTheAuthorToFollowersList()
+        public async Task FollowAuthor_AddsTheAuthorToFollowersList()
         {
             // Arrange
             var authorName1 = "TestAuthor1";
-            var expectedAuthor1 = new Author
-            {
-                UserName = authorName1
-            };
+            var expectedAuthor1 = new Author { UserName = authorName1 };
 
             var authorName2 = "TestAuthor2";
-            var expectedAuthor2 = new Author
-            {
-                UserName = authorName2
-            };
+            var expectedAuthor2 = new Author { UserName = authorName2 };
 
             _context.Authors.Add(expectedAuthor1);
             _context.Authors.Add(expectedAuthor2);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             // Act
-            _authorRepository.FollowAuthor(expectedAuthor1.UserName, expectedAuthor2.UserName);
+            await _authorRepository.FollowAuthor(expectedAuthor1.UserName, expectedAuthor2.UserName);
 
-            var result = string.Empty;
-
-            foreach (Author a in expectedAuthor2.Followers)
-            {
-                result = a.UserName;
-            }
+            var updatedAuthor2 = await _context.Authors
+                .Include(a => a.Followers)
+                .FirstOrDefaultAsync(a => a.UserName == authorName2);
 
             // Assert
-            Assert.That(result, Is.EqualTo(expectedAuthor1.UserName));
+            Assert.IsNotNull(updatedAuthor2);
+            Assert.That(updatedAuthor2.Followers.Any(f => f.UserName == authorName1), Is.True);
         }
 
         [Test]
-        public void UnfollowAuthor_RemovesTheAuthorFromFollowersList()
+        public async Task UnfollowAuthor_RemovesTheAuthorFromFollowersList()
         {
             // Arrange
             var authorName1 = "TestAuthor1";
-            var expectedAuthor1 = new Author
-            {
-                UserName = authorName1
-            };
+            var expectedAuthor1 = new Author { UserName = authorName1 };
 
             var authorName2 = "TestAuthor2";
-            var expectedAuthor2 = new Author
-            {
-                UserName = authorName2
-            };
+            var expectedAuthor2 = new Author { UserName = authorName2 };
 
             _context.Authors.Add(expectedAuthor1);
             _context.Authors.Add(expectedAuthor2);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             expectedAuthor1.Followers.Add(expectedAuthor2);
             expectedAuthor2.Following.Add(expectedAuthor1);
+            await _context.SaveChangesAsync();
 
             // Act
-            _authorRepository.UnfollowAuthor(expectedAuthor2.UserName, expectedAuthor1.UserName);
-            
+            await _authorRepository.UnfollowAuthor(expectedAuthor2.UserName, expectedAuthor1.UserName);
 
+            var updatedAuthor1 = await _context.Authors
+                .Include(a => a.Followers)
+                .FirstOrDefaultAsync(a => a.UserName == authorName1);
 
             // Assert
-            Assert.That(expectedAuthor1.Followers.Count, Is.EqualTo(0));
+            Assert.IsNotNull(updatedAuthor1);
+            Assert.That(updatedAuthor1.Followers.Count, Is.EqualTo(0));
         }
 
+        [Test]
+        public async Task IsFollowing_ReturnsTrue_WhenUserIsFollowingAnotherUser()
+        {
+            // Arrange
+            var followerName = "FollowerUser";
+            var followedName = "FollowedUser";
 
+            var follower = new Author { UserName = followerName };
+            var followed = new Author { UserName = followedName };
+
+            _context.Authors.Add(follower);
+            _context.Authors.Add(followed);
+            await _context.SaveChangesAsync();
+
+            // Establish the follow relationship
+            follower.Following.Add(followed);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var result = await _authorRepository.IsFollowing(followerName, followedName);
+
+            // Assert
+            Assert.That(result, Is.True);
+        }
+
+        [Test]
+        public async Task GetFollowers_ReturnsAuthorsThatTheAuthorIsFollowing()
+        {
+            // Arrange
+            var targetAuthor = new Author { UserName = "TargetUser" };
+            var followedAuthor1 = new Author { UserName = "FollowedUser1" };
+            var unrelatedAuthor = new Author { UserName = "UnrelatedUser" };
+
+            _context.Authors.Add(targetAuthor);
+            _context.Authors.Add(followedAuthor1);
+            _context.Authors.Add(unrelatedAuthor);
+            await _context.SaveChangesAsync();
+
+            targetAuthor.Following.Add(followedAuthor1);
+            await _context.SaveChangesAsync();
+
+            // Act
+            var followers = _authorRepository.GetFollowers(targetAuthor);
+
+            // Assert
+            Assert.That(followers.Count, Is.EqualTo(1));
+            Assert.That(followers.Any(f => f.Name == "FollowedUser1"), Is.True);
+            Assert.That(followers.Any(f => f.Name == "UnrelatedUser"), Is.False);
+        }
     }
 }
