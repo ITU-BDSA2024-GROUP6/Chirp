@@ -127,6 +127,72 @@ namespace UnitTests
             Assert.That(result.Email, Is.EqualTo(expectedAuthor.Email));
         }
 
-        
+        [Test]
+        public void FollowAuthor_AddsTheAuthorToFollowersList()
+        {
+            // Arrange
+            var authorName1 = "TestAuthor1";
+            var expectedAuthor1 = new Author
+            {
+                UserName = authorName1
+            };
+
+            var authorName2 = "TestAuthor2";
+            var expectedAuthor2 = new Author
+            {
+                UserName = authorName2
+            };
+
+            _context.Authors.Add(expectedAuthor1);
+            _context.Authors.Add(expectedAuthor2);
+            _context.SaveChanges();
+
+            // Act
+            _authorRepository.FollowAuthor(expectedAuthor1.UserName, expectedAuthor2.UserName);
+
+            var result = string.Empty;
+
+            foreach (Author a in expectedAuthor2.Followers)
+            {
+                result = a.UserName;
+            }
+
+            // Assert
+            Assert.That(result, Is.EqualTo(expectedAuthor1.UserName));
+        }
+
+        [Test]
+        public void UnfollowAuthor_RemovesTheAuthorFromFollowersList()
+        {
+            // Arrange
+            var authorName1 = "TestAuthor1";
+            var expectedAuthor1 = new Author
+            {
+                UserName = authorName1
+            };
+
+            var authorName2 = "TestAuthor2";
+            var expectedAuthor2 = new Author
+            {
+                UserName = authorName2
+            };
+
+            _context.Authors.Add(expectedAuthor1);
+            _context.Authors.Add(expectedAuthor2);
+            _context.SaveChanges();
+
+            expectedAuthor1.Followers.Add(expectedAuthor2);
+            expectedAuthor2.Following.Add(expectedAuthor1);
+
+            // Act
+            _authorRepository.UnfollowAuthor(expectedAuthor2.UserName, expectedAuthor1.UserName);
+            
+
+
+            // Assert
+            Assert.That(expectedAuthor1.Followers.Count, Is.EqualTo(0));
+        }
+
+
     }
 }
