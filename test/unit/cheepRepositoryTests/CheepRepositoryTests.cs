@@ -86,8 +86,7 @@ namespace UnitTests
             var cheep = _cheepRepository.CreateCheep(text, expectedAuthor, dateTime);
 
             // Assert
-            var retrievedCheep = _context.Cheeps
-    .FirstOrDefault(c => c.Text == text && c.Author.UserName == authorName && c.TimeStamp == dateTime);
+            var retrievedCheep = _context.Cheeps.FirstOrDefault(c => c.Text == text && c.Author.UserName == authorName && c.TimeStamp == dateTime);
 
             Assert.IsNotNull(retrievedCheep, "The cheep should exist in the context after being created.");
             Assert.That(retrievedCheep.Text, Is.EqualTo(text), "The text of the cheep should match.");

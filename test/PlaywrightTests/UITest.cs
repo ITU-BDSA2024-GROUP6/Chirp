@@ -20,7 +20,7 @@ namespace test.PlaywrightTests
 
         [SetUp]
         public async Task SetUp()
-        {            
+        {
             _factory = new CustomWebApplicationFactory();
             _serverAddress = _factory.TestServerAddress;
             _client = _factory.CreateClient(new WebApplicationFactoryClientOptions
@@ -30,6 +30,7 @@ namespace test.PlaywrightTests
             });
 
             await InitializeBrowserAndCreateBrowserContextAsync();
+
             var test = TestContext.CurrentContext.Test;
 
             // Check if the test is marked with the "SkipSetUp" category
@@ -40,40 +41,53 @@ namespace test.PlaywrightTests
         }
 
         [Test]
-        public async Task Test_LoginFunctionality()
+        public async Task UserCanRegister()
         {
+
             var _page = await _context!.NewPageAsync();
             await _page.GotoAsync(_serverAddress);
 
-            await _page.GetByRole(AriaRole.Link, new() { NameString = "Register" }).ClickAsync();
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Register" }).ClickAsync();
+            await _page.WaitForURLAsync(new Regex("/Identity/Account/Register$"));
+
             await _page.GetByPlaceholder("Username").ClickAsync();
+            await Expect(_page.GetByPlaceholder("Username")).ToBeFocusedAsync();
             await _page.GetByPlaceholder("Username").FillAsync("TestUser");
+            await Expect(_page.GetByPlaceholder("Username")).ToHaveValueAsync("TestUser");
+
+
             await _page.GetByPlaceholder("name@example.com").ClickAsync();
-            await _page.GetByPlaceholder("name@example.com").FillAsync("Test@Test.Test");
+            await Expect(_page.GetByPlaceholder("name@example.com")).ToBeFocusedAsync();
+            await _page.GetByPlaceholder("name@example.com").FillAsync("TestUser@Test.Test");
+            await Expect(_page.GetByPlaceholder("name@example.com")).ToHaveValueAsync("TestUser@Test.Test");
+
+
             await _page.GetByLabel("Password", new() { Exact = true }).ClickAsync();
             await _page.GetByLabel("Password", new() { Exact = true }).FillAsync("Password1!");
+            await Expect(_page.GetByLabel("Password", new() { Exact = true })).ToHaveValueAsync("Password1!");
             await _page.GetByLabel("Confirm Password").ClickAsync();
             await _page.GetByLabel("Confirm Password").FillAsync("Password1!");
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Register" }).ClickAsync();
+            await Expect(_page.GetByLabel("Confirm Password")).ToHaveValueAsync("Password1!");
 
-
+            await _page.Locator("#registerSubmit").ClickAsync();
+            await Expect(_page).ToHaveURLAsync(_serverAddress);
         }
 
-        [TearDown] 
-        public async Task TearDown() 
-        { 
+        [TearDown]
+        public async Task TearDown()
+        {
             Console.WriteLine("Tearing down");
             Dispose();
         }
 
-        private async Task InitializeBrowserAndCreateBrowserContextAsync() 
+        private async Task InitializeBrowserAndCreateBrowserContextAsync()
         {
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Headless = true, //Set to false if you want to see the browser
             });
-                
+
             _context = await _browser.NewContextAsync(new BrowserNewContextOptions());
         }
 
@@ -83,49 +97,6 @@ namespace test.PlaywrightTests
             _browser?.DisposeAsync().GetAwaiter().GetResult();
         }
 
-        
-/*
-        [Test]
-        public async Task HomepageHasPlaywrightInTitleAndGetStartedLinkLinkingtoTheIntroPage()
-        {
-            var _page = await _context!.NewPageAsync();
-            await _page.GotoAsync(_serverAddress);
 
-            
-            await _page.GetByRole(AriaRole.Link, new() { NameString = "Register" }).ClickAsync();
-            await _page.GetByPlaceholder("Username").ClickAsync();
-            await _page.GetByPlaceholder("Username").FillAsync("BennyMedDetHenny");
-            await _page.GetByPlaceholder("name@example.com").ClickAsync();
-            await _page.GetByPlaceholder("name@example.com").FillAsync("beor@itu.dk");
-            await _page.GetByLabel("Password", new() { Exact = true }).ClickAsync();
-            await _page.GetByLabel("Password", new() { Exact = true }).FillAsync("Password1!");
-            await _page.GetByLabel("Confirm Password").ClickAsync();
-            await _page.GetByLabel("Confirm Password").FillAsync("Password1!");
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Register" }).ClickAsync();
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Logout" }).ClickAsync();
-            await _page.GetByRole(AriaRole.Link, new() { NameString = "Login" }).ClickAsync();
-            await _page.GetByPlaceholder("name@example.com").ClickAsync();
-            await _page.GetByPlaceholder("name@example.com").FillAsync("BennyMedDetHenny");
-            await _page.GetByPlaceholder("Password").ClickAsync();
-            await _page.GetByPlaceholder("Password").FillAsync("Password1!");
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Log in" }).ClickAsync();
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Logout" }).ClickAsync();
-            await _page.GetByRole(AriaRole.Link, new() { NameString = "Login" }).ClickAsync();
-            await _page.GetByPlaceholder("name@example.com").ClickAsync();
-            await _page.GetByPlaceholder("name@example.com").FillAsync("beor@itu.dk");
-            await _page.GetByPlaceholder("Password").ClickAsync();
-            await _page.GetByPlaceholder("Password").FillAsync("Password1!");
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Log in" }).ClickAsync();
-            await _page.Locator("#cheepInput").ClickAsync();
-            await _page.Locator("#cheepInput").FillAsync("Hello everybody!");
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Share" }).ClickAsync();
-            await _page.GetByRole(AriaRole.Link, new() { NameString = "BennyMedDetHenny", Exact = true }).ClickAsync();
-            await _page.Locator("#cheepInput").ClickAsync();
-            await _page.Locator("#cheepInput").FillAsync("I can write on my own timeline aswell! Cool!");
-            await _page.GetByRole(AriaRole.Button, new() { NameString = "Share" }).ClickAsync();
-
-
-        }
-        */
     }
 }
