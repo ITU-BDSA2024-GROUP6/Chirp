@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "cheepRepositoryTests", "tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "authorRepositoryTests", "test\unit\authorRepositoryTests\authorRepositoryTests.csproj", "{64DBE212-8F43-42B3-8116-D4E60F5F4051}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaywrightTests", "test\PlaywrightTests\PlaywrightTests.csproj", "{6667873C-E6CE-4CC2-9020-EEC19993666A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,6 +50,10 @@ Global
 		{64DBE212-8F43-42B3-8116-D4E60F5F4051}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64DBE212-8F43-42B3-8116-D4E60F5F4051}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64DBE212-8F43-42B3-8116-D4E60F5F4051}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6667873C-E6CE-4CC2-9020-EEC19993666A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6667873C-E6CE-4CC2-9020-EEC19993666A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6667873C-E6CE-4CC2-9020-EEC19993666A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6667873C-E6CE-4CC2-9020-EEC19993666A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{334C86CC-DAD8-488E-B346-A82665617810} = {7575C913-5771-49A6-8113-A3F1016A4DEF}
@@ -56,5 +62,6 @@ Global
 		{EE364C89-6054-4FF2-98B1-2095073994D5} = {BE837B1B-42E5-4D3A-8F52-91694ECA3BCF}
 		{FA17DF90-2176-4D47-9CC5-BA096AA26D8C} = {EE364C89-6054-4FF2-98B1-2095073994D5}
 		{64DBE212-8F43-42B3-8116-D4E60F5F4051} = {EE364C89-6054-4FF2-98B1-2095073994D5}
+		{6667873C-E6CE-4CC2-9020-EEC19993666A} = {BE837B1B-42E5-4D3A-8F52-91694ECA3BCF}
 	EndGlobalSection
 EndGlobal
