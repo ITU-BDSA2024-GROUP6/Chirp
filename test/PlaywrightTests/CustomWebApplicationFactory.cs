@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Chirp.Infrastructure.Data;
 using Chirp.Web;
+using Chirp.Core.Models;
 
 namespace test.PlaywrightTests;
 
@@ -130,7 +131,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         initialHost.Start();
         return initialHost;
     }
-    
+
     protected override void Dispose(bool disposing)
     {
         _testHost?.StopAsync().Wait();
