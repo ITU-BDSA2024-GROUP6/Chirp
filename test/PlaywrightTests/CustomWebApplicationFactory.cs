@@ -46,61 +46,53 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
     protected override IHost CreateHost(IHostBuilder builder)
     {
-        var initialHost = builder.Build();
-        var selectedPort = GetAvailablePort();
-        var baseUrl = $"http://127.0.0.1:{selectedPort}";
-
+        // Before building the initial host, we need to modify the configuration
         builder.ConfigureServices(services =>
         {
-            // First, remove any existing authentication configuration
-            var descriptors = services.Where(d => 
-                d.ServiceType.Name.Contains("Authentication") ||
-                d.ServiceType.Name.Contains("Security") ||
-                d.ServiceType.Name.Contains("GitHub") ||
-                d.ServiceType == typeof(IAuthenticationService) ||
-                d.ServiceType == typeof(IAuthenticationHandlerProvider)
-            ).ToList();
+            // Remove ALL existing authentication and identity services
+            var descriptorsToRemove = services
+                .Where(d => 
+                    d.ServiceType.Namespace?.Contains("Authentication") == true ||
+                    d.ServiceType.Namespace?.Contains("Identity") == true ||
+                    d.ServiceType.Namespace?.Contains("Security") == true
+                ).ToList();
             
-            foreach (var descriptor in descriptors)
+            foreach (var descriptor in descriptorsToRemove)
             {
                 services.Remove(descriptor);
             }
 
-            // Configure test authentication
+            // Add our test authentication setup
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "TestAuth";
-                options.DefaultAuthenticateScheme = "TestAuth";
-                options.DefaultChallengeScheme = "TestAuth";
                 options.DefaultSignInScheme = "TestAuth";
             }).AddCookie("TestAuth");
 
-            // Add Identity without the default UI (since we're testing)
+            // Re-add Identity with minimal configuration
             services.AddIdentityCore<Author>(options => 
             {
                 options.SignIn.RequireConfirmedAccount = false;
-                // Make password requirements simple for testing
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequiredLength = 6;
+                options.Password.RequireUppercase = false;
+                options.Password.RequiredLength = 3; // Minimal for testing
             })
             .AddEntityFrameworkStores<ChatDBContext>();
 
-            // Database configuration (your existing code)
+            // Configure GitHub auth to be disabled
+            services.Configure<AuthenticationOptions>(options =>
+            {
+                options.DefaultChallengeScheme = "TestAuth";
+            });
+
+            // Rest of your existing database configuration
             var existingDbContext = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<ChatDBContext>));
             if (existingDbContext != null)
             {
                 services.Remove(existingDbContext);
-            }
-
-            var dbConnDescriptor = services.SingleOrDefault(
-                d => d.ServiceType == typeof(DbConnection));
-            if (dbConnDescriptor != null)
-            {
-                services.Remove(dbConnDescriptor);
             }
 
             services.AddSingleton<DbConnection>(_ =>
@@ -116,6 +108,11 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 options.UseSqlite(conn);
             });
         });
+
+        // Continue with the rest of your existing code
+        var initialHost = builder.Build();
+        var selectedPort = GetAvailablePort();
+        var baseUrl = $"http://127.0.0.1:{selectedPort}";
 
         builder.UseEnvironment("Development");
         builder.ConfigureWebHost(webHostBuilder => webHostBuilder.UseKestrel().UseUrls(baseUrl));
