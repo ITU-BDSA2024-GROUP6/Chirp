@@ -51,7 +51,43 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
         builder.ConfigureServices(services =>
         {
-            // First, remove any existing database configurations
+            // First, remove any existing authentication configuration
+            var descriptors = services.Where(d => 
+                d.ServiceType.Name.Contains("Authentication") ||
+                d.ServiceType.Name.Contains("Security") ||
+                d.ServiceType.Name.Contains("GitHub") ||
+                d.ServiceType == typeof(IAuthenticationService) ||
+                d.ServiceType == typeof(IAuthenticationHandlerProvider)
+            ).ToList();
+            
+            foreach (var descriptor in descriptors)
+            {
+                services.Remove(descriptor);
+            }
+
+            // Configure test authentication
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "TestAuth";
+                options.DefaultAuthenticateScheme = "TestAuth";
+                options.DefaultChallengeScheme = "TestAuth";
+                options.DefaultSignInScheme = "TestAuth";
+            }).AddCookie("TestAuth");
+
+            // Add Identity without the default UI (since we're testing)
+            services.AddIdentityCore<Author>(options => 
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                // Make password requirements simple for testing
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 6;
+            })
+            .AddEntityFrameworkStores<ChatDBContext>();
+
+            // Database configuration (your existing code)
             var existingDbContext = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<ChatDBContext>));
             if (existingDbContext != null)
@@ -66,7 +102,6 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(dbConnDescriptor);
             }
 
-            // Set up our test database connection
             services.AddSingleton<DbConnection>(_ =>
             {
                 var sqliteConn = new SqliteConnection("DataSource=:memory:");
@@ -79,48 +114,23 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 var conn = provider.GetRequiredService<DbConnection>();
                 options.UseSqlite(conn);
             });
-
-            // Remove the existing authentication configuration
-            var authBuilder = services.SingleOrDefault(
-                d => d.ServiceType == 
-                    typeof(Microsoft.AspNetCore.Authentication.AuthenticationBuilder));
-            if (authBuilder != null)
-            {
-                services.Remove(authBuilder);
-            }
-
-            // Set up simplified authentication for testing
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = "Identity.Application";
-                options.DefaultSignInScheme = "Identity.External";
-                options.DefaultChallengeScheme = "Identity.External";
-            })
-            .AddCookie("Identity.Application")
-            .AddCookie("Identity.External");
         });
 
-        // Use the Development environment for testing
         builder.UseEnvironment("Development");
-        
-        // Configure the test server
-        builder.ConfigureWebHost(webHostBuilder => 
-            webHostBuilder.UseKestrel().UseUrls(baseUrl));
+        builder.ConfigureWebHost(webHostBuilder => webHostBuilder.UseKestrel().UseUrls(baseUrl));
 
         _testHost = builder.Build();
         _testHost.Start();
 
-        // Set up the client options with the correct server address
         var server = _testHost.Services.GetRequiredService<IServer>();
         var addressesFeature = server.Features.Get<IServerAddressesFeature>() ?? 
             throw new InvalidOperationException("No server addresses available.");
-        ClientOptions.BaseAddress = addressesFeature.Addresses
-            .Select(uri => new Uri(uri)).Last();
+        ClientOptions.BaseAddress = addressesFeature.Addresses.Select(uri => new Uri(uri)).Last();
 
         initialHost.Start();
         return initialHost;
     }
-
+    
     protected override void Dispose(bool disposing)
     {
         _testHost?.StopAsync().Wait();
