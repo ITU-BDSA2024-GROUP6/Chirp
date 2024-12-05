@@ -12,36 +12,31 @@ using Chirp.Infrastructure.Data;
 using Chirp.Web;
 
 namespace test.PlaywrightTests;
-/* Custom test environment for tests in ASP.NET Core with Playwright.
-Defines a custom factory for the test server environment for the application
-Referenced from: https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-8.0
- */
+
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     private IHost? _testHost;
-    private static readonly Queue<int> PortPool = new Queue<int>(Enumerable.Range(4000, 15));  // Set of available ports, e.g., 4000-4014
+    // We maintain a pool of ports to avoid conflicts when running multiple tests
+    private static readonly Queue<int> PortPool = new Queue<int>(Enumerable.Range(4000, 15));
 
-    // Get the next available port from the queue
     private static int GetAvailablePort()
     {
         lock (PortPool)
         {
             if (PortPool.Count > 0)
             {
-                return PortPool.Dequeue();  // Dequeue the next port
+                return PortPool.Dequeue();
             }
             throw new InvalidOperationException("No available ports remaining in the pool.");
         }
     }
 
-    // Property to access the base URL of the test server
     public string TestServerAddress
     {
         get
         {
             if (_testHost is null)
             {
-                // Forces WebApplicationFactory to initialize the server
                 using var client = CreateDefaultClient();
             }
             return ClientOptions.BaseAddress.ToString();
@@ -52,14 +47,11 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     {
         var initialHost = builder.Build();
         var selectedPort = GetAvailablePort();
-
-        // Set up the base URL using the available port
         var baseUrl = $"http://127.0.0.1:{selectedPort}";
 
-        // Configure test services and replace the default services
         builder.ConfigureServices(services =>
         {
-            // Replace existing ChatDBContext with an in-memory version for testing purposes
+            // First, remove any existing database configurations
             var existingDbContext = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbContextOptions<ChatDBContext>));
             if (existingDbContext != null)
@@ -67,7 +59,6 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(existingDbContext);
             }
 
-            // Remove any existing database connection
             var dbConnDescriptor = services.SingleOrDefault(
                 d => d.ServiceType == typeof(DbConnection));
             if (dbConnDescriptor != null)
@@ -75,7 +66,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(dbConnDescriptor);
             }
 
-            // Set up an open SQLite connection to ensure the connection stays open for tests
+            // Set up our test database connection
             services.AddSingleton<DbConnection>(_ =>
             {
                 var sqliteConn = new SqliteConnection("DataSource=:memory:");
@@ -83,29 +74,49 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 return sqliteConn;
             });
 
-            // Configure the ChatDBContext to use the in-memory SQLite connection
             services.AddDbContext<ChatDBContext>((provider, options) =>
             {
                 var conn = provider.GetRequiredService<DbConnection>();
                 options.UseSqlite(conn);
             });
+
+            // Remove the existing authentication configuration
+            var authBuilder = services.SingleOrDefault(
+                d => d.ServiceType == 
+                    typeof(Microsoft.AspNetCore.Authentication.AuthenticationBuilder));
+            if (authBuilder != null)
+            {
+                services.Remove(authBuilder);
+            }
+
+            // Set up simplified authentication for testing
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = "Identity.Application";
+                options.DefaultSignInScheme = "Identity.External";
+                options.DefaultChallengeScheme = "Identity.External";
+            })
+            .AddCookie("Identity.Application")
+            .AddCookie("Identity.External");
         });
 
+        // Use the Development environment for testing
         builder.UseEnvironment("Development");
-        // Configure the server to use Kestrel with the chosen base URL
-        builder.ConfigureWebHost(webHostBuilder => webHostBuilder.UseKestrel().UseUrls(baseUrl));
+        
+        // Configure the test server
+        builder.ConfigureWebHost(webHostBuilder => 
+            webHostBuilder.UseKestrel().UseUrls(baseUrl));
 
-        // Build and start the custom test host
         _testHost = builder.Build();
-
         _testHost.Start();
 
-        // Retrieve the server's base address and configure HTTP client options
+        // Set up the client options with the correct server address
         var server = _testHost.Services.GetRequiredService<IServer>();
-        var addressesFeature = server.Features.Get<IServerAddressesFeature>() ?? throw new InvalidOperationException("No server addresses available.");
-        ClientOptions.BaseAddress = addressesFeature.Addresses.Select(uri => new Uri(uri)).Last();
+        var addressesFeature = server.Features.Get<IServerAddressesFeature>() ?? 
+            throw new InvalidOperationException("No server addresses available.");
+        ClientOptions.BaseAddress = addressesFeature.Addresses
+            .Select(uri => new Uri(uri)).Last();
 
-        // Start the initial host instance
         initialHost.Start();
         return initialHost;
     }
@@ -113,7 +124,7 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
     protected override void Dispose(bool disposing)
     {
         _testHost?.StopAsync().Wait();
-        Thread.Sleep(1500); // Give time for the server to shut down properly
+        Thread.Sleep(1500); // Allow time for proper shutdown
         _testHost?.Dispose();
     }
 }
