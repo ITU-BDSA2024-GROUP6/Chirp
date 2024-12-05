@@ -98,14 +98,6 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
         // Build and start the custom test host
         _testHost = builder.Build();
 
-        // Ensure the database schema is created
-        using (var scope = _testHost.Services.CreateScope())
-        {
-            var dbContext = scope.ServiceProvider.GetRequiredService<ChatDBContext>();
-            dbContext.Database.EnsureCreated();
-            // dbContext.Database.Migrate(); // Uncomment if you need to apply migrations instead
-        }
-
         _testHost.Start();
 
         // Retrieve the server's base address and configure HTTP client options
