@@ -8,6 +8,8 @@ on:
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: ${{ github.ref == 'refs/heads/main' && 'Production' || 'Test' }}
     steps:
       - uses: actions/checkout@v4
       
