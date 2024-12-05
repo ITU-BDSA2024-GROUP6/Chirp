@@ -253,7 +253,7 @@ namespace test.PlaywrightTests
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = false, //Set to false if you want to see the browser
+                Headless = Environment.GetEnvironmentVariable("CI") != null, // Headless in CI, headed locally
             });
 
             _context = await _browser.NewContextAsync(new BrowserNewContextOptions());
