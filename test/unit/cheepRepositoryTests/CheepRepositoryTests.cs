@@ -9,6 +9,7 @@ using System;
 
 namespace UnitTests
 {
+    [Category("Unit")]
     public class CheepRepositoryTests
     {
         private ChatDBContext _context;

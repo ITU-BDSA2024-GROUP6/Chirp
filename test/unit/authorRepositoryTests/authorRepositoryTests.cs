@@ -9,6 +9,7 @@ using System;
 
 namespace UnitTests
 {
+    [Category("Unit")]
     public class AuthorRepositoryTests : IDisposable
     {
         private ChatDBContext _context;

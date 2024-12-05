@@ -7,6 +7,7 @@ using Xunit;
 
 namespace test.PlaywrightTests
 {
+    [Category("E2E")]
     [TestFixture, NonParallelizable]
     public class UITest : PageTest, IClassFixture<CustomWebApplicationFactory>, IDisposable
     {
