@@ -4,49 +4,47 @@ on:
     branches: [ main, test/github-actions-setup ]
   pull_request:
     branches: [ main ]
-    
+
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
     
-    # Set up .NET SDK
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.x
     
-    # Install system dependencies required by Playwright for E2E testing
     - name: Install Playwright deps
       run: |
         sudo apt-get update
         sudo apt-get install -y libglib2.0-0 libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2
     
-    # Restore dependencies for all projects
-    - name: Restore dependencies
-      run: |
-        dotnet restore ./src/Chirp.Web/Chirp.Web.csproj
-        dotnet restore ./test
+    # First restore and build the solution (includes unit tests)
+    - name: Restore solution
+      run: dotnet restore Chirp.sln
     
-    # Build all projects
-    - name: Build
-      run: |
-        dotnet build ./src/Chirp.Web/Chirp.Web.csproj --no-restore
-        dotnet build ./test --no-restore
+    - name: Build solution
+      run: dotnet build Chirp.sln --no-restore
     
-    # Run unit tests first as they're fastest
+    # Separately handle PlaywrightTests since it's not in the solution
+    - name: Restore Playwright tests
+      run: dotnet restore ./test/PlaywrightTests/PlaywrightTests.csproj
+    
+    - name: Build Playwright tests
+      run: dotnet build ./test/PlaywrightTests/PlaywrightTests.csproj --no-restore
+    
+    # Run the tests
     - name: Run Unit Tests
-      run: dotnet test ./test --filter "Category=Unit" --no-build --verbosity normal
+      run: dotnet test Chirp.sln --filter "Category=Unit" --no-build --verbosity normal
     
-    # Install Playwright browser for E2E tests
     - name: Install Playwright Browser
       run: pwsh ./test/PlaywrightTests/bin/Debug/net8.0/playwright.ps1 install
     
-    # Run E2E tests with retry mechanism since they can be flaky
     - name: Run E2E Tests
       uses: nick-fields/retry@v2
       with:
         timeout_minutes: 10
         max_attempts: 3
-        command: dotnet test ./test --filter "Category=E2E" --no-build --verbosity normal
+        command: dotnet test ./test/PlaywrightTests/PlaywrightTests.csproj --filter "Category=E2E" --no-build --verbosity normal
