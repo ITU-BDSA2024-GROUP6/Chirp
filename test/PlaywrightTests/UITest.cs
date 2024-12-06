@@ -1,7 +1,4 @@
 using Microsoft.Playwright;
-using NUnit.Framework;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
 
@@ -13,22 +10,16 @@ namespace test.PlaywrightTests
     {
         private IBrowserContext? _context;
         private IBrowser? _browser;
-        private CustomWebApplicationFactory _factory;
-        private string _serverAddress;
-        private IPlaywright _playwright;
-        private HttpClient _client;
-        private IPage _page;
+        private CustomWebApplicationFactory _factory = null!;
+        private string _serverAddress = null!;
+        private IPlaywright _playwright = null!;
+        private IPage _page = null!;
 
         [SetUp]
         public async Task SetUp()
         {
             _factory = new CustomWebApplicationFactory();
             _serverAddress = _factory.TestServerAddress;
-            _client = _factory.CreateClient(new WebApplicationFactoryClientOptions
-            {
-                AllowAutoRedirect = true,
-                HandleCookies = true,
-            });
 
             await InitializeBrowserAndCreateBrowserContextAsync();
 
@@ -153,7 +144,6 @@ namespace test.PlaywrightTests
             await _page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
 
             var cheep = _page.GetByText("Test Cheep");
-            await cheep.HighlightAsync();
             await Expect(cheep).ToBeVisibleAsync();
 
             await Expect(_page).ToHaveURLAsync(_serverAddress);
@@ -175,7 +165,6 @@ namespace test.PlaywrightTests
             await _page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
 
             var cheep = _page.GetByText("Test Cheep");
-            await cheep.HighlightAsync();
             await Expect(cheep).ToBeVisibleAsync();
 
             await Expect(_page).ToHaveURLAsync(expectedURL);
@@ -219,11 +208,154 @@ namespace test.PlaywrightTests
             await Expect(_page.GetByPlaceholder("Please confirm your new")).ToHaveValueAsync("NewPassword1!");
             await _page.GetByRole(AriaRole.Button, new() { Name = "Update password" }).ClickAsync();
 
+            var confirmationText = _page.GetByText("Your password has been");
+            await Expect(confirmationText).ToBeVisibleAsync();
+        }
 
+        [Test]
+        public async Task UserCanFollowAndUnfollowAnotherUserFromPublicTimeline()
+        {
+            var followButton = _page.Locator("li").Filter(new() { HasText = "Starbuck now is what we hear the worst." }).GetByRole(AriaRole.Button);
+
+            //follow author
+            await Expect(followButton).ToHaveTextAsync("Follow");
+            await followButton.ClickAsync();
+            await Expect(followButton).ToHaveTextAsync("Unfollow");
+
+            //unfollow author
+            await followButton.ClickAsync();
+            await Expect(followButton).ToHaveTextAsync("Follow");
+
+            //Check to see if we are still on the same page
+            await Expect(_page).ToHaveURLAsync(_serverAddress);
+        }
+
+
+
+        [Test]
+        public async Task UserCanFollowandUnfollowAnotherUserFromUserTimeline()
+        {
+            await _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine Follow Starbuck now is what we hear the worst. — 2023-08-01" }).GetByRole(AriaRole.Link).ClickAsync();
+            var expectedURL = _serverAddress + "Jacqualine%20Gilcoine";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+
+            var followButton = _page.Locator("li").Filter(new() { HasText = "Starbuck now is what we hear the worst." }).GetByRole(AriaRole.Button);
+
+            //follow author
+            await Expect(followButton).ToHaveTextAsync("Follow");
+            await followButton.ClickAsync();
+            await Expect(followButton).ToHaveTextAsync("Unfollow");
+
+
+            //unfollow author
+            await followButton.ClickAsync();
+            await Expect(followButton).ToHaveTextAsync("Follow");
+
+            //Check to see if we are still on the same page
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+        }
+
+        [Test]
+        public async Task UserCanUnFollowAnotherUserFromPrivateTimeline()
+        {
+            //Follow user
+            await _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine Follow Starbuck now is what we hear the worst. — 2023-08-01" }).GetByRole(AriaRole.Button).ClickAsync();
+
+            //Go to Private Timeline
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Your Timeline" }).ClickAsync();
+            var expectedURL = _serverAddress + "TestUser";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+            //Unfollow user
+            var unFollowButton = _page.Locator("li").Filter(new() { HasText = "Starbuck now is what we hear the worst." }).GetByRole(AriaRole.Button);
+            await Expect(unFollowButton).ToHaveTextAsync("Unfollow");
+            await unFollowButton.ClickAsync();
+
+            //If this text is visible, the user is following no one.
+            var confirmationText = _page.GetByText("There are no cheeps so far.");
+            await Expect(confirmationText).ToBeVisibleAsync();
+        }
+
+        [Test]
+        public async Task UserCanSeeWhoTheyFollowUnderProfileSettings()
+        {
+            await _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine Follow Starbuck now is what we hear the worst. — 2023-08-01" }).GetByRole(AriaRole.Button).ClickAsync();
+
+            await _page.GetByRole(AriaRole.Button, new() { Name = "About me" }).ClickAsync();
+            var expectedURL = _serverAddress + "Identity/Account/Manage";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+            await _page.GetByRole(AriaRole.Link, new() { Name = "Following" }).ClickAsync();
+            var newExpectedURL = _serverAddress + "Identity/Account/Manage/Following";
+            await Expect(_page).ToHaveURLAsync(newExpectedURL);
+
+            var followingUserName = _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine" });
+            await Expect(followingUserName).ToBeVisibleAsync();
+        }
+
+        [Test]
+        public async Task UserCanUnFollowAnotherUserFromProfileSettings()
+        {
+            await _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine Follow Starbuck now is what we hear the worst. — 2023-08-01" }).GetByRole(AriaRole.Button).ClickAsync();
+
+            await _page.GetByRole(AriaRole.Button, new() { Name = "About me" }).ClickAsync();
+            var expectedURL = _serverAddress + "Identity/Account/Manage";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+            await _page.GetByRole(AriaRole.Link, new() { Name = "Following" }).ClickAsync();
+            var newExpectedURL = _serverAddress + "Identity/Account/Manage/Following";
+            await Expect(_page).ToHaveURLAsync(newExpectedURL);
+
+
+            var unFollowButton = _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine" }).GetByRole(AriaRole.Button);
+            await Expect(unFollowButton).ToHaveTextAsync("Unfollow");
+            await unFollowButton.ClickAsync();
+
+            var confirmationText = _page.GetByText("You are not following any");
+            await Expect(confirmationText).ToBeVisibleAsync();
+        }
+
+        [Test]
+        public async Task FollowedUsersCheepsAppearOnPrivateTimeline()
+        {
+            //Follow user
+            await _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine Follow Starbuck now is what we hear the worst. — 2023-08-01" }).GetByRole(AriaRole.Button).ClickAsync();
+
+            //Go to Private Timeline
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Your Timeline" }).ClickAsync();
+            var expectedURL = _serverAddress + "TestUser";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+            var targetCheep = _page.GetByText("Starbuck now is what we hear the worst.");
+            await Expect(targetCheep).ToBeVisibleAsync();
+        }
+
+        [Test]
+        public async Task FollowedUsersCheepsDisappearFromPrivateTimelineWhenUnfollowed()
+        {
+            //Follow user
+            await _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine Follow Starbuck now is what we hear the worst. — 2023-08-01" }).GetByRole(AriaRole.Button).ClickAsync();
+
+            //Go to Private Timeline
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Your Timeline" }).ClickAsync();
+            var expectedURL = _serverAddress + "TestUser";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+            //Check if the cheep appears on Private Timeline
+            var targetCheep = _page.GetByText("Starbuck now is what we hear the worst.");
+            await Expect(targetCheep).ToBeVisibleAsync();
+
+            //Unfollow user
+            await _page.Locator("li").Filter(new() { HasText = "Jacqualine Gilcoine Unfollow Starbuck now is what we hear the worst. — 2023-08-" }).GetByRole(AriaRole.Button).ClickAsync();
+
+            //Check if the cheep now disappeared
+            var targetText = _page.GetByText("There are no cheeps so far.");
+            await Expect(targetText).ToBeVisibleAsync();
         }
 
         [TearDown]
-        public async Task TearDown()
+        public void TearDown()
         {
             Console.WriteLine("Tearing down");
             Dispose();

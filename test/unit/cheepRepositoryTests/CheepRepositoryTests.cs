@@ -12,9 +12,9 @@ namespace UnitTests
     [Category("Unit")]
     public class CheepRepositoryTests
     {
-        private ChatDBContext _context;
-        private IAuthorRepository _authorRepository;
-        private ICheepRepository _cheepRepository;
+        private ChatDBContext _context = null!;
+        private IAuthorRepository _authorRepository = null!;
+        private ICheepRepository _cheepRepository = null!;
 
         [SetUp]
         public void SetUp()

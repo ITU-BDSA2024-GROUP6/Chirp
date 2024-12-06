@@ -59,6 +59,7 @@ namespace Chirp.Infrastructure.Repositories
                 (
                     _context.Cheeps
                 .Include(c => c.Author)
+                .OrderByDescending(c => c.TimeStamp)
                 .Where(c => c.Author == followingAuthor) 
                 .Skip(page * pageSize)
                 .Take(pageSize)
