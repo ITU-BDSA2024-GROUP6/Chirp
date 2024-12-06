@@ -1,23 +1,50 @@
-name: .NET
-
+name: .NET Build and Test
 on:
   push:
-    branches: [ main ]
+    branches: [ main, test/github-actions-setup ]
   pull_request:
     branches: [ main ]
 
 jobs:
-  build:
-
+  build-and-test:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v4
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.x
-    - name: Restore dependencies
-      run: dotnet restore ./src/Chirp.Web/Chirp.Web.csproj
-    - name: Build
-      run: dotnet build ./src/Chirp.Web/Chirp.Web.csproj --no-restore
+    
+    - name: Install Playwright deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libglib2.0-0 libnss3 libnspr4 libatk1.0-0 libatk-bridge2.0-0 libcups2 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxfixes3 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2
+    
+    # First restore and build the solution (includes unit tests)
+    - name: Restore solution
+      run: dotnet restore Chirp.sln
+    
+    - name: Build solution
+      run: dotnet build Chirp.sln --no-restore
+    
+    # Separately handle PlaywrightTests since it's not in the solution
+    - name: Restore Playwright tests
+      run: dotnet restore ./test/PlaywrightTests/PlaywrightTests.csproj
+    
+    - name: Build Playwright tests
+      run: dotnet build ./test/PlaywrightTests/PlaywrightTests.csproj --no-restore
+    
+    # Run the tests
+    - name: Run Unit Tests
+      run: dotnet test Chirp.sln --filter "Category=Unit" --no-build --verbosity normal
+    
+    - name: Install Playwright Browser
+      run: pwsh ./test/PlaywrightTests/bin/Debug/net8.0/playwright.ps1 install
+    
+    - name: Run E2E Tests
+      uses: nick-fields/retry@v2
+      with:
+        timeout_minutes: 10
+        max_attempts: 3
+        command: dotnet test ./test/PlaywrightTests/PlaywrightTests.csproj --filter "Category=E2E" --no-build --verbosity normal

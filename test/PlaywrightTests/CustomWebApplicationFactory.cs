@@ -19,7 +19,7 @@ Referenced from: https://learn.microsoft.com/en-us/aspnet/core/test/integration-
 public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 {
     private IHost? _testHost;
-    private static readonly Queue<int> PortPool = new Queue<int>(Enumerable.Range(4000, 15));  // Set of available ports, e.g., 4000-4014
+    private static readonly Queue<int> PortPool = new Queue<int>(Enumerable.Range(4000, 25));  // Set of available ports, e.g., 4000-4014
 
     // Get the next available port from the queue
     private static int GetAvailablePort()
@@ -97,14 +97,6 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
 
         // Build and start the custom test host
         _testHost = builder.Build();
-
-        // Ensure the database schema is created
-        using (var scope = _testHost.Services.CreateScope())
-        {
-            var dbContext = scope.ServiceProvider.GetRequiredService<ChatDBContext>();
-            dbContext.Database.EnsureCreated();
-            // dbContext.Database.Migrate(); // Uncomment if you need to apply migrations instead
-        }
 
         _testHost.Start();
 

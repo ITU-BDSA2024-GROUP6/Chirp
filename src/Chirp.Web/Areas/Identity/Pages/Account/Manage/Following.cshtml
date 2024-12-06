@@ -18,7 +18,7 @@
                     <strong>
                         <a href="/@author.Name">@author.Name</a>
                     </strong>
-                    <form method="post" style="display: inline; margin: 0;" asp-page-handler="Unfollow"
+                    <form method="post" style="display: inline; margin: 0; ;" asp-page-handler="Unfollow"
                         asp-route-author="@author.Name">
                             @Html.AntiForgeryToken()
 
@@ -26,13 +26,15 @@
 
                         <input type="hidden" name="currentAuthor" value="@User.Identity!.Name" />
 
-                        <button type="submit" style="padding: 2px 6px;">Unfollow</button>
+                        <button type="submit" style="padding: 2px 6px; border-radius: 0%;">Unfollow</button>
                     </form>
                 </div>
                 </p>
             </li>
         }
     </ul>
+} else {
+    <em>You are not following any people yet.</em>
 }
 
 @section Scripts {

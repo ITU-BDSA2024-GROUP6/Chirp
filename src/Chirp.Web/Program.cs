@@ -26,7 +26,7 @@ builder.Services.AddAuthentication(options =>
         options.DefaultChallengeScheme = "GitHub";
     })
     .AddCookie()
-    
+
     .AddGitHub(o =>
     {
         o.ClientId = builder.Configuration["authentication_github_clientId"] ?? "";
@@ -38,16 +38,17 @@ builder.Services.AddAuthentication(options =>
 
 var app = builder.Build();
 
-
 using (var scope = app.Services.CreateScope())
 {
     var chatDBContext = scope.ServiceProvider.GetRequiredService<ChatDBContext>();
+    chatDBContext.Database.EnsureCreated();
     DbInitializer.SeedDatabase(chatDBContext);
 }
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
+
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }

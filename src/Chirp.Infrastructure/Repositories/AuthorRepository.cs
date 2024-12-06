@@ -107,12 +107,12 @@ namespace Chirp.Infrastructure.Repositories
         public List<AuthorDTO> GetFollowers(Author author)
         {
             return _context.Authors
-                .Where(a => a.Id == author.Id) // Filter to find the specific author
-                .SelectMany(a => a.Following) // Flatten the Following list
+                .Where(a => a.Id == author.Id) 
+                .SelectMany(a => a.Following) 
                 .Select(f => new AuthorDTO
                 {
-                    Name = f.UserName,
-                    Email = f.Email
+                    Name = f.UserName!,
+                    Email = f.Email!
                 })
                 .ToList();
         }

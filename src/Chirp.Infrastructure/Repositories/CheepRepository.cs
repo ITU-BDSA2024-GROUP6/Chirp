@@ -51,7 +51,7 @@ namespace Chirp.Infrastructure.Repositories
 
         public List<CheepDTO> GetUsersFollowingCheeps(Author author, int page, int pageSize)
         {
-            var _cheeps = GetCheepsFromAuthor(author, page, pageSize);
+            var _cheeps = new List<CheepDTO>();
 
             foreach (Author followingAuthor in author.Following)
             {
@@ -59,6 +59,7 @@ namespace Chirp.Infrastructure.Repositories
                 (
                     _context.Cheeps
                 .Include(c => c.Author)
+                .OrderByDescending(c => c.TimeStamp)
                 .Where(c => c.Author == followingAuthor) 
                 .Skip(page * pageSize)
                 .Take(pageSize)
@@ -70,10 +71,6 @@ namespace Chirp.Infrastructure.Repositories
                 }).ToList()
                 );
             }
-
-            _cheeps = _cheeps
-                .OrderByDescending(cheep => DateTime.Parse(cheep.TimeStamp))
-                .ToList();
 
             return _cheeps;
         }

@@ -28,13 +28,15 @@
   </ItemGroup>
 
   <ItemGroup>
-        <Using Include="Microsoft.Playwright.NUnit" />
-        <Using Include="NUnit.Framework" />
-        <Using Include="System.Text.RegularExpressions" />
-        <Using Include="System.Threading.Tasks" />
-    </ItemGroup>
+    <Using Include="Microsoft.Playwright.NUnit" />
+    <Using Include="NUnit.Framework" />
+    <Using Include="System.Text.RegularExpressions" />
+    <Using Include="System.Threading.Tasks" />
+  </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Chirp.Core\Chirp.Core.csproj" />
+    <ProjectReference Include="..\..\src\Chirp.Infrastructure\Chirp.Infrastructure.csproj" />
     <ProjectReference Include="..\..\src\Chirp.Web\Chirp.Web.csproj" />
   </ItemGroup>
 
