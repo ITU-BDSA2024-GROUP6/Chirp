@@ -353,6 +353,56 @@ namespace test.PlaywrightTests
             await Expect(targetText).ToBeVisibleAsync();
         }
 
+        [Test]
+        public async Task UserCanSeeOwnCheepsOnYourCheepsInProfileSettings()
+        {
+            await _page.Locator("#cheepInput").ClickAsync();
+            await _page.Locator("#cheepInput").FillAsync("Test Cheep");
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
+
+            await _page.GetByRole(AriaRole.Button, new() { Name = "About me" }).ClickAsync();
+            var expectedURL = _serverAddress + "Identity/Account/Manage";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+            await _page.GetByRole(AriaRole.Link, new() { Name = "Your Cheeps" }).ClickAsync();
+            var expectedPersonalCheepsURL = _serverAddress + "Identity/Account/Manage/PersonalCheeps";
+            await Expect(_page).ToHaveURLAsync(expectedPersonalCheepsURL);
+
+            var cheep = _page.GetByText("Test Cheep");
+            await Expect(cheep).ToBeVisibleAsync();
+        }
+
+        [Test]
+        public async Task UserCanDeleteProfileUnderForgetMeInProfileSettings()
+        {
+            await _page.Locator("#cheepInput").ClickAsync();
+            await _page.Locator("#cheepInput").FillAsync("Test Cheep");
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Share" }).ClickAsync();
+
+            await _page.GetByRole(AriaRole.Button, new() { Name = "About me" }).ClickAsync();
+            var expectedURL = _serverAddress + "Identity/Account/Manage";
+            await Expect(_page).ToHaveURLAsync(expectedURL);
+
+            await _page.GetByRole(AriaRole.Link, new() { Name = "Forget me" }).ClickAsync();
+            var expectedForgetMeURL = _serverAddress + "Identity/Account/Manage/Delete";
+            await Expect(_page).ToHaveURLAsync(expectedForgetMeURL);
+
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Forget me" }).ClickAsync();
+            var expectedDeleteURL = _serverAddress + "Identity/Account/Manage/DeletePersonalData";
+            await Expect(_page).ToHaveURLAsync(expectedDeleteURL);
+
+            await Expect(_page.GetByPlaceholder("Please enter your password.")).ToBeEmptyAsync();
+            await _page.GetByPlaceholder("Please enter your password.").ClickAsync();
+            await _page.GetByPlaceholder("Please enter your password.").FillAsync("Password1!");
+            await Expect(_page.GetByPlaceholder("Please enter your password.")).ToHaveValueAsync("Password1!");
+            await _page.GetByRole(AriaRole.Button, new() { Name = "Delete data and close my" }).ClickAsync();
+            await Expect(_page).ToHaveURLAsync(_serverAddress);
+
+            var cheep = _page.GetByText("Test Cheep");
+            await Expect(cheep).Not.ToBeVisibleAsync();
+        }
+
+
         [TearDown]
         public void TearDown()
         {
@@ -384,7 +434,7 @@ namespace test.PlaywrightTests
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = true, //Set to false if you want to see the browser
+                Headless = false, //Set to false if you want to see the browser
             });
 
             _context = await _browser.NewContextAsync(new BrowserNewContextOptions());
