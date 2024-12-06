@@ -4,7 +4,6 @@ using Xunit;
 
 namespace test.PlaywrightTests
 {
-    [Category("E2E")]
     [TestFixture, NonParallelizable]
     public class UITest : PageTest, IClassFixture<CustomWebApplicationFactory>, IDisposable
     {
@@ -385,7 +384,7 @@ namespace test.PlaywrightTests
             _playwright = await Microsoft.Playwright.Playwright.CreateAsync();
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = false, //Set to false if you want to see the browser
+                Headless = true, //Set to false if you want to see the browser
             });
 
             _context = await _browser.NewContextAsync(new BrowserNewContextOptions());
