@@ -21,8 +21,8 @@ jobs:
       # Run unit tests before deployment
       - name: Run Unit Tests
         run: |
-          dotnet restore ./test
-          dotnet test ./test --filter "Category=Unit" --verbosity normal
+          dotnet restore Chirp.sln
+          dotnet test Chirp.sln --filter "Category=Unit" --verbosity normal
       
       - name: Build with dotnet
         run: dotnet build src/Chirp.Web/Chirp.Web.csproj --configuration Release
