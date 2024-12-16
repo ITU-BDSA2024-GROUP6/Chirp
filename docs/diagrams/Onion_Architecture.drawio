@@ -1,0 +1,196 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36" version="25.0.3">
+  <diagram name="Side-1" id="DdkJf6Pid_xudekcSj97">
+    <mxGraphModel dx="1149" dy="1134" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-51" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#EBF3FF;" vertex="1" parent="1">
+          <mxGeometry x="29.5" y="-120.49" width="730" height="730" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-12" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#CCE2FF;" vertex="1" parent="1">
+          <mxGeometry x="137.38" y="-12.620000000000001" width="514.25" height="514.25" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-1" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#99CCFF;" vertex="1" parent="1">
+          <mxGeometry x="240" y="90" width="309" height="309" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-4" value="&lt;b&gt;Author&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="402.75" y="260" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-5" value="&lt;b&gt;AuthorDTO&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="402.75" y="219.5" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-6" value="&lt;b&gt;CheepDTO&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="316.25" y="219.5" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-7" value="&lt;b&gt;Cheep&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="336.25" y="260" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-9" value="«interface»&lt;div&gt;&lt;b&gt;IAuthorRepository&lt;/b&gt;&lt;/div&gt;" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="402.75" y="160" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-10" value="«interface»&lt;div&gt;&lt;b&gt;ICheepRepository&lt;/b&gt;&lt;/div&gt;" style="html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="276.25" y="160" width="110" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-11" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;&lt;b&gt;Chirp.Core&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="326.25" y="110" width="136.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-13" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;&lt;b&gt;Chirp.Infrastructure&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="276.25" y="30" width="236.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-14" value="&lt;b&gt;ChatDBContext&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="420" width="96.25" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-15" value="&lt;b&gt;DBInitializer&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="420" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-16" value="&lt;b&gt;AuthorRepository&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="500" y="360" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-17" value="&lt;b&gt;CheepRepository&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="360" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-19" value="Migrations" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="570" y="219.5" width="70" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-28" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.565;entryY=0.982;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-17" target="j4zop-ahKGAg_y_V5jdb-7">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="290" y="340" as="sourcePoint" />
+            <mxPoint x="450" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-29" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-17" target="j4zop-ahKGAg_y_V5jdb-6">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="290" y="340" as="sourcePoint" />
+            <mxPoint x="450" y="340" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-32" value="" style="endArrow=block;endFill=0;endSize=12;html=1;rounded=0;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.168;entryY=0.994;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-17" target="j4zop-ahKGAg_y_V5jdb-10">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="350" y="280" as="sourcePoint" />
+            <mxPoint x="510" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-33" value="" style="endArrow=block;endFill=0;endSize=12;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0.799;entryY=1.003;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-16" target="j4zop-ahKGAg_y_V5jdb-9">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="450" y="399.5" as="sourcePoint" />
+            <mxPoint x="480" y="210.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-34" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-16" target="j4zop-ahKGAg_y_V5jdb-5">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="350" y="280" as="sourcePoint" />
+            <mxPoint x="510" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-38" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=-35;" vertex="1" parent="1">
+          <mxGeometry x="308.75" y="326" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-44" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=-55;" vertex="1" parent="1">
+          <mxGeometry x="277.25" y="300" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-45" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-15" target="j4zop-ahKGAg_y_V5jdb-14">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="433.25" y="551" as="sourcePoint" />
+            <mxPoint x="356.25" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-46" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.456;entryY=0.998;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-15" target="j4zop-ahKGAg_y_V5jdb-4">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="507" y="399" as="sourcePoint" />
+            <mxPoint x="430" y="288" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-47" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.756;entryY=0.997;entryDx=0;entryDy=0;exitX=0.189;exitY=-0.017;exitDx=0;exitDy=0;exitPerimeter=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-15" target="j4zop-ahKGAg_y_V5jdb-7">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="437" y="420" as="sourcePoint" />
+            <mxPoint x="375" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-48" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=75;" vertex="1" parent="1">
+          <mxGeometry x="422" y="340" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-49" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=65;" vertex="1" parent="1">
+          <mxGeometry x="386.25" y="350" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-50" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;use&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="384.25" y="423" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-52" value="&lt;b&gt;Program&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="634" y="40" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-54" value="Pages" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="103" y="28" width="50" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-56" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.836;entryY=0.131;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-52" target="j4zop-ahKGAg_y_V5jdb-12">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="626" y="190" as="sourcePoint" />
+            <mxPoint x="549" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-57" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.882;entryY=0.175;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-52" target="j4zop-ahKGAg_y_V5jdb-1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="570" y="380" as="sourcePoint" />
+            <mxPoint x="493" y="270" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-58" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;use&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="599" y="42" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-59" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;use&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=-25;" vertex="1" parent="1">
+          <mxGeometry x="566" y="101" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-60" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0;exitY=0;exitDx=50;exitDy=20.5;entryX=0.178;entryY=0.119;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-54" target="j4zop-ahKGAg_y_V5jdb-12">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="227" y="-12.620000000000005" as="sourcePoint" />
+            <mxPoint x="160" y="-12.620000000000005" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-61" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="176" y="36" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-62" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;use&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="176" y="23" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-64" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0;exitY=0;exitDx=50;exitDy=40;entryX=0.186;entryY=0.113;entryDx=0;entryDy=0;entryPerimeter=0;exitPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-54" target="j4zop-ahKGAg_y_V5jdb-1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="183" y="88" as="sourcePoint" />
+            <mxPoint x="259" y="89" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-65" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=22;" vertex="1" parent="1">
+          <mxGeometry x="226.5" y="88" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-66" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;use&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=22;" vertex="1" parent="1">
+          <mxGeometry x="231" y="78" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-76" value="Areas" style="shape=folder;fontStyle=1;spacingTop=10;tabWidth=40;tabHeight=14;tabPosition=left;html=1;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="66.5" y="95" width="36.5" height="33" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-77" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0;exitY=0;exitDx=36.5;exitDy=18.75;exitPerimeter=0;entryX=0.07;entryY=0.245;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-76" target="j4zop-ahKGAg_y_V5jdb-12">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="181.5" y="52.379999999999995" as="sourcePoint" />
+            <mxPoint x="170" y="114" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-78" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="123.5" y="101" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-79" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;use&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=0;" vertex="1" parent="1">
+          <mxGeometry x="124.5" y="88" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-80" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0;exitY=0;exitDx=36.5;exitDy=33;exitPerimeter=0;entryX=0.034;entryY=0.321;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="j4zop-ahKGAg_y_V5jdb-76" target="j4zop-ahKGAg_y_V5jdb-1">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="137.5" y="153" as="sourcePoint" />
+            <mxPoint x="250" y="190" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-81" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;create&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=22;" vertex="1" parent="1">
+          <mxGeometry x="181" y="152" width="20.5" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="j4zop-ahKGAg_y_V5jdb-82" value="&lt;span style=&quot;font-weight: normal; background-color: rgb(255, 255, 255);&quot;&gt;&lt;font style=&quot;line-height: 80%; font-size: 10px;&quot;&gt;&amp;lt;&amp;lt;use&amp;gt;&amp;gt;&lt;/font&gt;&lt;/span&gt;" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=1;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;portConstraintRotation=0;movable=1;resizable=1;deletable=1;editable=1;locked=0;connectable=1;imageAspect=0;rotation=22;" vertex="1" parent="1">
+          <mxGeometry x="185.5" y="142" width="20.5" height="10" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
