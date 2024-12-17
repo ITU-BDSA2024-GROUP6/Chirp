@@ -3,9 +3,6 @@
 @inject SignInManager<Author> SignInManager
 @inject UserManager<Author> UserManager
 
-<head>
-    <link rel="stylesheet" href="~/_LoginPartial.cshtml.css" />
-</head>
 @if (SignInManager.IsSignedIn(User))
 {
     <div style="width: 100%; position: relative;">

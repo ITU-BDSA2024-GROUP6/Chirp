@@ -5,7 +5,10 @@ using Chirp.Infrastructure.Data;
 using Chirp.Core.RepositoryInterfaces;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Chirp.Core.Models;
-
+using Microsoft.AspNetCore.Builder;
+using NWebsec.AspNetCore.Middleware;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,7 +29,6 @@ builder.Services.AddAuthentication(options =>
         options.DefaultChallengeScheme = "GitHub";
     })
     .AddCookie()
-
     .AddGitHub(o =>
     {
         o.ClientId = builder.Configuration["authentication_github_clientId"] ?? "";
@@ -48,30 +50,51 @@ using (var scope = app.Services.CreateScope())
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
-
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-/*
-// Add security headers
-app.UseSecurityHeaders(new HeaderPolicyCollection()
-    .AddDefaultSecurityHeaders()
-    .AddStrictTransportSecurityMaxAgeIncludeSubDomains()
-    .AddContentSecurityPolicy(builder =>
-    {
-        builder.AddDefaultSrc().Self();
-        builder.AddScriptSrc().Self().UnsafeInline();
-        builder.AddStyleSrc().Self().UnsafeInline();
-        builder.AddImgSrc().Self().Data();
-        builder.AddFormAction().Self();
-        builder.AddConnectSrc().Self();
-        // if we need to allow GitHub authentication:
-        // builder.AddFrameSrc().From("https://github.com");
-    }));
-*/
+
+// Configure static files with proper MIME types
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".css"] = "text/css";
+provider.Mappings[".js"] = "application/javascript";
+provider.Mappings[".map"] = "application/json";
+// Add specific mapping for Razor-generated CSS
+provider.Mappings[".cshtml.css"] = "text/css";
+
+// Configure static files BEFORE security headers
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider,
+    ServeUnknownFileTypes = true // This helps with some edge cases
+});
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+
+// Security headers AFTER static files
+app.UseHsts(hsts => hsts.MaxAge(365).IncludeSubdomains());
+app.UseXContentTypeOptions();
+app.UseReferrerPolicy(opts => opts.NoReferrer());
+app.UseXXssProtection(options => options.EnabledWithBlockMode());
+app.UseXfo(options => options.Deny());
+
+app.UseCsp(opts => opts
+    .DefaultSources(s => s.Self())
+    .ScriptSources(s => s.Self().UnsafeInline().CustomSources("https://cdnjs.cloudflare.com"))
+    .StyleSources(s => s.Self().UnsafeInline())
+    .ImageSources(s => s.Self().CustomSources("data:"))
+    .FormActions(s => s
+        .Self()
+        .CustomSources(
+            "https://github.com",
+            "https://github.com/login/oauth/authorize"
+        )
+    )
+    .FrameAncestors(s => s.Self())
+    .BaseUris(s => s.Self())
+    .FrameSources(s => s.CustomSources("https://github.com"))
+    .ConnectSources(s => s.Self())
+);
 
 app.UseRouting();
 app.UseAuthentication();
