@@ -14,8 +14,11 @@ numbersections: true
 # Design and Architecture of Chirp!
 
 ## Domain model
+![_Figure 1: Illustration of the Chirp! domain model_](images/Domain_Model.png)
 
-## Architecture — In the small
+The UML class diagram above provides an overview of the core domain model for our _Chirp!_ application, highlighting the primary entities, their attributes, and the relationships between them. A key aspect of the diagram is the cardinality between the entities, which defines how objects in one class relate to objects in another.
+
+## Architecture — In the small 
 
 ## Architecture of deployed application
 
