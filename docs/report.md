@@ -135,6 +135,65 @@ The empty Todo and In Progress columns reflect that all planned features are com
 \newpage
 
 ## How to make Chirp! work locally
+Firstly, open a command prompt. From here, navigate to the folder in which you want the project to be, and run the command:
+
+```  console
+git clone https://github.com/ITU-BDSA2024-GROUP6/Chirp.git
+``` 
+\
+Now create a Github OAuth app via https://github.com/settings/developers
+Click New OAuth app and fill in the details. The homepage URL should be: 
+
+"http://localhost:5273/"
+
+\
+and the callback URL should be
+
+"http://localhost:5273/signin-github"
+
+\
+You should now take note of the client ID, you will need this in a second. This can be found on the apps page.
+\
+
+Now you need to generate a secret, take note/copy of the client secret as well, this is done on the same page.
+You need this to set the Development Secrets.
+\
+
+Now add the user-secrets with the following commands:
+
+``` console
+dotnet user-secrets init
+``` 
+
+``` console
+dotnet user-secrets set "authentication:github:clientId" "<YOUR_CLIENTID>"
+``` 
+
+``` console
+dotnet user-secrets set "authentication:github:clientSecret" "<YOUR_CLIENTSECRET>"
+``` 
+\
+Then, navigate to the root directory “_Chirp_”, where you just cloned the repository to.
+Then navigate to the Chirp.Web folder with the following command:
+
+``` console
+cd src/Chirp.Web
+``` 
+\
+Then start the application by running the command:
+
+``` console
+dotnet run
+``` 
+\newpage
+You should see the following in the terminal:
+
+![_Picture of expected terminal logs after “dotnet run”_](images/Dotnet_Run_Log.jpg)
+
+Click the url http://localhost:5273 or copy it into the adressbar in your browser.
+This will open our Chirp Client which you can now browse through as you wish.
+
+\newpage
 
 ## How to run test suite locally
 
