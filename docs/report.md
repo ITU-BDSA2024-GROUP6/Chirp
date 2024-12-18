@@ -8,7 +8,6 @@ author:
 - "Valdemar Mulbjerg <vamu@itu.dk>"
 - "Christian Jörgensen <chpj@itu.dk>"
 numbersections: true
-
 ---
 \newpage
 
@@ -17,7 +16,9 @@ numbersections: true
 ## Domain model
 ![_Illustration of the Chirp! domain model_](images/Domain_Model.png)
 
-The UML class diagram above provides an overview of the core domain model for our _Chirp!_ application, highlighting the primary entities, their attributes, and the relationships between them. A key aspect of the diagram is the cardinality between the entities, which defines how objects in one class relate to objects in another.
+The UML class diagram above provides an overview of the core domain model for our _Chirp!_ application, highlighting the primary entities, their attributes, and the relationships between them. 
+
+A key aspect of the diagram is the cardinality between the entities, which defines how objects in one class relate to objects in another.
 
 \newpage
 
@@ -25,6 +26,8 @@ The UML class diagram above provides an overview of the core domain model for ou
 ![_Illustration of the Chirp! architecture_](images/Onion_Architecture.png)
 
 The union architecture diagram above visually represents the layered structure of the Chirp! application. The diagram consists of three circles with a different shade of blue, each symbolizing one of the core architectural layers: Core, Infrastructure, and Web. The components within each circle represent the key parts or responsibilities of that layer.
+
+
 The arrows throughout the diagram represent the unidirectional dependency flow of the application, where each layer depends only on the layers inside of itself: 
 
 * The Core layer is independent and does not depend on any outer layer.
@@ -62,11 +65,13 @@ In contrast to the previous figure, this diagram depicts the program's accessibi
 The user journey on the left, “Login”, showcases the login process of an authenticated user, ensuring easy access to the full functionality of the program by allowing users to login with both username and email as well as a separate GitHub option.
 
 The user Journey on the right, “Browsing”, highlights the interactive features available to logged-in users, such as posting content and engaging with their own timeline, which form the core functionality of the Chirp! application.
-\newpage
 
 
 ## Sequence of functionality/calls trough Chirp!
+![_Sequence of functionality diagram of the calls through Chirp!_](images/Sequence_of_Functionality.png)
 
+The diagram above shows the sequence of functionality from when an unauthenticated user sends a HTTP GET request to the root endpoint of our application (/) until the server responds with a fully rendered HTML page.
+\newpage
 
 # Process
 
