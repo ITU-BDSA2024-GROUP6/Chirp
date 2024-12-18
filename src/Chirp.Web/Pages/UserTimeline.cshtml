@@ -50,7 +50,7 @@
                         </form>
                         }
                     </div>
-                    <div style="margin-top: 4px;">@cheep.Text</div>
+                    <div class="cheeptext" style="margin-top: 4px;">@cheep.Text</div>
                     <small>&mdash; @cheep.TimeStamp</small>
                     </p>
                 </li>
@@ -120,7 +120,7 @@
             font-size: 1rem;
         }
 
-        .cheep {
+        .cheeptext {
             word-wrap: break-word;
             /* Break long words onto the next line */
             overflow-wrap: break-word;
@@ -128,6 +128,7 @@
             word-break: break-word;
             /* Handle long words in different browsers */
             hyphens: auto;
+            white-space: pre-wrap;
         }
 
         /* Styling for Followers and Following Section */
