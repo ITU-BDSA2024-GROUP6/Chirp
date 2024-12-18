@@ -88,7 +88,6 @@ namespace Chirp.Web.Pages
 
         public async Task<IActionResult> OnPostFollowAsync(string author)
         {
-            Console.WriteLine("in the follow method");
             try
             {
                 
@@ -96,9 +95,8 @@ namespace Chirp.Web.Pages
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine($"Error while following author: {ex.Message}");
-
                 ModelState.AddModelError(string.Empty, "Unable to follow this author. Please try again.");
+                Console.WriteLine(ex.Message);
             }
             
             if (IsOwnTimeline(User.Identity!.Name!))
@@ -116,22 +114,19 @@ namespace Chirp.Web.Pages
             }
             catch (ArgumentException ex)
             {
-                Console.WriteLine($"Error while unfollowing author: {ex.Message}");
                 ModelState.AddModelError(string.Empty, "Unable to unfollow this author. Please try again.");
+                Console.WriteLine(ex.Message);
             }
             return RedirectToPage("/UserTimeline", new { author = currentAuthor });
         }
 
         public bool IsOwnTimeline(string user)
         { 
-            Console.WriteLine("In the owntimeline method");
             var currentPath = Request.Path.ToString();
 
             var authorFromUrl = currentPath.TrimStart('/'); // Remove leading slash
             var decodedAuthorFromUrl = Uri.UnescapeDataString(authorFromUrl); // Decode URL-encoded string
 
-            Console.WriteLine("User: " + User);
-            Console.WriteLine("Decoded user: " + decodedAuthorFromUrl);
             return string.Equals(decodedAuthorFromUrl, user, StringComparison.OrdinalIgnoreCase);
         }
     }
