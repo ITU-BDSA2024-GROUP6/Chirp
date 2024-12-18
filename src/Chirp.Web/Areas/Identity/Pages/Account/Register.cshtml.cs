@@ -23,6 +23,10 @@ using Chirp.Infrastructure.Data;
 
 namespace Chirp.Web.Areas.Identity.Pages.Account
 {
+    /// <summary>
+    /// Represents the model for the user registration page in the Identity area.
+    /// Handles the registration of new users, including validation and account creation.
+    /// </summary>
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<Author> _signInManager;
@@ -33,6 +37,9 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ChatDBContext _context;
 
+        /// <summary>
+        /// Initializes the RegisterModel with required services for user registration.
+        /// </summary>
         public RegisterModel(
         UserManager<Author> userManager,
         IUserStore<Author> userStore,
@@ -50,13 +57,25 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         _context = context;
         }
 
+        /// <summary>
+        /// Represents the data entered by the user during registration.
+        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
 
+        /// <summary>
+        /// The URL to redirect to after successful registration.
+        /// </summary>
         public string ReturnUrl { get; set; }
 
+        /// <summary>
+        /// External login providers available during registration.
+        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        /// <summary>
+        /// Nested model for user input data during registration.
+        /// </summary>
         public class InputModel
         {
             [Required]
@@ -82,12 +101,25 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         }
 
 
+        /// <summary>
+        /// Handles the HTTP GET request to display the registration page.
+        /// </summary>
+        
+        /// <param name="returnUrl">The URL to redirect to after registration.</param>
         public async Task OnGetAsync(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
+        /// <summary>
+        /// Handles the HTTP POST request to register a new user.
+        /// </summary>
+        
+        /// <param name="returnUrl">The URL to redirect to after successful registration.</param>
+        /// <returns>
+        /// Redirects to the return URL on success or redisplays the registration page on failure.
+        /// </returns>
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -140,6 +172,14 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         }
 
 
+        /// <summary>
+        /// Creates a new instance of the Author user model.
+        /// </summary>
+        
+        /// <returns>A new instance of the Author class.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the Author class cannot be instantiated.
+        /// </exception>
         private Author CreateUser()
         {
             try
@@ -154,6 +194,14 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             }
         }
 
+        /// <summary>
+        /// Retrieves the email store for the user model.
+        /// </summary>¨
+        
+        /// <returns>An IUserEmailStore instance for managing user emails.</returns>
+        /// <exception cref="NotSupportedException">
+        /// Thrown if the user store does not support email operations.
+        /// </exception>
         private IUserEmailStore<Author> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)

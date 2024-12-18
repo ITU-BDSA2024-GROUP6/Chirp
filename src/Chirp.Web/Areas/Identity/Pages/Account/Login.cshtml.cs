@@ -1,4 +1,3 @@
-
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 #nullable disable
@@ -20,12 +19,24 @@ using Chirp.Core.Models;
 
 namespace Chirp.Web.Areas.Identity.Pages.Account
 {
+    /// <summary>
+    /// Represents the model for the login page in the Identity area.
+    /// Handles user authentication, including email/username and password validation,
+    /// and supports external login providers.
+    /// </summary>
     public class LoginModel : PageModel
     {
         private readonly SignInManager<Author> _signInManager;
         private readonly UserManager<Author> _userManager;
         private readonly ILogger<LoginModel> _logger;
 
+        /// <summary>
+        /// Initializes the LoginModel with required services for user authentication.
+        /// </summary>
+        
+        /// <param name="signInManager">Manages user sign-in operations.</param>
+        /// <param name="userManager">Manages user account operations.</param>
+        /// <param name="logger">Logs information and warnings during the login process.</param>
         public LoginModel(SignInManager<Author> signInManager, UserManager<Author> userManager, ILogger<LoginModel> logger)
         {
             _signInManager = signInManager;
@@ -89,6 +100,12 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             public bool RememberMe { get; set; }
         }
 
+        /// <summary>
+        /// Handles the HTTP GET request to display the login page.
+        /// Clears external authentication cookies and prepares external login providers.
+        /// </summary>
+        
+        /// <param name="returnUrl">The URL to redirect to after a successful login.</param>
         public async Task OnGetAsync(string returnUrl = null)
         {
             if (!string.IsNullOrEmpty(ErrorMessage))
@@ -106,6 +123,15 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             ReturnUrl = returnUrl;
         }
 
+        /// <summary>
+        /// Handles the HTTP POST request to log in a user.
+        /// Validates the user's email/username and password, and supports additional scenarios like two-factor authentication and account lockout.
+        /// </summary>
+        
+        /// <param name="returnUrl">The URL to redirect to after a successful login.</param>
+        /// <returns>
+        /// Redirects to the specified return URL on success, or redisplays the login page with errors on failure.
+        /// </returns>
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
