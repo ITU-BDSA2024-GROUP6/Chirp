@@ -1,13 +1,8 @@
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Chirp.Infrastructure.Repositories;
 using Chirp.Infrastructure.Data;
 using Chirp.Core.RepositoryInterfaces;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Chirp.Core.Models;
-using Microsoft.AspNetCore.Builder;
-using NWebsec.AspNetCore.Middleware;
-using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
