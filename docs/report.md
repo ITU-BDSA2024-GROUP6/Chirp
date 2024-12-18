@@ -52,7 +52,7 @@ Above, is a diagram that illustrates the architecture of our deployed Chirp! app
 The following two figures illustrate distinct user journeys through the Chirp! application, tailored for both unauthorized users(not logged in) and authorized users (logged in). Each figure maps out two specific journeys, showing how users can interact with the system's key features.
 
 ### Unauthorized Journey
-![_Activity diagram of an unauthorized users journey_](images/Unauthorized_Journey.png){height=575px}
+![_Activity diagram of an unauthorized users journey_](images/Unauthorized_Journey.png){height=550px}
 
 
 This diagram focuses on the experience of users who are not logged into the system.
@@ -124,11 +124,11 @@ This keeps our application up to date and ensures it works before deployment.
 ![_Team work diagram of our work progress_](images/Teamwork_Diagram.png){height=530px}
 
 The diagram above illustrates how we managed tasks and issues throughout the development process. At the start of each week, all requirements were broken into separate issues and moved to the “_Todo_” column.
-\newpage
 
 For most issues, the team worked together since tasks were often sequentially dependent. This meant that starting a later issue simultaneously was not feasible. However, when possible, we split the group into two teams to work on independent issues. In such cases, two branches were created, and both teams worked separately to resolve their tasks. Once finished, the branches were merged into one and thoroughly tested to ensure that no conflicts or functionality issues occurred. If all tests passed, the merged branch was integrated into the main branch, and the related issues were moved to “_Done_”.
 
 This approach allowed us to maintain stability in the main branch, while effectively resolving multiple issues in parallel when the tasks permitted it.
+\newpage
 
 
 ### Project Board
