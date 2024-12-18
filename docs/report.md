@@ -2,11 +2,11 @@
 title: _Chirp!_ Project Report
 subtitle: ITU BDSA 2024 Group `6`
 author:
-- "Benjamin Ormstrup <beor@itu.dk>"
-- "Marcus Frandsen <megf@itu.dk"
-- "Victor de Roepstorff <vicd@itu.dk>"
-- "Valdemar Mulbjerg <vamu@itu.dk>"
-- "Christian Jörgensen <chpj@itu.dk>"
+- "Benjamin Ormstrup - <beor@itu.dk>"
+- "Marcus Frandsen - <megf@itu.dk>"
+- "Victor de Roepstorff - <vicd@itu.dk>"
+- "Christian Jörgensen - <chpj@itu.dk>"
+- "Valdemar Mulbjerg - <vamu@itu.dk>"
 numbersections: true
 ---
 \newpage
@@ -76,6 +76,42 @@ The diagram above shows the sequence of functionality from when an unauthenticat
 # Process
 
 ## Build, test, release, and deployment
+### Build and Test
+![_Build and Test diagram of the build_and_test.yml workflow_](images/Build_And_Test_Workflow.png){height=400px}
+
+The diagram above shows our GitHub Actions workflow for building and testing the _Chirp!_ application. The workflow runs when code is pushed to the main branch or a pull request targets it.
+
+It starts by checking out the repository and setting up .NET version 8.x. The dependencies are restored, and the application is built. Tests are then executed, ensuring both functional and browser-based components work as expected.
+
+This workflow ensures new changes do not break the build or tests.
+\newpage
+
+### Release
+
+![_Release diagram of the release.yml workflow_](images/Release_Workflow_Diagram.png){height=450px}
+
+The diagram above illustrates our _Chirp!_ release workflow, which runs when a tag matching the format v* is pushed to GitHub. This triggers the process to build, test, and release the application.
+
+The workflow starts with Checkout and setting up .NET version 8.x. It restores dependencies, runs unit tests, and builds the project for deployment. The application is then published, zipped, and a GitHub release is created. Finally, the zipped build is uploaded as a release asset, allowing it to be downloaded and deployed.
+
+This ensures that every tagged release is thoroughly tested and packaged for distribution.
+\newpage
+
+### Deploy
+
+![_Deploy diagram of the deploy.yml workflow_](images/Deploy_Workflow.png){height=450px}
+
+The diagram above shows the Build and Deploy workflow for our _Chirp!_ application. It runs on pushes to the main branch or manual triggers.
+The workflow builds, tests, and deploys the application in two steps:
+
+* Build and Test: The code is checked out, dependencies are restored, unit tests are run, and the application is built and published as an artifact.
+
+* Deploy: The artifact is downloaded and deployed to the Production environment on Azure.
+
+This keeps our application up to date and ensures it works before deployment.
+
+\newpage
+
 
 ## Team work
 
