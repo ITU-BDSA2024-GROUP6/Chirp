@@ -27,7 +27,6 @@ A key aspect of the diagram is the cardinality between the entities, which defin
 
 The union architecture diagram above visually represents the layered structure of the Chirp! application. The diagram consists of three circles with a different shade of blue, each symbolizing one of the core architectural layers: Core, Infrastructure, and Web. The components within each circle represent the key parts or responsibilities of that layer.
 
-
 The arrows throughout the diagram represent the unidirectional dependency flow of the application, where each layer depends only on the layers inside of itself: 
 
 * The Core layer is independent and does not depend on any outer layer.

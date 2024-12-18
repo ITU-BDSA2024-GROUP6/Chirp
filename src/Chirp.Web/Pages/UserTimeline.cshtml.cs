@@ -3,8 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using Chirp.Core.RepositoryInterfaces;
 using Chirp.Core.DTOs;
 using Chirp.Web.Pages.Shared;
-using Chirp.Core.Models;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Chirp.Web.Pages
 {
