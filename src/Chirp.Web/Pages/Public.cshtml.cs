@@ -63,7 +63,14 @@ namespace Chirp.Web.Pages
 
             // Add sanitization before creating the cheep
             var sanitizedText = SanitizeText(Text);
-            await _cheepService.CreateCheep(sanitizedText, author, DateTime.UtcNow);
+
+            if (sanitizedText.Length <= 160)
+            {
+                await _cheepService.CreateCheep(sanitizedText, author, DateTime.UtcNow);
+            } 
+            else {
+                ModelState.AddModelError("Text", "Cheeps cannot exceed 160 characters.");
+            }
             
             return RedirectToPage("/Public", new{});
         }
