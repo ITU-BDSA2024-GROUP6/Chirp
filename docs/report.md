@@ -1,14 +1,19 @@
 ---
-title: _Chirp!_ Project Report
+title: _Chirp!_ Project \ Report
 subtitle: ITU BDSA 2024 Group `6`
-author:
-- "Benjamin Ormstrup - <beor@itu.dk>"
-- "Marcus Frandsen - <megf@itu.dk>"
-- "Victor de Roepstorff - <vicd@itu.dk>"
-- "Christian Jörgensen - <chpj@itu.dk>"
-- "Valdemar Mulbjerg - <vamu@itu.dk>"
+author: |
+  Benjamin Ormstrup - <beor@itu.dk> \
+  Marcus Frandsen - <megf@itu.dk> \
+  Victor de Roepstorff - <vicd@itu.dk> \
+  Christian Jörgensen - <chpj@itu.dk> \
+  Valdemar Mulbjerg - <vamu@itu.dk>
 numbersections: true
+geometry: top=2cm, bottom=2.5cm, left=3cm, right=3cm
+mainfont: "Arial"
+header-includes:
+  - \raggedright
 ---
+
 \newpage
 
 # Design and Architecture of Chirp!
@@ -23,7 +28,7 @@ A key aspect of the diagram is the cardinality between the entities, which defin
 \newpage
 
 ## Architecture — In the small 
-![_Illustration of the Chirp! architecture_](images/Onion_Architecture.png)
+![_Illustration of the Chirp! architecture_](images/Onion_Architecture.png){height=550px}
 
 The union architecture diagram above visually represents the layered structure of the Chirp! application. The diagram consists of three circles with a different shade of blue, each symbolizing one of the core architectural layers: Core, Infrastructure, and Web. The components within each circle represent the key parts or responsibilities of that layer.
 
@@ -32,7 +37,7 @@ The arrows throughout the diagram represent the unidirectional dependency flow o
 * The Core layer is independent and does not depend on any outer layer.
 
 * The Infrastructure layer relies on the Core while still remaining separate from the Web layer. 
-\newpage
+
 * The Web layer depends on both the Infrastructure and Core layers to deliver functionality to the user.
 
 This layered structure ensures separation of concerns, making the program easily maintainable, testable, and scalable. Each layer can be adjusted, without having a direct impact on the logic and functionality of the layers above it. 
@@ -47,7 +52,7 @@ Above is a diagram that illustrates the architecture of our deployed Chirp! appl
 The following two figures illustrate distinct user journeys through the Chirp! application, tailored for both unauthorized users(not logged in) and authorized users (logged in). Each figure maps out two specific journeys, showing how users can interact with the system's key features.
 
 ### Unauthorized Journey
-![_Activity diagram of an unauthorized users journey_](images/Unauthorized_Journey.png)
+![_Activity diagram of an unauthorized users journey_](images/Unauthorized_Journey.png){height=575px}
 
 
 This diagram focuses on the experience of users who are not logged into the system.
@@ -66,6 +71,7 @@ The user journey on the left, “Login”, showcases the login process of an aut
 
 The user Journey on the right, “Browsing”, highlights the interactive features available to logged-in users, such as posting content and engaging with their own timeline, which form the core functionality of the Chirp! application.
 
+\newpage
 
 ## Sequence of functionality/calls trough Chirp!
 
@@ -84,18 +90,18 @@ The diagram above shows our GitHub Actions workflow for building and testing the
 
 It starts by checking out the repository and setting up .NET version 8.x. The dependencies are restored, and the application is built. Tests are then executed, ensuring both functional and browser-based components work as expected.
 
-This workflow ensures new changes do not break the build or tests.
+This workflow helps maintain stability by verifying that all components work correctly after each change.
 \newpage
 
 ### Release
 
-![_Release diagram of the release.yml workflow_](images/Release_Workflow_Diagram.png){height=450px}
+![_Release diagram of the release.yml workflow_](images/Release_Workflow.png){height=450px}
 
 The diagram above illustrates our _Chirp!_ release workflow, which runs when a tag matching the format v* is pushed to GitHub. This triggers the process to build, test, and release the application.
 
 The workflow starts with Checkout and setting up .NET version 8.x. It restores dependencies, runs unit tests, and builds the project for deployment. The application is then published, zipped, and a GitHub release is created. Finally, the zipped build is uploaded as a release asset, allowing it to be downloaded and deployed.
 
-This ensures that every tagged release is thoroughly tested and packaged for distribution.
+This ensures that every tagged release is thoroughly tested and zipped for distribution.
 \newpage
 
 ### Deploy
@@ -115,9 +121,9 @@ This keeps our application up to date and ensures it works before deployment.
 
 ## Team work
 ### Tasks and Issues
-![_Team work diagram of our work progress_](images/TeamWork_Diagram.png){height=530px}
+![_Team work diagram of our work progress_](images/Teamwork_Diagram.png){height=530px}
 
-The diagram above illustrates how we managed tasks and issues throughout the development process. At the start of each week, all requirements were broken into separate issues and moved to the “_Todo_” column
+The diagram above illustrates how we managed tasks and issues throughout the development process. At the start of each week, all requirements were broken into separate issues and moved to the “_Todo_” column.
 \newpage
 
 For most issues, the team worked together since tasks were often sequentially dependent. This meant that starting a later issue simultaneously was not feasible. However, when possible, we split the group into two teams to work on independent issues. In such cases, two branches were created, and both teams worked separately to resolve their tasks. Once finished, the branches were merged into one and thoroughly tested to ensure that no conflicts or functionality issues occurred. If all tests passed, the merged branch was integrated into the main branch, and the related issues were moved to “_Done_”.
