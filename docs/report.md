@@ -135,12 +135,16 @@ The empty Todo and In Progress columns reflect that all planned features are com
 \newpage
 
 ## How to make Chirp! work locally
+**1. Clone the repository**
+
 Firstly, open a command prompt. From here, navigate to the folder in which you want the project to be, and run the command:
 
 ```  console
 git clone https://github.com/ITU-BDSA2024-GROUP6/Chirp.git
 ``` 
 \
+**2. GitHub OAuth**
+
 Now create a Github OAuth app via https://github.com/settings/developers
 Click New OAuth app and fill in the details. The homepage URL should be: 
 
@@ -154,6 +158,8 @@ and the callback URL should be
 \
 You should now take note of the client ID, you will need this in a second. This can be found on the apps page.
 \
+
+**3. Secrets**
 
 Now you need to generate a secret, take note/copy of the client secret as well, this is done on the same page.
 You need this to set the Development Secrets.
@@ -173,6 +179,8 @@ dotnet user-secrets set "authentication:github:clientId" "<YOUR_CLIENTID>"
 dotnet user-secrets set "authentication:github:clientSecret" "<YOUR_CLIENTSECRET>"
 ``` 
 \
+**4. Run the program**
+
 Then, navigate to the root directory “_Chirp_”, where you just cloned the repository to.
 Then navigate to the Chirp.Web folder with the following command:
 
@@ -190,12 +198,44 @@ You should see the following in the terminal:
 
 ![_Picture of expected terminal logs after “dotnet run”_](images/Dotnet_Run_Log.jpg)
 
+**5. Open browser**
+
 Click the url http://localhost:5273 or copy it into the adressbar in your browser.
 This will open our Chirp Client which you can now browse through as you wish.
 
 \newpage
 
 ## How to run test suite locally
+You will need to have Playwright installed, which you, if you haven’t already, can do by following this guide: https://playwright.dev/docs/getting-started-vscode
+
+Once you have installed Playwright, the tests are now ready to run.
+
+In the terminal, navigate to the root directory (/Chirp) of the project and run the command: 
+
+``` console
+dotnet test
+```
+
+### Coverage
+Our test suite covers unit tests, UI tests, and an end-to-end (E2E) test to ensure reliability and correctness across different parts of the Chirp! application.
+
+**Unit Tests**:
+
+* AuthorRepositoryTests
+Tests for core author operations, including retrieving authors by name, email, and ID, following/unfollowing authors, and verifying follower relationships.
+
+* CheepRepositoryTests
+Tests cheep operations such as creating cheeps, retrieving cheeps by author, and fetching cheeps from followed users.
+
+**UI Tests**:
+
+Using Playwright, these tests verify functionality for both authenticated and unauthenticated users.
+
+**End-to-End Test**:
+
+A single comprehensive Playwright test that verifies the full user journey.
+
+Together, these tests ensure that individual components function correctly, UI interactions work seamlessly, and the system behaves as expected end-to-end.
 
 
 # Ethics
