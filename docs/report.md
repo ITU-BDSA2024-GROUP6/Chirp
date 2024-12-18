@@ -236,10 +236,23 @@ Using Playwright, these tests verify functionality for both authenticated and un
 A single comprehensive Playwright test that verifies the full user journey.
 
 Together, these tests ensure that individual components function correctly, UI interactions work seamlessly, and the system behaves as expected end-to-end.
+\newpage
 
 
 # Ethics
 
 ## License
 
+We chose the MIT License for our application. This license is simple and permissive, allowing others to freely use, modify, and distribute the software for both private and commercial purposes. 
+
+Additionally, the license includes a disclaimer stating that the software is provided "as is," without any warranty, ensuring that we are not liable for any issues arising from its use.
+
 ## LLMs, ChatGPT, CoPilot, and others
+
+We used ChatGPT and Claude as supporting tools during the development of our project.
+
+At the start, we encountered new concepts such as C# and Razor Pages, which required further clarification. ChatGPT was particularly helpful in explaining terms and topics we did not fully understand. For tasks involving specific principles like command-query separation, we used LLMs to generate examples. These examples provided a clearer understanding of the required structure and helped us approach tasks more effectively.
+
+The use of ChatGPT and Claude streamlined our workflow by acting as a precise alternative to traditional search engines. Instead of manually reviewing multiple articles, the LLMs provided targeted information, which we fact-checked to ensure accuracy. This significantly reduced the time spent on searching and allowed us to focus on implementation.
+
+Overall, the LLMs improved our efficiency and understanding, speeding up development. While the responses were usually correct, there were rare cases of generic or incorrect answers that caused minor delays. Despite this, their contribution was valuable in enhancing both the pace and quality of our work.
