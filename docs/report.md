@@ -136,7 +136,7 @@ This approach allowed us to maintain stability in the main branch, while effecti
 
 The project board screenshot shows its state right before hand-in. The board is divided into four columns: Todo, In Queue/Temporarily Paused, In Progress, and Done.
 
-The empty Todo and In Progress columns reflect that all planned features are complete, and no unresolved tasks remain. This organization ensured a clear workflow and efficient tracking of progress throughout development.
+The empty Todo and In Progress columns reflect that all planned features are complete, and no unresolved tasks remain. This way of organizing our tasks and issues ensured a clear workflow and efficient tracking of progress throughout development.
 \newpage
 
 ## How to make Chirp! work locally
