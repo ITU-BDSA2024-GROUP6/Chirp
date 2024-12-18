@@ -45,21 +45,21 @@ namespace IntegrationTests
             var author1 = new Author
             {
                 Id = Guid.NewGuid().ToString(),
-                UserName = "John Doe",
-                Email = "john@email.dk"
+                UserName = "testUser1",
+                Email = "testUser1@test.test"
             };
 
             var author2 = new Author
             {
                 Id = Guid.NewGuid().ToString(),
-                UserName = "Joe Smith",
-                Email = "joe@email.dk"
+                UserName = "testUser2",
+                Email = "testUser2@test.test"
             };
 
             _context.Authors.AddRange(author1, author2);
             await _context.SaveChangesAsync();
 
-            // Follow Author
+            // Retrieve authors from DB
             var author1FromDb = _authorRepository.GetAuthorByName(author1.UserName);
             var author2FromDb = _authorRepository.GetAuthorByName(author2.UserName);
 
@@ -67,7 +67,11 @@ namespace IntegrationTests
             Assert.IsNotNull(author1FromDb, "Author1 not found in database");
             Assert.IsNotNull(author2FromDb, "Author2 not found in database");
 
-            await _authorRepository.FollowAuthor(author1FromDb.UserName, author2FromDb.UserName);
+            // Follow Author
+            await _authorRepository.FollowAuthor(
+                author1FromDb?.UserName ?? throw new ArgumentNullException(nameof(author1FromDb)),
+                author2FromDb?.UserName ?? throw new ArgumentNullException(nameof(author2FromDb))
+            );
 
             // Create Cheeps
             await _cheepRepository.CreateCheep("Hello World", author1FromDb, DateTime.Now);
