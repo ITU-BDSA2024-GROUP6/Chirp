@@ -11,45 +11,61 @@ jobs:
   build-test-release:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.x
-    
-    # Run unit tests before deployment
-    - name: Run Unit Tests
-      run: |
-        dotnet restore Chirp.sln
-        dotnet test Chirp.sln --filter "Category=Unit" --verbosity normal
-    
-    - name: Build
-      run: dotnet build ./src/Chirp.Web/Chirp.Web.csproj --configuration Release --no-restore
-    
-    - name: Publish Web App
-      run: dotnet publish ./src/Chirp.Web/Chirp.Web.csproj -c Release -o ./publish
-    
-    - name: Zip Published App
-      run: zip -r chirp-webapp.zip ./publish
-    
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
-    
-    - name: Upload Web App Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./chirp-webapp.zip
-        asset_name: chirp-webapp.zip
-        asset_content_type: application/zip
+      # 1. Checkout Code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. Setup .NET
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      # 3. Restore Dependencies
+      - name: Restore Dependencies
+        run: dotnet restore Chirp.sln
+
+      # 4. Run Unit Tests
+      - name: Run Unit Tests
+        run: dotnet test Chirp.sln --filter "Category=Unit" --verbosity normal
+
+      # 5. Build for Windows
+      - name: Build - Windows
+        shell: bash
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          windows_release_name=Chirp-$tag-win-x64
+          dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net8.0 --runtime "win-x64" --self-contained false -c Release -o "${windows_release_name}"
+          7z a -tzip "${windows_release_name}.zip" "./${windows_release_name}/*"
+          rm -r "$windows_release_name"
+
+      # 6. Build for Linux
+      - name: Build - Linux
+        shell: bash
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          linux_release_name=Chirp-$tag-linux-x64
+          dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net8.0 --runtime "linux-x64" --self-contained false -c Release -o "${linux_release_name}"
+          7z a -tzip "${linux_release_name}.zip" "$linux_release_name"
+          rm -r "$linux_release_name"
+
+      # 7. Build for MacOS x64
+      - name: Build - MacOS x64
+        shell: bash
+        run: |
+          tag=$(git describe --tags --abbrev=0)
+          macos_release_name=Chirp-$tag-osx-x64
+          dotnet publish src/Chirp.Web/Chirp.Web.csproj --framework net8.0 --runtime "osx-x64" --self-contained false -c Release -o "${macos_release_name}"
+          7z a -tzip "${macos_release_name}.zip" "$macos_release_name"
+          rm -r "$macos_release_name"
+
+      # 8. Publish Release Assets to GitHub
+      - name: Publish Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            Chirp-*-win-x64.zip
+            Chirp-*-linux-x64.zip
+            Chirp-*-osx-x64.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
