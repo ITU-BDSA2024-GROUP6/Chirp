@@ -50,6 +50,7 @@ The following two figures illustrate distinct user journeys through the Chirp! a
 ### Unauthorized Journey
 ![_Activity diagram of an unauthorized users journey_](images/Unauthorized_Journey.png)
 
+
 This diagram focuses on the experience of users who are not logged into the system.
 
 The user journey on the left, “Browsing”, highlights the program's accessibility for unauthenticated users, allowing them to explore content without having to register first. 
@@ -68,6 +69,7 @@ The user Journey on the right, “Browsing”, highlights the interactive featur
 
 
 ## Sequence of functionality/calls trough Chirp!
+
 ![_Sequence of functionality diagram of the calls through Chirp!_](images/Sequence_of_Functionality.png)
 
 The diagram above shows the sequence of functionality from when an unauthenticated user sends a HTTP GET request to the root endpoint of our application (/) until the server responds with a fully rendered HTML page.
@@ -112,8 +114,25 @@ This keeps our application up to date and ensures it works before deployment.
 
 \newpage
 
-
 ## Team work
+### Tasks and Issues
+![_Team work diagram of our work progress_](images/TeamWork_Diagram.png){height=530px}
+
+The diagram above illustrates how we managed tasks and issues throughout the development process. At the start of each week, all requirements were broken into separate issues and moved to the “_Todo_” column
+\newpage
+
+For most issues, the team worked together since tasks were often sequentially dependent. This meant that starting a later issue simultaneously was not feasible. However, when possible, we split the group into two teams to work on independent issues. In such cases, two branches were created, and both teams worked separately to resolve their tasks. Once finished, the branches were merged into one and thoroughly tested to ensure that no conflicts or functionality issues occurred. If all tests passed, the merged branch was integrated into the main branch, and the related issues were moved to “_Done_”.
+
+This approach allowed us to maintain stability in the main branch while effectively resolving multiple issues in parallel when the tasks permitted it.
+
+
+### Project Board
+![_Project board screenshot from GitHub_](images/Project_Board.jpg)
+
+The project board screenshot shows its state right before hand-in. The board is divided into four columns: Todo, In Queue/Temporarily Paused, In Progress, and Done.
+
+The empty Todo and In Progress columns reflect that all planned features are complete, and no unresolved tasks remain. This organization ensured a clear workflow and efficient tracking of progress throughout development.
+\newpage
 
 ## How to make Chirp! work locally
 
