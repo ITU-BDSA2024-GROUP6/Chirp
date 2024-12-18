@@ -21,7 +21,7 @@ header-includes:
 ## Domain model
 ![_Illustration of the Chirp! domain model_](images/Domain_Model.png)
 
-The UML class diagram above provides an overview of the core domain model for our _Chirp!_ application, highlighting the primary entities, their attributes, and the relationships between them. 
+The UML class diagram above, provides an overview of the core domain model for our _Chirp!_ application, highlighting the primary entities, their attributes, and the relationships between them. 
 
 A key aspect of the diagram is the cardinality between the entities, which defines how objects in one class relate to objects in another.
 
@@ -30,7 +30,7 @@ A key aspect of the diagram is the cardinality between the entities, which defin
 ## Architecture — In the small 
 ![_Illustration of the Chirp! architecture_](images/Onion_Architecture.png){height=550px}
 
-The union architecture diagram above visually represents the layered structure of the Chirp! application. The diagram consists of three circles with a different shade of blue, each symbolizing one of the core architectural layers: Core, Infrastructure, and Web. The components within each circle represent the key parts or responsibilities of that layer.
+The union architecture diagram above, visually represents the layered structure of the Chirp! application. The diagram consists of three circles with a different shade of blue, each symbolizing one of the core architectural layers: Core, Infrastructure, and Web. The components within each circle represent the key parts or responsibilities of that layer.
 
 The arrows throughout the diagram represent the unidirectional dependency flow of the application, where each layer depends only on the layers inside of itself: 
 
@@ -45,7 +45,7 @@ This layered structure ensures separation of concerns, making the program easily
 ## Architecture of deployed application
 ![_Application Architecture diagram of the deployed application_](images/Application_Architecture.png)
 
-Above is a diagram that illustrates the architecture of our deployed Chirp! application which focuses on the client-server relation.
+Above, is a diagram that illustrates the architecture of our deployed Chirp! application which focuses on the client-server relation.
 \newpage
 
 ## User activities
@@ -58,12 +58,12 @@ The following two figures illustrate distinct user journeys through the Chirp! a
 This diagram focuses on the experience of users who are not logged into the system.
 
 The user journey on the left, “Browsing”, highlights the program's accessibility for unauthenticated users, allowing them to explore content without having to register first. 
-The user can navigate the public timeline as well as other authenticated users timelines.
+The user can navigate the public timeline as well as other authenticated users' timelines.
 
 The user journey on the right, “Register”, emphasizes the application’s user-friendly onboarding process, using GitHub OAuth for convenience and ensuring new users can easily register as a user in the system. After registering the user is automatically logged in and navigated to the public timeline. 
 
 ### Authorized Journey
-![_Activity diagram of an authorized users journey_](images/Authorized_Journey.png)
+![_Activity diagram of an authorized user's journey_](images/Authorized_Journey.png)
 
 In contrast to the previous figure, this diagram depicts the program's accessibility for a user who is already registered with the Chirp! application. 
 
@@ -128,7 +128,7 @@ The diagram above illustrates how we managed tasks and issues throughout the dev
 
 For most issues, the team worked together since tasks were often sequentially dependent. This meant that starting a later issue simultaneously was not feasible. However, when possible, we split the group into two teams to work on independent issues. In such cases, two branches were created, and both teams worked separately to resolve their tasks. Once finished, the branches were merged into one and thoroughly tested to ensure that no conflicts or functionality issues occurred. If all tests passed, the merged branch was integrated into the main branch, and the related issues were moved to “_Done_”.
 
-This approach allowed us to maintain stability in the main branch while effectively resolving multiple issues in parallel when the tasks permitted it.
+This approach allowed us to maintain stability in the main branch, while effectively resolving multiple issues in parallel when the tasks permitted it.
 
 
 ### Project Board
@@ -205,13 +205,13 @@ You should see the following in the terminal:
 
 **5. Open browser**
 
-Click the url http://localhost:5273 or copy it into the adressbar in your browser.
+Click the url http://localhost:5273 or copy it into the addressbar in your browser.
 This will open our Chirp Client which you can now browse through as you wish.
 
 \newpage
 
 ## How to run test suite locally
-You will need to have Playwright installed, which you, if you haven’t already, can do by following this guide: https://playwright.dev/docs/getting-started-vscode
+You will need to have Playwright installed, which you, if you have not already, can do by following this guide: https://playwright.dev/docs/getting-started-vscode
 
 Once you have installed Playwright, the tests are now ready to run.
 
