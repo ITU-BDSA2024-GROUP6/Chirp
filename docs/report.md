@@ -35,8 +35,11 @@ The arrows throughout the diagram represent the unidirectional dependency flow o
 
 This layered structure ensures separation of concerns, making the program easily maintainable, testable, and scalable. Each layer can be adjusted, without having a direct impact on the logic and functionality of the layers above it. 
 
-
 ## Architecture of deployed application
+![_Application Architecture diagram of the deployed application_](images/Application_Architecture.png)
+
+Above is a diagram that illustrates the architecture of our deployed Chirp! application which focuses on the client-server relation.
+\newpage
 
 ## User activities
 
