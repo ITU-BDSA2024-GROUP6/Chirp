@@ -10,11 +10,13 @@ namespace Chirp.Infrastructure.Repositories
     {
         private readonly ChatDBContext _context;
 
+        // Constructor to inject the ChatDBContext dependency
         public AuthorRepository(ChatDBContext context)
         {
             _context = context;
         }
 
+        // Retrieves an Author by their username, including their following and followers
         public Author? GetAuthorByName(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -28,6 +30,7 @@ namespace Chirp.Infrastructure.Repositories
                 .FirstOrDefault(author => author.UserName != null && author.UserName.ToLower() == name.ToLower());
         }
 
+        // Retrieves an Author by their email address
         public Author? GetAuthorByEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -39,17 +42,20 @@ namespace Chirp.Infrastructure.Repositories
                 .FirstOrDefault(author => author.Email != null && author.Email.ToLower() == email.ToLower());
         }
 
+        // Retrieves an Author by their unique ID
         public Author? GetAuthorByID(string id)
         {
             return _context.Authors
                 .FirstOrDefault(author => author.Id.Equals(id));
         }
 
+        // Creates and returns an AuthorDTO from an Author model
         public AuthorDTO CreateAuthorDTO(Author author)
         {
             return new AuthorDTO() { Name = author?.UserName ?? "", Email = author?.Email ?? "" };
         }
 
+        // Checks if a user (followerName) is following another user (followedName)
         public async Task<bool> IsFollowing(string followerName, string followedName)
         {
             var follower = await _context.Authors
@@ -61,6 +67,7 @@ namespace Chirp.Infrastructure.Repositories
             return follower.Following.Any(f => f.UserName != null && f.UserName.ToLower() == followedName.ToLower());
         }
 
+        // Allows a user (followerName) to follow another user (followedName)
         public async Task FollowAuthor(string followerName, string followedName)
         {
             var follower = await _context.Authors
@@ -75,7 +82,7 @@ namespace Chirp.Infrastructure.Repositories
                 throw new ArgumentException("One or both users not found");
             }
 
-            // Check if already following
+            // Check if a user is already following another user
             if (!await IsFollowing(followerName, followedName))
             {
                 follower.Following.Add(followed);
@@ -83,6 +90,7 @@ namespace Chirp.Infrastructure.Repositories
             }
         }
 
+        // Allows a user (followerName) to unfollow another user (followedName)
         public async Task UnfollowAuthor(string followerName, string followedName)
         {
             var follower = await _context.Authors
@@ -104,6 +112,7 @@ namespace Chirp.Infrastructure.Repositories
             }
         }
 
+        // Retrieves a list of DTOs representing the followers of the given author
         public List<AuthorDTO> GetFollowers(Author author)
         {
             return _context.Authors

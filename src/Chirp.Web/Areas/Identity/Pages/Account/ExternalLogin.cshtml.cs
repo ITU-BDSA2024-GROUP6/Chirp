@@ -21,6 +21,10 @@ using Chirp.Core.Models;
 
 namespace Chirp.Web.Areas.Identity.Pages.Account
 {
+    /// <summary>
+    /// Handles external login functionality for the Identity area.
+    /// Supports logging in users using third-party providers (e.g., GitHub) and creating linked accounts.
+    /// </summary>
     [AllowAnonymous]
     public class ExternalLoginModel : PageModel
     {
@@ -31,6 +35,9 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
 
+        /// <summary>
+        /// Initializes the ExternalLoginModel with required services for external authentication.
+        /// </summary>
         public ExternalLoginModel(
             SignInManager<Author> signInManager,
             UserManager<Author> userManager,
@@ -87,8 +94,18 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             public string Email { get; set; }
         }
         
+        /// <summary>
+        /// Redirects to the login page if the external login process is initiated directly.
+        /// </summary>
         public IActionResult OnGet() => RedirectToPage("./Login");
 
+        /// <summary>
+        /// Initiates the external login process with the specified provider.
+        /// </summary>
+        
+        /// <param name="provider">The name of the external login provider.</param>
+        /// <param name="returnUrl">The URL to redirect to after login.</param>
+        /// <returns>A ChallengeResult to redirect the user to the external provider.</returns>
         public IActionResult OnPost(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
@@ -97,6 +114,13 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             return new ChallengeResult(provider, properties);
         }
 
+        /// <summary>
+        /// Handles the callback from the external login provider after user authentication.
+        /// </summary>
+        
+        /// <param name="returnUrl">The URL to redirect to after successful login.</param>
+        /// <param name="remoteError">Any error message returned by the external provider.</param>
+        /// <returns>A redirect to the return URL or login page with error messages.</returns>
         public async Task<IActionResult> OnGetCallbackAsync(string returnUrl = null, string remoteError = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -162,6 +186,12 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         }
 
 
+        /// <summary>
+        /// Handles account confirmation for external login.
+        
+        /// </summary>
+        /// <param name="returnUrl">The URL to redirect to after confirmation.</param>
+        /// <returns>A redirect to the confirmation page or login page with error messages.</returns>
         public async Task<IActionResult> OnPostConfirmationAsync(string returnUrl = null)
         {
             returnUrl ??= Url.Content("~/");
@@ -220,6 +250,15 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
         }
 
 
+        /// <summary>
+        /// Creates a new instance of the Author user model.
+        /// </summary>
+        
+        /// <returns>A new instance of the Author class.</returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if the Author class cannot be instantiated.
+        /// Ensure the class has a parameterless constructor and is not abstract.
+        /// </exception>
         private Author CreateUser()
         {
             try
@@ -233,6 +272,15 @@ namespace Chirp.Web.Areas.Identity.Pages.Account
             }
         }
 
+        /// <summary>
+        /// Retrieves the email store for the Author user model.
+        /// </summary>
+        
+        /// <returns>An IUserEmailStore instance for managing user email data.</returns>
+        /// <exception cref="NotSupportedException">
+        /// Thrown if the UserManager does not support email operations.
+        /// Ensure the user store is configured to manage email data.
+        /// </exception>
         private IUserEmailStore<Author> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)

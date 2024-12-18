@@ -29,12 +29,21 @@ namespace Chirp.Web.Pages
 
         private const int PageSize = 32;
 
+        /// <summary>
+        /// Initializes the PublicModel with dependencies for cheep and author operations.
+        /// </summary>
         public PublicModel(ICheepRepository cheepService, IAuthorRepository authorService)
         {
             _cheepService = cheepService;
             _authorService = authorService;
         }
 
+        /// <summary>
+        /// Handles HTTP GET requests to load public cheeps.
+        /// </summary>
+        
+        /// <param name="page">The page number for pagination (default: 0).</param>
+        /// <returns>An IActionResult that renders the public cheeps page.</returns>
         public async Task<IActionResult> OnGet([FromQuery] int page = 0)
         {
             CurrentPage = page;
@@ -51,6 +60,11 @@ namespace Chirp.Web.Pages
             return Page();
         }
 
+        /// <summary>
+        /// Handles HTTP POST requests to create a new cheep.
+        /// </summary>
+        
+        /// <returns>An IActionResult that redirects back to the public cheeps page.</returns>
         public async Task<IActionResult> OnPostAsync()
         {
             var authorName = User.Identity!.Name ?? "";
@@ -75,16 +89,25 @@ namespace Chirp.Web.Pages
             return RedirectToPage("/Public", new{});
         }
 
+        /// <summary>
+        /// Initializes the follow status and ownership of the timeline for the current user.
+        /// </summary>
         private async Task InitializeFollowStatus()
-            {
-                CurrentUser = User.Identity!.Name!;
-                IsFollowing = await _authorService.IsFollowing(CurrentUser, Author);
+        {
+            CurrentUser = User.Identity!.Name!;
+            IsFollowing = await _authorService.IsFollowing(CurrentUser, Author);
 
-                var currentUser = _authorService.GetAuthorByName(CurrentUser);
-                var targetAuthor = _authorService.GetAuthorByName(Author);
-                IsOwnTimeline = currentUser?.UserName == targetAuthor?.UserName;
-            }
+            var currentUser = _authorService.GetAuthorByName(CurrentUser);
+            var targetAuthor = _authorService.GetAuthorByName(Author);
+            IsOwnTimeline = currentUser?.UserName == targetAuthor?.UserName;
+        }
 
+        /// <summary>
+        /// Handles HTTP POST requests to follow a specified author.
+        /// </summary>
+        
+        /// <param name="author">The username of the author to follow.</param>
+        /// <returns>An IActionResult that redirects to the public cheeps page.</returns>
         public async Task<IActionResult> OnPostFollowAsync(string author)
         {
             try 
@@ -103,6 +126,12 @@ namespace Chirp.Web.Pages
             return RedirectToPage("/Public", new{});
         }
 
+        /// <summary>
+        /// Handles HTTP POST requests to unfollow a specified author.
+        /// </summary>
+        
+        /// <param name="author">The username of the author to unfollow.</param>
+        /// <returns>An IActionResult that redirects to the public cheeps page.</returns>
         public async Task<IActionResult> OnPostUnfollowAsync(string author)
         {
             try 
