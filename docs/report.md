@@ -10,6 +10,7 @@ author:
 numbersections: true
 
 ---
+\newpage
 
 # Design and Architecture of Chirp!
 
@@ -17,6 +18,8 @@ numbersections: true
 ![_Illustration of the Chirp! domain model_](images/Domain_Model.png)
 
 The UML class diagram above provides an overview of the core domain model for our _Chirp!_ application, highlighting the primary entities, their attributes, and the relationships between them. A key aspect of the diagram is the cardinality between the entities, which defines how objects in one class relate to objects in another.
+
+\newpage
 
 ## Architecture — In the small 
 ![_Illustration of the Chirp! architecture_](images/Onion_Architecture.png)
@@ -26,8 +29,8 @@ The arrows throughout the diagram represent the unidirectional dependency flow o
 
 * The Core layer is independent and does not depend on any outer layer.
 
-* The Infrastructure layer relies on the Core while still remaining separate from the Web layer.
-
+* The Infrastructure layer relies on the Core while still remaining separate from the Web layer. 
+\newpage
 * The Web layer depends on both the Infrastructure and Core layers to deliver functionality to the user.
 
 This layered structure ensures separation of concerns, making the program easily maintainable, testable, and scalable. Each layer can be adjusted, without having a direct impact on the logic and functionality of the layers above it. 
