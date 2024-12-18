@@ -38,6 +38,10 @@ jobs:
     # Run the tests
     - name: Run Unit Tests
       run: dotnet test Chirp.sln --filter "Category=Unit" --no-build --verbosity normal
+
+      # Run Integration Tests
+    - name: Run Integration Tests
+      run: dotnet test ./test/integration/IntegrationTest.csproj --filter "Category=Integration" --no-build --verbosity normal
     
     - name: Install Playwright Browser
       run: pwsh ./test/PlaywrightTests/bin/Debug/net8.0/playwright.ps1 install
